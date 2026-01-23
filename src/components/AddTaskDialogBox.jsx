@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useTodo } from '../hooks/useTodo'
 
-function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
+function AddTaskDialogBox({showDialogBox, setShowDialogBox, addTask}) {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [priority, setPriority] = useState("medium")
@@ -9,7 +9,7 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
     const [category, setCategory] = useState("abc")
     const [dueDate, setDueDate] = useState("")
 
-    const {addTask} = useTodo();
+    // const {addTask} = useTodo();
 
     const inputBase = {
     blue: "bg-blue-600 hover:bg-blue-500 text-white",
@@ -24,7 +24,7 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
             // alert("Please fill all of this")
             // return;
         }
-        console.log(typeof dueDate)
+        // console.log(typeof dueDate)
         e.preventDefault();
         let task = {
             title,
