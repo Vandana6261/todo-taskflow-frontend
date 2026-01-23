@@ -47,12 +47,13 @@ import { useState } from "react";
         createdAt: new Date().toLocaleDateString()
       }
       // console.log(newTask, 49)
+      // console.log("add Task called")
       setTasks(prev => [...prev, newTask]);
     }
     // console.log(tasks)
     return {
       addTask,
-
+      tasks
     };
   }
 
