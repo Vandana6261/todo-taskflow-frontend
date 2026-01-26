@@ -1,7 +1,8 @@
 import { useState } from "react";
 
 
-  const defaultTask = [
+  const defaultTask =  
+  [
     {
       id: "1",
       title: "Review project proposal",
@@ -51,9 +52,16 @@ import { useState } from "react";
       setTasks(prev => [...prev, newTask]);
     }
     // console.log(tasks)
+
+    const deleteTask = (taskId) => {
+      let newTasks = tasks.filter(item => item.id !== taskId);
+      setTasks(newTasks)
+      console.log("Task Deleted")
+    }
     return {
       addTask,
-      tasks
+      tasks,
+      deleteTask
     };
   }
 
