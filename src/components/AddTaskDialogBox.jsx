@@ -47,7 +47,7 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox, addTask}) {
     }
   return (
     <>
-      <div className={`min-w-screen min-h-screen fixed top-0 flex justify-center items-center backdrop-blur-lg z-99 ${showDialogBox ? "flex" : "hidden"}`}
+      <div className={`min-w-screen min-h-screen fixed top-0 left-0 flex justify-center items-center backdrop-blur-lg z-99 ${showDialogBox ? "flex" : "hidden"}`}
       onClick={() => setShowDialogBox(false)}
       >
           <div className='modal-content `modal bg-gray-600/50 p-4 rounded backdrop-blur-sm}`'
