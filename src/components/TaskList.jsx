@@ -8,30 +8,34 @@ import { useTodo } from '../hooks/useTodo';
 
 function TaskList() {
     const [showDialogBox, setShowDialogBox] = useState(false);
-    const {tasks, addTask} = useTodo()
+    const {tasks, addTask, deleteTask} = useTodo()
     console.log(tasks)
 
   return (
     <>
-
-      {!tasks ? 
-        <div>
-          <p>No todos to display</p>
+      <div className='relative h-full'>
+        {tasks.length === 0 ?
+          <div className='flex justify-center items-center mt-8'>
+            <p className='text-xl '>No todos to display</p>
+          </div>
+          :
+          <div className='max-w-screen max-h-[70vh] overflow-y-auto'>
+            {tasks.map((task) => {
+              return (
+                <div className=''>
+                  <TaskItem deleteTask={deleteTask} task={task} />
+                </div>
+              )
+            })}
+          </div>
+        }
+        <div className='absolute bottom-10 w-full'>
+          <button
+          onClick={() => setShowDialogBox(true)}
+          className='btn hoverBase w-1/2 bg-amber-200 '
+          >Add Task</button>
+          <AddTaskDialogBox addTask={addTask} showDialogBox={showDialogBox} setShowDialogBox={setShowDialogBox}/>
         </div>
-        :
-        <div>
-          {tasks.map((task) => {
-            return <TaskItem task={task} />
-          })}
-        </div>
-      }
-      <div className='max-w-screen min-h-screen bg-transparent'>
-        <button 
-        onClick={() => setShowDialogBox(true)}
-        className='btn hoverBase'
-        >Add Task</button>
-
-        <AddTaskDialogBox addTask={addTask} showDialogBox={showDialogBox} setShowDialogBox={setShowDialogBox}/>
       </div>
     </>
   )
