@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import TaskList from './TaskList';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FiCheckSquare } from "react-icons/fi";
+import TaskDetails from './TaskDetails';
 
 
 function TodoApp() {
@@ -22,7 +23,6 @@ function TodoApp() {
           </div>
         </header>
 
-
         <div className='flex flex-1 items-center overflow-hidden'>
           {/* category */}
         <div className='flex-1 border-r border-gray-300 px-2 h-full '>
@@ -36,7 +36,8 @@ function TodoApp() {
 
         {/* todoUpdate */}
         <div className='flex-1 border-r border-gray-300 px-2 h-full '>
-          Todo Update
+          {/* Todo Update */}
+          <TaskDetails />
         </div>
         </div>
       </div>
