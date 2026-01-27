@@ -5,11 +5,12 @@ import React, { useState } from 'react'
 import AddTaskDialogBox from './AddTaskDialogBox'
 import TaskItem from './TaskItem';
 import { useTodo } from '../hooks/useTodo';
+import useTodoContext from '../context/TodoContext';
 
 function TaskList() {
     const [showDialogBox, setShowDialogBox] = useState(false);
-    const {tasks, addTask, deleteTask} = useTodo()
-    console.log(tasks)
+    const {tasks, addTask} = useTodoContext();
+    // console.log(tasks)
 
   return (
     <>
@@ -23,7 +24,7 @@ function TaskList() {
             {tasks.map((task) => {
               return (
                 <div className=''>
-                  <TaskItem deleteTask={deleteTask} task={task} />
+                  <TaskItem task={task} />
                 </div>
               )
             })}

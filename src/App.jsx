@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import TaskList from './components/TaskList'
 import TodoApp from './components/TodoApp'
+import { TodoProvider } from './context/TodoContext'
 
 function App() {
 
@@ -11,7 +12,9 @@ function App() {
     <>
       {/* <div>hello</div> */}
       {/* <TaskList /> */}
-      <TodoApp />
+      <TodoProvider>
+        <TodoApp />
+      </TodoProvider>
     </>
   )
 }
