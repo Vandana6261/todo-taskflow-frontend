@@ -4,7 +4,7 @@ function TaskDetails() {
   return (
     <>
       <div>
-        
+        Todo update
       </div>
     </>
   )
