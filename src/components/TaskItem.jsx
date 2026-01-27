@@ -3,17 +3,15 @@ import { useTodo } from '../hooks/useTodo'
 import useTodoContext from '../context/TodoContext'
 
 function TaskItem({task}) {
-  const { deleteTask } = useTodoContext()
-  // console.log(deleteTask);
-  // console.log(task)
+  const { deleteTask, selectId, setSelectId} = useTodoContext()
 
     const isCompleted = task.status === "completed"
+    const [showDetails, setShowDetails] = useState(false);
 
-    const [showDetails, setShowDetails] = useState( )
   return (
     <>
       <div tabIndex={0} className='py-1 px-4 border border-gray-300 rounded mb-4 hover:border-gray-400 focus:border-blue-700 '
-      // onClick={}
+      onClick={() => setSelectId(task.id)}
       >
         <div className='flex flex-col gap-4 mt-1 border border-gray-300 rounded-md p-2'>
             <div className='flex-1 flex gap-4'>

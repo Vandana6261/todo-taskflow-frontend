@@ -35,7 +35,7 @@ function TodoApp() {
         </div>
 
         {/* todoUpdate */}
-        <div className='flex-1 border-r border-gray-300 px-2 h-full '>
+        <div className='flex-1 h-full '>
           {/* Todo Update */}
           <TaskDetails />
         </div>
