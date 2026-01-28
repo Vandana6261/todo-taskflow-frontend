@@ -23,7 +23,7 @@ function TaskList() {
           <div className='max-w-screen max-h-[70vh] overflow-y-auto'>
             {tasks.map((task) => {
               return (
-                <div className=''>
+                <div key={task.id} className=''>
                   <TaskItem task={task} />
                 </div>
               )
