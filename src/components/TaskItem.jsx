@@ -33,11 +33,11 @@ function TaskItem({task}) {
               </div>
             </div>
         </div>
-        <div className='hoverBase btn w-fit m-2' 
+        {/* <div className='hoverBase btn w-fit m-2' 
         onClick={() => deleteTask(task.id)}
         >
           Delete
-        </div>
+        </div> */}
       </div>
     </>
   )
