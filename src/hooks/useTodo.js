@@ -40,6 +40,7 @@ import { useState } from "react";
   export function useTodo() {
 
     const [tasks, setTasks] = useState(defaultTask)
+    const [selectId, setSelectId] = useState(null);
     
     const addTask = (task) => {
       let newTask = {
@@ -54,14 +55,22 @@ import { useState } from "react";
     // console.log(tasks)
 
     const deleteTask = (taskId) => {
+      console.log("Delete called")
       let newTasks = tasks.filter(item => item.id !== taskId);
       setTasks(newTasks)
       console.log("Task Deleted")
     }
+
+    const updateTask = (task) => {
+      let newTasks = task.map()
+    }
     return {
       addTask,
       tasks,
-      deleteTask
+      deleteTask,
+      updateTask,
+      selectId, setSelectId,
+      
     };
   }
 
