@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { useTodo } from '../hooks/useTodo'
 import useTodoContext from '../context/TodoContext'
+import TaskDetails from './TaskDetails'
 
 function TaskItem({task}) {
   const { deleteTask, selectId, setSelectId} = useTodoContext()
+  const [isUpdate, setIsUpdate] = useState(false);
 
     const isCompleted = task.status === "completed"
     const [showDetails, setShowDetails] = useState(false);
@@ -33,11 +35,22 @@ function TaskItem({task}) {
               </div>
             </div>
         </div>
-        {/* <div className='hoverBase btn w-fit m-2' 
-        onClick={() => deleteTask(task.id)}
-        >
-          Delete
-        </div> */}
+        <div className='flex '>
+          <div className='hoverBase btn border-gray-500 w-fit m-2'
+          onClick={() => deleteTask(task.id)}
+          >
+            Delete
+          </div>
+          <div className='hoverBase btn border-gray-500 w-fit m-2'
+          onClick={() => setIsUpdate(!isUpdate)}
+          >
+            Update
+          </div>
+        </div>
+      </div>  
+
+      <div>
+        {isUpdate ? <TaskDetails isUpdate={isUpdate} setIsUpdate={setIsUpdate}/> : ""}
       </div>
     </>
   )
