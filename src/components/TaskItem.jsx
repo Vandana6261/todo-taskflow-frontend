@@ -10,10 +10,19 @@ function TaskItem({task}) {
     const isCompleted = task.status === "completed"
     const [showDetails, setShowDetails] = useState(false);
 
+  const handleUpdate = () => {
+    setIsUpdate(!isUpdate)
+    setSelectId(task.id)
+  }
+
+  const handleDelete = () => {
+    const isConfirmed = window.confirm("Are you sure you want to delete this todo")
+    if(isConfirmed) 
+      deleteTask(task.id)
+  }
   return (
     <>
       <div tabIndex={0} className='py-1 px-4 border border-gray-300 rounded mb-4 hover:border-gray-400 focus:border-blue-700 '
-      onClick={() => setSelectId(task.id)}
       >
         <div className='flex flex-col gap-4 mt-1 border border-gray-300 rounded-md p-2'>
             <div className='flex-1 flex gap-4'>
@@ -25,24 +34,23 @@ function TaskItem({task}) {
                 <p>{task.description}</p>
                 <div >
                   {task.category && <p>{task.category}</p>}
-                  {/* {task.dueDate && <p>{task.dueDate}</p>} */}
-                  {/* {console.log(typeof task.dueDate)} */}
                   {task.status && <p>{task.status}</p>}
+                  {task.dueDate && <p>{task.dueDate}</p>}
                 </div>
               </div>
               <div className='ml-auto'>
-                flag
+                flag  
               </div>
             </div>
         </div>
         <div className='flex '>
           <div className='hoverBase btn border-gray-500 w-fit m-2'
-          onClick={() => deleteTask(task.id)}
+          onClick={() => handleDelete()}
           >
             Delete
           </div>
           <div className='hoverBase btn border-gray-500 w-fit m-2'
-          onClick={() => setIsUpdate(!isUpdate)}
+          onClick={() => handleUpdate()}
           >
             Update
           </div>
