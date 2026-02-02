@@ -11,7 +11,7 @@ import { useState } from "react";
       priority: "high",
       status: "pending",
       catagoryId: "1",
-      dueData: new Date(),
+      dueDate: "2026-02-01",
       createdAt: new Date(Date.now() - 86400000), // yesterday date
     },
     {
@@ -21,7 +21,6 @@ import { useState } from "react";
       priority: "medium",
       status: "in-progress",
       categoryId: "3",
-      dueDate: new Date(Date.now() + 86400000),
       createdAt: new Date(Date.now() - 172800000),
     },
     {
@@ -48,22 +47,26 @@ import { useState } from "react";
         id: generateId(),
         createdAt: new Date().toLocaleDateString()
       }
-      // console.log(newTask, 49)
-      // console.log("add Task called")
       setTasks(prev => [...prev, newTask]);
     }
     // console.log(tasks)
 
     const deleteTask = (taskId) => {
-      console.log("Delete called")
       let newTasks = tasks.filter(item => item.id !== taskId);
       setTasks(newTasks)
-      console.log("Task Deleted")
     }
 
     const updateTask = (task) => {
-      let newTasks = task.map()
+      console.log(task)
+      let newTasks = tasks.map(eachTask => {
+        if(eachTask.id === task.id) {
+          return {...task}
+        } 
+        else return eachTask;
+      })
+      setTasks(newTasks);
     }
+
     return {
       addTask,
       tasks,
