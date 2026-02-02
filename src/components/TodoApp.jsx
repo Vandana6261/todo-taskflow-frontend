@@ -9,7 +9,7 @@ function TodoApp() {
   const [showCategory, setShowCategory] = useState(false)
   return (
     <>
-      <div className='max-w-screen h-screen flex flex-col bg-blue-700/30 '>
+      <div className='max-w-screen h-screen flex flex-col bg-[#ebf6f8] '>
         {/* header */}
         <header className='flex justify-start items-center h-auto p-4 border-b border-gray-300 gap-8'>
           <span className='text-2xl'>

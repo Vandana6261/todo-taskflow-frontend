@@ -12,7 +12,7 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox, addTask}) {
     // const {addTask} = useTodo();
 
 
-
+    
 
     const handleSubmit = (e) => {
         if(!title || ! description || !priority || !status || !category || !dueDate) {
@@ -123,7 +123,10 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox, addTask}) {
                         <input 
                             type="date" id='date' name='date'
                             value={dueDate}
-                            onChange={(e) => setDueDate(e.target.value)}
+                            onChange={(e) => {
+                                setDueDate(e.target.value)
+                                // console.log(task)
+                            }}
                         className='inputBase'
                         />
                     </div>
