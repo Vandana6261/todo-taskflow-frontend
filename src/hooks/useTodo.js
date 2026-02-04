@@ -12,6 +12,7 @@ import { useState } from "react";
       status: "pending",
       catagoryId: "1",
       dueDate: "2026-02-01",
+      isCompleted: false,
       createdAt: new Date(Date.now() - 86400000), // yesterday date
     },
     {
@@ -21,6 +22,7 @@ import { useState } from "react";
       priority: "medium",
       status: "in-progress",
       categoryId: "3",
+      isCompleted: true,
       createdAt: new Date(Date.now() - 172800000),
     },
     {
@@ -29,6 +31,7 @@ import { useState } from "react";
       priority: "low",
       status: "completed",
       categoryId: "2",
+      isCompleted: true,
       createdAt: new Date(Date.now() - 259200000),
     },
   ];
@@ -45,6 +48,7 @@ import { useState } from "react";
       let newTask = {
         ...task,
         id: generateId(),
+        isCompleted: false,
         createdAt: new Date().toLocaleDateString()
       }
       setTasks(prev => [...prev, newTask]);
@@ -57,7 +61,6 @@ import { useState } from "react";
     }
 
     const updateTask = (task) => {
-      console.log(task)
       let newTasks = tasks.map(eachTask => {
         if(eachTask.id === task.id) {
           return {...task}
