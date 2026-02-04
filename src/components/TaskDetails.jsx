@@ -20,9 +20,7 @@ function TaskDetails({setIsUpdate, isUpdate}) {
   }
 
   const handleUpdate = () => {
-    console.log("Update is clicked")
     updateTask(updatedData);
-    console.log("q24")
     setIsUpdate(!isUpdate)
   }
 
