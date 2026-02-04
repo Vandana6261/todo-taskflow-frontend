@@ -11,6 +11,7 @@ function TaskList() {
     const [showDialogBox, setShowDialogBox] = useState(false);
     const {tasks, addTask} = useTodoContext();
     // console.log(tasks)
+    const [active, setActive] = useState("");
 
   return (
     <>
@@ -23,7 +24,9 @@ function TaskList() {
           <div className='max-w-screen max-h-[70vh] overflow-y-auto'>
             {tasks.map((task) => {
               return (
-                <div key={task.id} className=''>
+                <div key={task.id} tabIndex={0} className={` ${active === task.id ? "onClickEffect transitionEffect" : ""}`}
+                onClick={() => {setActive(task.id)}} 
+                >
                   <TaskItem task={task} />
                 </div>
               )
