@@ -10,7 +10,6 @@ import useTodoContext from '../context/TodoContext';
 function TaskList() {
     const [showDialogBox, setShowDialogBox] = useState(false);
     const {tasks, addTask} = useTodoContext();
-    // console.log(tasks)
     const [active, setActive] = useState("");
 
   return (
