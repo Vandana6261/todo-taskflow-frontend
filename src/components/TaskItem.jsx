@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useTodo } from '../hooks/useTodo'
 import useTodoContext from '../context/TodoContext'
 import TaskDetails from './TaskDetails'
+import { createPortal } from 'react-dom'
 
 function TaskItem({task}) {
   const { deleteTask, updateTask, setSelectId} = useTodoContext()
@@ -71,7 +72,9 @@ function TaskItem({task}) {
       </div>  
 
       <div className=''>
-        {isUpdate ? <TaskDetails isUpdate={isUpdate} setIsUpdate={setIsUpdate}/> : ""}
+        {createPortal (
+          isUpdate ? <TaskDetails isUpdate={isUpdate} setIsUpdate={setIsUpdate}/> : "", document.body
+        )}
       </div>
     </>
   )
