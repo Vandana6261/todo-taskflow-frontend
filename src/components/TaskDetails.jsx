@@ -35,8 +35,8 @@ function TaskDetails({setIsUpdate, isUpdate}) {
 
   return (
     <>
-      <div className='min-h-screen min-w-screen fixed backdrop-blur-sm flex justify-center items-center top-0 left-0 z-9999'>
-        {/* <div>Hello</div> */}
+      <div className='min-w-screen min-h-screen fixed top-0 left-0 backdrop-blur-sm flex justify-center items-center z-9999'>
+
           <div className='flex flex-col gap-4 bg-blue-900/25 min-h-full rounded-xl p-4 '>
             {/* 1st part */}
             <div className='flex-1 border-b border-gray-300 rounded px-4 py-2 flex justify-between'>
@@ -49,6 +49,7 @@ function TaskDetails({setIsUpdate, isUpdate}) {
             {/* 2nd part */}
             <div className='flex-3 max-h-[70vh] overflow-y-auto border-b border-gray-300 '>
               <div className='flex flex-col gap-2 '>
+
                 <div className='mx-2'>
                   <label 
                   className='heading4 ' 
@@ -96,6 +97,7 @@ function TaskDetails({setIsUpdate, isUpdate}) {
                     </select>
                   </p>
                 </div>
+
                 <div className='mx-2'>
                   <label 
                   className='heading4 '
@@ -115,6 +117,7 @@ function TaskDetails({setIsUpdate, isUpdate}) {
                     </select>
                   </p>
                 </div>
+
                 <div className='mx-2'>
                   <label 
                   className='heading4'
@@ -134,16 +137,17 @@ function TaskDetails({setIsUpdate, isUpdate}) {
                     </select>
                   </p>
                 </div>
+
                 <div className='mx-2'>
                   <label 
                   className='heading4 '
-                  htmlFor='date'
+                  htmlFor='dueDate'
                   >
                     Due Date:
                     </label>
                   <p>
                     <input 
-                      type="date" id='date' name='date'
+                      type="date" id='date' name='dueDate'
                       value={updatedData.dueDate}
                       onChange={(e) => handleChange(e)}
                       className='inputBase text-sm '
