@@ -10,7 +10,7 @@ import { useState } from "react";
         "Go through the Q1 project proposal and provide feedback to the team.",
       priority: "high",
       status: "pending",
-      catagoryId: "1",
+      category: "Work",
       dueDate: "2026-02-01",
       isCompleted: false,
       createdAt: new Date(Date.now() - 86400000), // yesterday date
@@ -20,8 +20,8 @@ import { useState } from "react";
       title: "Buy groceries",
       description: "Milk, eggs, bread, vegetables",
       priority: "medium",
-      status: "in-progress",
-      categoryId: "3",
+      status: "Inprogress",
+      category: "Personal",
       isCompleted: true,
       createdAt: new Date(Date.now() - 172800000),
     },
@@ -29,8 +29,8 @@ import { useState } from "react";
       id: "3",
       title: "Morning workout",
       priority: "low",
-      status: "completed",
-      categoryId: "2",
+      status: "complete",
+      category: "Shopping",
       isCompleted: true,
       createdAt: new Date(Date.now() - 259200000),
     },
@@ -38,13 +38,16 @@ import { useState } from "react";
 
   
   const generateId = () => Math.random().toString(36).substring(2, 9);
+  // const category = 
   
   export function useTodo() {
 
     const [tasks, setTasks] = useState(defaultTask)
+    const [taskToBeShow, setTaskToBeShow] = useState(tasks)
     const [selectId, setSelectId] = useState(null);
     
     const addTask = (task) => {
+      // console.log(task);
       let newTask = {
         ...task,
         id: generateId(),
@@ -52,6 +55,7 @@ import { useState } from "react";
         createdAt: new Date().toLocaleDateString()
       }
       setTasks(prev => [...prev, newTask]);
+      setTaskToBeShow(prev => [...prev, newTask]);
     }
     // console.log(tasks)
 
@@ -68,6 +72,19 @@ import { useState } from "react";
         else return eachTask;
       })
       setTasks(newTasks);
+      setTaskToBeShow(newTasks)
+    }
+
+    const searchTask = (text) => {
+      let arr = tasks.filter(item => {
+        let title = item.title ? item.title.toLowerCase() : ""
+        let description = item.description ? item.description.toLowerCase() : ""
+        
+        if(title.includes(text) || description.includes(text)) {
+          return item;
+        }
+      })
+      setTaskToBeShow(arr);
     }
 
     return {
@@ -75,8 +92,9 @@ import { useState } from "react";
       tasks,
       deleteTask,
       updateTask,
+      searchTask,
       selectId, setSelectId,
-      
+      taskToBeShow,
     };
   }
 
