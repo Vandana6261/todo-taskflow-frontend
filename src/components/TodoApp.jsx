@@ -3,6 +3,7 @@ import TaskList from './TaskList';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FiCheckSquare } from "react-icons/fi";
 import TaskDetails from './TaskDetails';
+import Category from './Category';
 
 
 function TodoApp() {
@@ -15,7 +16,7 @@ function TodoApp() {
           <span className='text-2xl'>
             <GiHamburgerMenu />
           </span>
-          <div className='flex items-center gap-4 text-2xl '>
+          <div className='flex items-center gap-4 text-3xl '>
             <span>
               <FiCheckSquare />
             </span>
@@ -26,11 +27,11 @@ function TodoApp() {
         <div className='flex flex-1 items-center overflow-hidden'>
           {/* category */}
         <div className='flex-1 border-r border-gray-300 px-2 h-full '>
-          category
+          <Category />
         </div>
 
         {/* main */}
-        <div className='flex-3 border-r border-gray-300 px-2 h-full '>
+        <div className='flex-4 border-r border-gray-300 h-full '>
           <TaskList />
         </div>
        
