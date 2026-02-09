@@ -6,7 +6,7 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox, addTask}) {
     const [description, setDescription] = useState("")
     const [priority, setPriority] = useState("medium")
     const [status, setStatus] = useState("pending")
-    const [category, setCategory] = useState("abc")
+    const [category, setCategory] = useState("")
     const [dueDate, setDueDate] = useState("")
 
     // const {addTask} = useTodo();
@@ -107,7 +107,7 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox, addTask}) {
                     </div>
                     <div className='flex flex-col gap-3'>
                         <label htmlFor="category" className='text-md font-semibold'>Category:</label>
-                        <select 
+                        {/* <select 
                             name="category" id="category"
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
@@ -116,7 +116,23 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox, addTask}) {
                             <option value="work" >Work</option>
                             <option value="personal" >Personal</option>
                             <option value="shopping" >Shopping</option>
-                        </select>
+                        </select> */}
+
+                        {/* new try */}
+
+                        <input 
+                            type="text" 
+                            name="category" 
+                            id="category" 
+                            placeholder='work/presonal/shopping'
+                            value={category}
+                            onChange={(e) => {
+                                setCategory(e.target.value)
+                                console.log(e.target.value)
+                            }}
+                            className='inputBase px-2 py-1'
+                        />
+                        
                     </div>
                     <div className='flex flex-col gap-3'>
                         <label htmlFor="date" className='text-md font-semibold'>Due Date:</label>

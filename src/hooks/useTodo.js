@@ -38,13 +38,14 @@ import { useState } from "react";
 
   
   const generateId = () => Math.random().toString(36).substring(2, 9);
-  // const category = 
+  // const category = ["work", "personal", "shopping"]
   
   export function useTodo() {
 
     const [tasks, setTasks] = useState(defaultTask)
     const [taskToBeShow, setTaskToBeShow] = useState(tasks)
     const [selectId, setSelectId] = useState(null);
+    const [categories, setCategories] = useState(["work", "personal", "shopping"])
     
     const addTask = (task) => {
       // console.log(task);
@@ -54,8 +55,13 @@ import { useState } from "react";
         isCompleted: false,
         createdAt: new Date().toLocaleDateString()
       }
+      setCategories(prev => [...prev, newTask.category]);
       setTasks(prev => [...prev, newTask]);
       setTaskToBeShow(prev => [...prev, newTask]);
+      if(!categories.includes(task.category)) {
+        setCategories(prev => [...prev, task.category])
+
+      }
     }
     // console.log(tasks)
 
@@ -76,15 +82,38 @@ import { useState } from "react";
     }
 
     const searchTask = (text) => {
+      if(text == "") {
+        setTaskToBeShow(tasks);
+        return;
+      }
+      // console.log(categories)
       let arr = tasks.filter(item => {
         let title = item.title ? item.title.toLowerCase() : ""
         let description = item.description ? item.description.toLowerCase() : ""
-        
+
         if(title.includes(text) || description.includes(text)) {
           return item;
         }
       })
+      console.log(arr)
       setTaskToBeShow(arr);
+    }
+
+    const filterTask = (cat) => {
+      if(cat == 'all') {
+        setTaskToBeShow(tasks);
+        return;
+      }
+      let arr = tasks.filter(item => {
+        cat = cat.toLowerCase();
+        let category = item.category.toLowerCase()
+        // console.log(item)
+        if(category.includes(cat)) {
+          return item;
+        }
+      })
+      // console.log(arr)
+      setTaskToBeShow(arr)
     }
 
     return {
@@ -95,6 +124,8 @@ import { useState } from "react";
       searchTask,
       selectId, setSelectId,
       taskToBeShow,
+      categories,
+      filterTask
     };
   }
 

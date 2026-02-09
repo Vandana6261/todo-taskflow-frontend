@@ -5,7 +5,7 @@ import TaskDetails from './TaskDetails'
 import { createPortal } from 'react-dom'
 
 function TaskItem({task}) {
-  const { deleteTask, updateTask, setSelectId} = useTodoContext()
+  const { deleteTask, updateTask, setSelectId, categories} = useTodoContext()
   const [isUpdate, setIsUpdate] = useState(false);
   const [isCompleted, setIsCompleted] = useState(task.isCompleted);
 
@@ -30,6 +30,7 @@ function TaskItem({task}) {
       <div tabIndex={0} className={`py-1 px-4 border-b border-t border-gray-300 rounded mb-4 hover:border-gray-400 `}
       onClick={() => setSelectId(task.id)}
       >
+        {/* task title, description, etc. */}
         <div className={`flex flex-col mt-1  rounded-md p-2 ${isCompleted ? "line-through text-gray-400" : ""}`}>
             <div className='flex-1 flex gap-4'>
               <div className=''>
@@ -43,7 +44,7 @@ function TaskItem({task}) {
                 }}
                 />
               </div>
-              <div className='flex flex-col gap-1 '>
+              <div className='flex flex-col '>
                 <h2>{task.title}</h2>
                 <p>{task.description}</p>
                 <div className='flex gap-4 items-center'>
@@ -56,6 +57,8 @@ function TaskItem({task}) {
                 flag  
               </div>
             </div>
+
+        </div>
 
         {/* buttn delete and update */}
         <div className='flex '>
@@ -70,7 +73,6 @@ function TaskItem({task}) {
           >
             Update
           </button>
-        </div>
         </div>
       </div>  
       
