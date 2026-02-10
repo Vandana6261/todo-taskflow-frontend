@@ -32,7 +32,6 @@ function Category() {
           </div>
           {categories.map((item, index) => {
             const color = colors[index % colors.length]
-            console.log(color)
             return (
               <div
                 key={index}
