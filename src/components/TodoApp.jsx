@@ -5,6 +5,7 @@ import { FiCheckSquare } from "react-icons/fi";
 import TaskDetails from './TaskDetails';
 import Category from './Category';
 
+// console.log("TodoApp rendered")
 
 function TodoApp() {
   const [showCategory, setShowCategory] = useState(false)

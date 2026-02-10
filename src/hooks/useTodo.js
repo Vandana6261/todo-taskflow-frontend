@@ -38,7 +38,6 @@ import { useState } from "react";
 
   
   const generateId = () => Math.random().toString(36).substring(2, 9);
-  // const category = ["work", "personal", "shopping"]
   
   export function useTodo() {
 
@@ -55,12 +54,10 @@ import { useState } from "react";
         isCompleted: false,
         createdAt: new Date().toLocaleDateString()
       }
-      setCategories(prev => [...prev, newTask.category]);
       setTasks(prev => [...prev, newTask]);
       setTaskToBeShow(prev => [...prev, newTask]);
       if(!categories.includes(task.category)) {
         setCategories(prev => [...prev, task.category])
-
       }
     }
     // console.log(tasks)

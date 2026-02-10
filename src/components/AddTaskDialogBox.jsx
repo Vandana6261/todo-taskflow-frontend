@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import { useTodo } from '../hooks/useTodo'
+import useTodoContext from '../context/TodoContext'
 
-function AddTaskDialogBox({showDialogBox, setShowDialogBox, addTask}) {
+// console.log("SearchBar rendered")
+
+function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [priority, setPriority] = useState("medium")
@@ -9,17 +12,14 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox, addTask}) {
     const [category, setCategory] = useState("")
     const [dueDate, setDueDate] = useState("")
 
-    // const {addTask} = useTodo();
-
+    const { addTask } = useTodoContext()
 
     
-
     const handleSubmit = (e) => {
         if(!title || ! description || !priority || !status || !category || !dueDate) {
-            // alert("Please fill all of this")
-            // return;
+            alert("Please fill all of this")
+            return;
         }
-        // console.log(typeof dueDate)
         e.preventDefault();
         let task = {
             title,
@@ -30,8 +30,6 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox, addTask}) {
             dueDate,
         }
         addTask(task)
-        // console.log(task)
-        // console.log("Call the add Task")
 
         setTitle("");
         setDescription("");
@@ -107,19 +105,7 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox, addTask}) {
                     </div>
                     <div className='flex flex-col gap-3'>
                         <label htmlFor="category" className='text-md font-semibold'>Category:</label>
-                        {/* <select 
-                            name="category" id="category"
-                            value={category}
-                            onChange={(e) => setCategory(e.target.value)}
-                        className='inputBase'
-                        >
-                            <option value="work" >Work</option>
-                            <option value="personal" >Personal</option>
-                            <option value="shopping" >Shopping</option>
-                        </select> */}
-
                         {/* new try */}
-
                         <input 
                             type="text" 
                             name="category" 

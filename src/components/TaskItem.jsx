@@ -4,6 +4,8 @@ import useTodoContext from '../context/TodoContext'
 import TaskDetails from './TaskDetails'
 import { createPortal } from 'react-dom'
 
+console.log("TaskItem rendered")
+
 function TaskItem({task}) {
   const { deleteTask, updateTask, setSelectId, categories} = useTodoContext()
   const [isUpdate, setIsUpdate] = useState(false);

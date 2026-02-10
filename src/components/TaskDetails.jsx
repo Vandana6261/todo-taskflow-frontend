@@ -4,6 +4,8 @@ import { MdDeleteForever } from "react-icons/md";
 import { RxUpdate } from "react-icons/rx";
 import useTodoContext from '../context/TodoContext';
 
+// console.log("TaskDetails rendered")
+
 function TaskDetails({setIsUpdate, isUpdate}) {
   const {selectId, setSelectId, tasks, deleteTask, updateTask} = useTodoContext();
   const [updatedData, setUpdatedData] = useState({})

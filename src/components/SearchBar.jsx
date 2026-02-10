@@ -2,6 +2,8 @@ import React from 'react'
 import { IoIosSearch } from "react-icons/io";
 import useTodoContext from '../context/TodoContext';
 
+// console.log("SearchBar rendered")
+
 function SearchBar() {
     const {searchTask} = useTodoContext()
     const {  } = useTodoContext()

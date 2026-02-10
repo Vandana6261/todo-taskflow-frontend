@@ -7,6 +7,8 @@ import TaskItem from './TaskItem';
 import useTodoContext from '../context/TodoContext';
 import SearchBar from './SearchBar';
 
+// console.log("TaskList rendered")
+
 function TaskList() {
     const [showDialogBox, setShowDialogBox] = useState(false);
     const {addTask, taskToBeShow} = useTodoContext();
@@ -45,7 +47,7 @@ function TaskList() {
           onClick={() => setShowDialogBox(true)}
           className='btn hoverBase w-1/2 bg-amber-200 '
           >Add Task</button>
-          <AddTaskDialogBox addTask={addTask} showDialogBox={showDialogBox} setShowDialogBox={setShowDialogBox}/>
+          <AddTaskDialogBox showDialogBox={showDialogBox} setShowDialogBox={setShowDialogBox}/>
         </div>
       </div>
     </>
