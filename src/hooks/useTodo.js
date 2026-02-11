@@ -63,8 +63,11 @@ import { useState } from "react";
     // console.log(tasks)
 
     const deleteTask = (taskId) => {
+      console.log("Delete task called")
       let newTasks = tasks.filter(item => item.id !== taskId);
       setTasks(newTasks)
+      setTaskToBeShow(newTasks);
+      
     }
 
     const updateTask = (task) => {
