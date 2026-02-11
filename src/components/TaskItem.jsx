@@ -3,6 +3,7 @@ import { useTodo } from '../hooks/useTodo'
 import useTodoContext from '../context/TodoContext'
 import TaskDetails from './TaskDetails'
 import { createPortal } from 'react-dom'
+import Confirmation from './Confirmation'
 
 // console.log("TaskItem rendered")
 
@@ -10,6 +11,7 @@ function TaskItem({task}) {
   const { deleteTask, updateTask, setSelectId, categories} = useTodoContext()
   const [isUpdate, setIsUpdate] = useState(false);
   const [isCompleted, setIsCompleted] = useState(task.isCompleted);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
     // const isCompleted = task.status === "completed"
 
@@ -19,9 +21,10 @@ function TaskItem({task}) {
   }
 
   const handleDelete = () => {
-    const isConfirmed = window.confirm("Are you sure you want to delete this todo")
-    if(isConfirmed) 
-      deleteTask(task.id)
+    setConfirmDelete(!confirmDelete)
+    // const isConfirmed = window.confirm("Are you sure you want to delete this todo")
+    // if(isConfirmed) 
+    //   deleteTask(task.id)
   }
   
   useEffect(() =>{
@@ -37,7 +40,7 @@ function TaskItem({task}) {
             <div className='flex-1 flex gap-4'>
               <div className=''>
                 <input 
-                className='cursor-progress'
+                className='cursor-pointer'
                 type="checkbox"  id='checkbox' name='checkbox' checked={isCompleted}
                 onChange={(e) => {
                   // e.stopPropagation()
@@ -82,6 +85,13 @@ function TaskItem({task}) {
       <div className=''>
         {createPortal (
           isUpdate ? <TaskDetails isUpdate={isUpdate} setIsUpdate={setIsUpdate}/> : "", document.body
+        )}
+      </div>
+
+      {/* confirmation (delete) */}
+      <div>
+        {createPortal (
+          confirmDelete ? <Confirmation taskId={task.id} setConfirmDelete={setConfirmDelete}/> : "", document.body
         )}
       </div>
     </>

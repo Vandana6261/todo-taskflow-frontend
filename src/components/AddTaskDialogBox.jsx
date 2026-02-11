@@ -40,10 +40,10 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
     }
   return (
     <>
-      <div className={`min-w-screen min-h-screen fixed top-0 left-0 flex justify-center items-center backdrop-blur-lg z-99 ${showDialogBox ? "flex" : "hidden"}`}
+      <div className={`min-w-screen min-h-screen fixed top-0 left-0 flex justify-center items-center backdrop-blur-lg ${showDialogBox ? "flex" : "hidden"}`}
       onClick={() => setShowDialogBox(false)}
       >
-          <div className='modal-content `modal bg-gray-600/50 p-4 rounded backdrop-blur-sm}`'
+          <div className='modal-content modal bg-gray-600/50 p-4 rounded backdrop-blur-sm}`'
             onClick={(e) => e.stopPropagation()}
           >
               <h2 className='text-2xl text-center'>Create Task</h2>
@@ -114,7 +114,6 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
                             value={category}
                             onChange={(e) => {
                                 setCategory(e.target.value)
-                                console.log(e.target.value)
                             }}
                             className='inputBase px-2 py-1'
                         />

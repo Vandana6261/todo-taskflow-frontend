@@ -37,9 +37,13 @@ function TaskDetails({setIsUpdate, isUpdate}) {
 
   return (
     <>
-      <div className='min-w-screen min-h-screen fixed top-0 left-0 backdrop-blur-sm flex justify-center items-center z-9999'>
+      <div className='min-w-screen min-h-screen fixed top-0 left-0 backdrop-blur-sm flex justify-center items-center z-9999'
+      onClick={() => setIsUpdate(!isUpdate)}
+      >
 
-          <div className='flex flex-col gap-4 bg-blue-900/25 min-h-full rounded-xl p-4 '>
+          <div className='flex flex-col gap-4 bg-blue-900/25 min-h-full rounded-xl p-4 '
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* 1st part */}
             <div className='flex-1 border-b border-gray-300 rounded px-4 py-2 flex justify-between'>
               <p>Task Details</p>
