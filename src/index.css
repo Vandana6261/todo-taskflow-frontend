@@ -3,6 +3,15 @@
 @tailwind components;
 @tailwind utilities; */
 
+@theme {
+    --color-primary-theme: #F0F2F7;
+    --color-secondary-theme: #1E3A8A40;
+    --color-btn-color: #456fa7c5;
+    --color-delete-color: #dd4545de;
+    --color-update-color: #1d6b16ce;
+    --color-modal-color: #1E3A8A40;
+}
+
 @layer components {
     .inputBase {
         @apply px-0 py-1 w-full border rounded border-gray-800/50 focus:outline-0 focus:ring focus:ring-amber-500 ring-offset-1 focus:shadow-[0_10px_10px_rgba(0,0,0,0.2)];

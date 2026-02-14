@@ -58,21 +58,21 @@ function TaskItem({task}) {
                   {task.dueDate && <small>{task.dueDate} dueDate</small>}
                 </div>
               </div>
-              <div className='ml-auto'>
+              {/* <div className='ml-auto'>
                 flag  
-              </div>
+              </div> */}
             </div>
 
         </div>
 
-        {/* buttn delete and update */}
+        {/* button delete and update */}
         <div className='flex '>
-          <button className='hoverBase btn border-gray-600 w-fit m-2 bg-red-600 text-white'
+          <button className='hoverBase btn border-gray-600 w-fit m-2 bg-delete-color text-white'
           onClick={() => handleDelete()}
           >
             Delete
           </button>
-          <button className={`hoverBase btn border-gray-600 w-fit m-2 bg-green-900 text-white ${isCompleted ? "line-through text-gray-400 border-gra-300 " : ""}`}
+          <button className={`hoverBase btn border-gray-600 w-fit m-2 bg-update-color text-white ${isCompleted ? "line-through text-gray-400 border-gra-300 " : ""}`}
           onClick={() => handleUpdate()}
           disabled={isCompleted}
           >

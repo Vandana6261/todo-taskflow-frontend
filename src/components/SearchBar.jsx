@@ -18,7 +18,7 @@ function SearchBar() {
     <>
       <div className=''>
         <form>
-            <div tabIndex={0} className=' w-[30%] border border-gray-400 rounded flex items-center gap-2 px-2 focus-within:border focus-within:border-red-400 '>
+            <div tabIndex={0} className='w-[80%]  md:w-[60%] border border-gray-400 rounded flex items-center gap-2 px-2 focus-within:border focus-within:border-blue-800/50'>
                 <span>
                     <IoIosSearch />
                 </span>

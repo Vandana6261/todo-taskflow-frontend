@@ -26,28 +26,19 @@ function TaskDetails({setIsUpdate, isUpdate}) {
     setIsUpdate(!isUpdate)
   }
 
-  const handleDelete = (id) => {
-    const isConfirmed = window.confirm("Are you sure you want to delete?");
-    if(isConfirmed) {
-      deleteTask(id);
-      // alert("Todo deleted successfully");
-    }
-    return;
-  }
-
   return (
     <>
-      <div className='min-w-screen min-h-screen fixed top-0 left-0 backdrop-blur-sm flex justify-center items-center z-9999'
+      <div className='min-w-screen min-h-screen fixed top-0 left-0 backdrop-blur-sm flex justify-center items-center'
       onClick={() => setIsUpdate(!isUpdate)}
       >
 
-          <div className='flex flex-col gap-4 bg-blue-900/25 min-h-full rounded-xl p-4 '
+          <div className='flex flex-col gap-4 bg-modal-color min-h-full w-[90vw] sm:w-[70vw] md:w-[40vw] rounded-xl p-1 sm:p-4 '
             onClick={(e) => e.stopPropagation()}
           >
             {/* 1st part */}
             <div className='flex-1 border-b border-gray-300 rounded px-4 py-2 flex justify-between'>
               <p>Task Details</p>
-              <span className='border h-8 w-8 flex justify-center items-center rounded-[100%] bg-gray-300 cursor-pointer'
+              <span className='border h-8 w-8 flex justify-center items-center rounded-[100%]  cursor-pointer'
                 onClick={() => setIsUpdate(!isUpdate)}
               >X</span>
             </div>
@@ -159,18 +150,16 @@ function TaskDetails({setIsUpdate, isUpdate}) {
                       className='inputBase text-sm '
                   />
                   </p>
-
-                  <p className='text-sm '>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
                 </div>
                 <div>
-                  <p>Created At</p>
+                  <p>Created At {updatedData.dueDate}.....Pending</p>
                 </div>
               </div>
             </div>
 
             {/* 3rd part  */}
             <div className='flex-1 flex items-center justify-between gap-4 px-2 self-end '>
-              <button className='btn hoverBase flex items-center gap-2'
+              <button className='btn hoverBase bg-delete-color text-white flex items-center gap-2'
               onClick={() => setIsUpdate(!isUpdate)}
               >
                 <span>
@@ -181,16 +170,7 @@ function TaskDetails({setIsUpdate, isUpdate}) {
                 </span>
               </button>
               
-              <button className='btn hoverBase flex items-center gap-2'
-              onClick={() => handleDelete(updatedData.id)}
-              >
-                <span>
-                  <MdDeleteForever />
-                </span>
-                <span>Delete</span>
-              </button>
-              
-              <button className='btn hoverBase flex items-center gap-2'
+              <button className='btn hoverBase bg-update-color text-white flex items-center gap-2'
               onClick={() => handleUpdate()}
               >
                 <span>

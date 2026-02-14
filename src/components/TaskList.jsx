@@ -42,10 +42,10 @@ function TaskList() {
         </div>
 
 
-        <div className='absolute bottom-10 w-full'>
+        <div className='absolute w-full bottom-10 text-right pr-2'>
           <button
           onClick={() => setShowDialogBox(true)}
-          className='btn hoverBase w-1/2 bg-amber-200 '
+          className='btn hoverBase border-none w-1/2 py-2 font-bold bg-[#1e3b8acb] '
           >Add Task</button>
           <AddTaskDialogBox showDialogBox={showDialogBox} setShowDialogBox={setShowDialogBox}/>
         </div>

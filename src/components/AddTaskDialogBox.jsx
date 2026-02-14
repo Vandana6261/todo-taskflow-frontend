@@ -16,11 +16,11 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
 
     
     const handleSubmit = (e) => {
+        e.preventDefault();
         if(!title || ! description || !priority || !status || !category || !dueDate) {
             alert("Please fill all of this")
             return;
         }
-        e.preventDefault();
         let task = {
             title,
             description,
@@ -38,17 +38,24 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
         setCategory("abc");
         setDueDate("")
     }
+
+    const handleCancel = (e) => {
+        setShowDialogBox(false)
+    }
   return (
     <>
-      <div className={`min-w-screen min-h-screen fixed top-0 left-0 flex justify-center items-center backdrop-blur-lg ${showDialogBox ? "flex" : "hidden"}`}
-      onClick={() => setShowDialogBox(false)}
+      <div className={`min-w-screen min-h-screen fixed top-0 left-0 flex justify-center items-center backdrop-blur-sm ${showDialogBox ? "flex" : "hidden"} text-left`}
+      onClick={(e) => { setShowDialogBox(false) }}
       >
-          <div className='modal-content modal bg-gray-600/50 p-4 rounded backdrop-blur-sm}`'
-            onClick={(e) => e.stopPropagation()}
+          <div className='modal-content modal bg-modal-color p-4 rounded } min-h-full`'
+            onClick={(e) => {
+                e.stopPropagation()
+                console.log("child called")
+            }}
           >
               <h2 className='text-2xl text-center'>Create Task</h2>
               <form onSubmit={(e) => handleSubmit(e)}
-               className='flex flex-col gap-2' 
+               className='flex flex-col gap-2 max-h-[70vh] overflow-y-auto px-4 mt-2' 
                >
                 <div className='flex flex-col gap-1'>
                     <label htmlFor="title" className='text-md font-semibold'>Title:</label>
@@ -76,7 +83,7 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
                 </div>
 
 
-                <div className="dopdownSection grid grid-cols-2 gap-2">
+                <div className="dopdownSection grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <div className='flex flex-col gap-3'>
                         <label htmlFor="priority" className='text-md font-semibold'>Priority:</label>
                         <select 
@@ -132,17 +139,20 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
                         />
                     </div>
                 </div>
-                <div className='flex gap-3'>
+
+              </form>
+
+                <div className='flex gap-3 mt-2'>
                     <button 
-                        onClick={() => setShowDialogBox(false)}
-                        className='btn hoverBase'        
+                        type="button"
+                        onClick={(e) => handleCancel(e)}
+                        className='btn hoverBase bg-delete-color text-white'        
                     >Cancel</button>
                     <button 
-                        onClick={() => setShowDialogBox(false)}
-                        className='btn hoverBase'
+                        type='submit'
+                        className='btn hoverBase bg-update-color text-white'
                     >Create Task</button>
                 </div>
-              </form>
           </div>
       </div>
     </>
