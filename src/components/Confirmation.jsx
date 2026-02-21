@@ -1,7 +1,7 @@
 import React from 'react'
 import useTodoContext from '../context/TodoContext';
 
-function Confirmation({taskId, setConfirmDelete}) {
+function Confirmation({task, taskId, setConfirmDelete}) {
 
     const {deleteTask} = useTodoContext()
 
@@ -10,7 +10,7 @@ function Confirmation({taskId, setConfirmDelete}) {
     }
 
     const handleDelete = () => {
-        deleteTask(taskId);
+        deleteTask(taskId, {...task, isDeleted: true});
         setConfirmDelete(prev => !prev);
     }
   return (
