@@ -30,7 +30,13 @@ function Category() {
             <div className='rounded-full w-3 h-3 bg-blue-600'></div>
             <h2>All</h2>
           </div>
-          {categories.map((item, index) => {
+          {
+            categories.length == 0 ? 
+            <p>No category to desiplay</p>
+            :
+
+          // }
+          (categories.map((item, index) => {
             const color = colors[index % colors.length]
             return (
               <div
@@ -46,7 +52,8 @@ function Category() {
                 </div>
               </div>
             )
-          })}
+          }))
+        }
         </div>
       </div>
     </>

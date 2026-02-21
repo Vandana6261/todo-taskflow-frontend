@@ -29,9 +29,11 @@ function TaskList() {
             :
             <div className='max-w-screen max-h-[70vh] overflow-y-auto pt-2 '>
               {taskToBeShow.map((task) => {
+                // console.log(task._id)
+                if(!task.isDeleted)
                 return (
-                  <div key={task.id} tabIndex={0} className={` ${active === task.id ? "onClickEffect transitionEffect" : ""}`}
-                  onClick={() => {setActive(task.id)}}
+                  <div key={task._id} tabIndex={0} className={` ${active === task._id ? "onClickEffect transitionEffect" : ""}`}
+                  onClick={() => {setActive(task._id)}}
                   >
                     <TaskItem task={task} />
                   </div>

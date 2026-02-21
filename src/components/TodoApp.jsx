@@ -11,7 +11,7 @@ function TodoApp() {
   const [showCategory, setShowCategory] = useState(false)
   return (
     <>
-      <div className='max-w-screen h-screen flex flex-col bg-[#ebf6f8] '>
+      <div className='max-w-screen h-screen flex flex-col bg-[#e5ebf0c5]'>
         {/* header */}
         <header className='flex justify-start items-center h-auto p-4 border-b border-gray-300 gap-8'>
           <span className='text-2xl'>
@@ -27,16 +27,16 @@ function TodoApp() {
 
         <div className='flex flex-1 items-center overflow-hidden'>
           {/* category */}
-        <div className='flex-1 border-r border-gray-300 px-2 h-full '>
-          <Category />
+          <div className='flex-1 border-r border-gray-300 px-2 h-full '>
+            <Category />
+          </div>
+
+          {/* main */}
+          <div className='flex-4 border-r border-gray-300 h-full '>
+            <TaskList />
+          </div>
         </div>
 
-        {/* main */}
-        <div className='flex-4 border-r border-gray-300 h-full '>
-          <TaskList />
-        </div>
-       
-        </div>
       </div>
     </>
   )
