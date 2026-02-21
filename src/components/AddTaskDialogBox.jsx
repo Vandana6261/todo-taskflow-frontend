@@ -11,13 +11,15 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
     const [status, setStatus] = useState("pending")
     const [category, setCategory] = useState("")
     const [dueDate, setDueDate] = useState("")
-
+    const [dateError, setDateError] = useState("")
+    
     const { addTask } = useTodoContext()
-
+    
+    const today = new Date().toISOString().split("T")[0];
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(!title || ! description || !priority || !status || !category || !dueDate) {
+        if(!title || ! description || !priority || !status || !category || !dueDate ) {
             alert("Please fill all of this")
             return;
         }
@@ -51,6 +53,7 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
         setCategory("");
         setDueDate("")
     }
+
   return (
     <>
       <div className={`min-w-screen min-h-screen fixed top-0 left-0 flex justify-center items-center backdrop-blur-sm ${showDialogBox ? "flex" : "hidden"} text-left`}
@@ -72,12 +75,10 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
                         type="text" 
                         id='title' 
                         name='title' 
-                        pattern="^[A-Za-z]+$" 
                         placeholder='What needs to be done?'
                         value={title}
-                        // onChange={(e) => setTitle(e.target.value)}
                         onChange={(e) => {
-                            const value = e.target.value.replace(/[^A-Za-z]/g, "");
+                            const value = e.target.value.replace(/[^A-Za-z ]/g, "");
                             setTitle(value)
                         }}
                         className='inputBase px-2 py-1'
@@ -98,7 +99,7 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
                 </div>
 
 
-                <div className="dopdownSection grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div className="dropdownSection grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <div className='flex flex-col gap-3'>
                         <label htmlFor="priority" className='text-md font-semibold'>Priority:</label>
                         <select 
@@ -146,12 +147,22 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
                         <input 
                             type="date" id='date' name='date'
                             value={dueDate}
+                            min={today}
                             onChange={(e) => {
-                                setDueDate(e.target.value)
-                                // console.log(task)
+                                let date = e.target.value;
+                                if(date < today) {
+                                    setDateError("Please select a valid date")
+                                }
+                                else {
+                                    setDateError("")
+                                    setDueDate(e.target.value)
+                                }
+                                // console.log(e.target.value).toISOString()
                             }}
                         className='inputBase'
                         />
+
+                        {dateError && <p className='text-red-500'>{dateError}</p>}
                     </div>
                 </div>
 
