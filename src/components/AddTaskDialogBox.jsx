@@ -29,18 +29,27 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
             category,
             dueDate,
         }
+        // console.log(task)
         addTask(task)
 
         setTitle("");
         setDescription("");
         setPriority("medium");
         setStatus("pending");
-        setCategory("abc");
+        setCategory("");
         setDueDate("")
+
+        setShowDialogBox(false)
     }
 
     const handleCancel = (e) => {
         setShowDialogBox(false)
+        setTitle("");
+        setDescription("");
+        setPriority("medium");
+        setStatus("pending");
+        setCategory("");
+        setDueDate("")
     }
   return (
     <>
@@ -50,7 +59,7 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
           <div className='modal-content modal bg-modal-color p-4 rounded } min-h-full`'
             onClick={(e) => {
                 e.stopPropagation()
-                console.log("child called")
+                // console.log("child called")
             }}
           >
               <h2 className='text-2xl text-center'>Create Task</h2>
@@ -63,9 +72,14 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
                         type="text" 
                         id='title' 
                         name='title' 
+                        pattern="^[A-Za-z]+$" 
                         placeholder='What needs to be done?'
                         value={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        // onChange={(e) => setTitle(e.target.value)}
+                        onChange={(e) => {
+                            const value = e.target.value.replace(/[^A-Za-z]/g, "");
+                            setTitle(value)
+                        }}
                         className='inputBase px-2 py-1'
                     />
                 </div>
@@ -76,9 +90,10 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
                         name="description" 
                         id="description" 
                         placeholder='Add More Details.....'
+                        maxLength={300}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className='inputBase px-2 py-1'
+                        className='inputBase px-2 py-1 h-12 overflow-y-auto'
                     />
                 </div>
 
@@ -140,8 +155,6 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
                     </div>
                 </div>
 
-              </form>
-
                 <div className='flex gap-3 mt-2'>
                     <button 
                         type="button"
@@ -151,8 +164,11 @@ function AddTaskDialogBox({showDialogBox, setShowDialogBox}) {
                     <button 
                         type='submit'
                         className='btn hoverBase bg-update-color text-white'
+                        onClick={(e) => handleSubmit(e)}
                     >Create Task</button>
                 </div>
+              </form>
+
           </div>
       </div>
     </>
