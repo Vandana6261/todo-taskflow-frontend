@@ -8,32 +8,33 @@ import Confirmation from './Confirmation'
 // console.log("TaskItem rendered")
 
 function TaskItem({task}) {
-  const { deleteTask, updateTask, setSelectId, categories} = useTodoContext()
+  const {tasks, updateTask, setSelectId, selectId, categories} = useTodoContext()
   const [isUpdate, setIsUpdate] = useState(false);
   const [isCompleted, setIsCompleted] = useState(task.isCompleted);
   const [confirmDelete, setConfirmDelete] = useState(false);
+   const [updatedData, setUpdatedData] = useState({})
 
     // const isCompleted = task.status === "completed"
-
+  // console.log(task)
   const handleUpdate = () => {
+    setSelectId(task._id)
     setIsUpdate(!isUpdate)
-    setSelectId(task.id)
+    const taskToBeUpdated = tasks.find((eachTask) => eachTask._id === task._id);
+    setUpdatedData(taskToBeUpdated)
   }
 
   const handleDelete = () => {
     setConfirmDelete(!confirmDelete)
-    // const isConfirmed = window.confirm("Are you sure you want to delete this todo")
-    // if(isConfirmed) 
-    //   deleteTask(task.id)
   }
   
   useEffect(() =>{
-
+    // updateTask(selectId, {...task, isCompleted: true})
   }, [isCompleted])
+
   return (
     <>
       <div tabIndex={0} className={`py-1 px-4 border-b border-t border-gray-300 rounded mb-4 hover:border-gray-400 `}
-      onClick={() => setSelectId(task.id)}
+      onClick={() => setSelectId(task._id)}
       >
         {/* task title, description, etc. */}
         <div className={`flex flex-col mt-1  rounded-md p-2 ${isCompleted ? "line-through text-gray-400" : ""}`}>
@@ -43,8 +44,7 @@ function TaskItem({task}) {
                 className='cursor-pointer'
                 type="checkbox"  id='checkbox' name='checkbox' checked={isCompleted}
                 onChange={(e) => {
-                  // e.stopPropagation()
-                  updateTask({...task, isCompleted:e.target.checked})
+                  updateTask(selectId, {...task, isCompleted:e.target.checked})
                   setIsCompleted(e.target.checked)
                 }}
                 />
@@ -84,14 +84,14 @@ function TaskItem({task}) {
       {/* TaskDetails (update) */}
       <div className=''>
         {createPortal (
-          isUpdate ? <TaskDetails isUpdate={isUpdate} setIsUpdate={setIsUpdate}/> : "", document.body
+          isUpdate ? <TaskDetails isUpdate={isUpdate} setIsUpdate={setIsUpdate} updatedData={updatedData} setUpdatedData={setUpdatedData} /> : "", document.body
         )}
       </div>
 
       {/* confirmation (delete) */}
       <div>
         {createPortal (
-          confirmDelete ? <Confirmation taskId={task.id} setConfirmDelete={setConfirmDelete}/> : "", document.body
+          confirmDelete ? <Confirmation task={task} taskId={task._id} setConfirmDelete={setConfirmDelete}/> : "", document.body
         )}
       </div>
     </>

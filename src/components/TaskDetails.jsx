@@ -6,15 +6,8 @@ import useTodoContext from '../context/TodoContext';
 
 // console.log("TaskDetails rendered")
 
-function TaskDetails({setIsUpdate, isUpdate}) {
-  const {selectId, setSelectId, tasks, deleteTask, updateTask} = useTodoContext();
-  const [updatedData, setUpdatedData] = useState({})
-
-  useEffect(() => {
-    const task = tasks.find((eachTask) => eachTask.id === selectId);
-    setUpdatedData(task)
-  }, [selectId])
-  
+function TaskDetails({setIsUpdate, isUpdate, updatedData, setUpdatedData}) {
+  const {selectId, setSelectId, tasks, updateTask} = useTodoContext();
 
   const handleChange = (e) => {
     const {name, value} = e.target;
@@ -22,7 +15,7 @@ function TaskDetails({setIsUpdate, isUpdate}) {
   }
 
   const handleUpdate = () => {
-    updateTask(updatedData);
+    updateTask(selectId, updatedData);
     setIsUpdate(!isUpdate)
   }
 
@@ -55,7 +48,7 @@ function TaskDetails({setIsUpdate, isUpdate}) {
                   </label>
                   <input 
                   type="text" id='title' name='title'
-                  value={updatedData.title}
+                  value={updatedData?.title}
                   className='inputBase px-2 py-1 text-sm'
                   onChange={(e) => handleChange(e)}
                   />
@@ -68,7 +61,7 @@ function TaskDetails({setIsUpdate, isUpdate}) {
                     Description
                   </label>
                   <textarea name="description" id="description" 
-                  value={updatedData.description}
+                  value={updatedData?.description}
                   className='inputBase px-2 py-1 text-sm '
                   onChange={(e) => handleChange(e)}
                   rows={4}
@@ -84,7 +77,7 @@ function TaskDetails({setIsUpdate, isUpdate}) {
                   </label>
                   <p>
                     <select name="priority" id="priority" 
-                    value={updatedData.priority}
+                    value={updatedData?.priority}
                     className='inputBase text-sm '
                     onChange={(e) => handleChange(e)}
                     >
@@ -104,7 +97,7 @@ function TaskDetails({setIsUpdate, isUpdate}) {
                   </label>
                   <p>
                     <select name="status" id="status" 
-                    value={updatedData.status}
+                    value={updatedData?.status}
                     className='inputBase text-sm '
                     onChange={(e) => handleChange(e)}
                     >
@@ -124,7 +117,7 @@ function TaskDetails({setIsUpdate, isUpdate}) {
                     </label>
                   <p>
                     <select name="category" id="category" 
-                    value={updatedData.category}
+                    value={updatedData?.category}
                     className='inputBase text-sm '
                     onChange={(e) => handleChange(e)}
                     >
@@ -145,14 +138,14 @@ function TaskDetails({setIsUpdate, isUpdate}) {
                   <p>
                     <input 
                       type="date" id='date' name='dueDate'
-                      value={updatedData.dueDate}
+                      value={updatedData?.dueDate}
                       onChange={(e) => handleChange(e)}
                       className='inputBase text-sm '
                   />
                   </p>
                 </div>
                 <div>
-                  <p>Created At {updatedData.dueDate}.....Pending</p>
+                  <p>Created At {updatedData?.dueDate}.....Pending</p>
                 </div>
               </div>
             </div>
