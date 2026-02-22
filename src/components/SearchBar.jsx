@@ -37,7 +37,7 @@ function SearchBar() {
                     <IoIosSearch />
                 </span>
                 <input 
-                className='py-2 px-4 border-none focus:border-none focus:outline-none'
+                className='py-2 px-4 border-none focus:border-none focus:outline-none w-full'
                 type="text" placeholder='Search' 
                 // onChange={(e) => handleSearch(e)}
                 onKeyUp={(e) => handleSearch(e)}
