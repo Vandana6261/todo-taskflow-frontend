@@ -9,9 +9,8 @@ function SearchBar() {
     const {  } = useTodoContext()
 
     const handleSearch = (e) => {
-        let val = e.target.value.trim().toLowerCase();
-        // console.log(val)
-        searchTask(val.trim());
+      let val = e.target.value;
+      searchTask(val.trim())
     }
 
   return (
@@ -25,7 +24,8 @@ function SearchBar() {
                 <input 
                 className='py-2 px-4 border-none focus:border-none focus:outline-none'
                 type="text" placeholder='Search' 
-                onChange={(e) => handleSearch(e)}
+                // onChange={(e) => handleSearch(e)}
+                onKeyUp={(e) => handleSearch(e)}
                 />
             </div>
         </form>

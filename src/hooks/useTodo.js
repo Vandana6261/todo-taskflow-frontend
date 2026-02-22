@@ -111,22 +111,26 @@ import { useEffect, useState } from "react";
       }
     }
 
-    const searchTask = (text) => {
-      if(text == "") {
-        setTaskToBeShow(tasks);
-        return;
-      }
-      // console.log(categories)
-      let arr = tasks.filter(item => {
-        let title = item.title ? item.title.toLowerCase() : ""
-        let description = item.description ? item.description.toLowerCase() : ""
-
-        if(title.includes(text) || description.includes(text)) {
-          return item;
+    async function searchTask (keyword) {
+      try {
+        if(keyword === "") {
+          await loadTodo();
+          return;
         }
-      })
-      console.log(arr)
-      setTaskToBeShow(arr);
+        const response = await fetch(`http://localhost:5000/api/todo/${keyword}`)
+        if(!response.ok) {
+          console.log("Error response is not ok: ", response.status);
+          console.log(response);
+          return;
+        }
+        else {
+          const data = await response.json();
+          setTaskToBeShow(prev => [...data])
+        }
+      } catch (error) {
+        console.log("Error occured while searching task")
+        console.log(error.message)
+      }
     }
 
     const filterTask = (cat) => {
@@ -147,6 +151,7 @@ import { useEffect, useState } from "react";
     }
 
     return {
+      loadTodo,
       addTask,
       tasks,
       deleteTask,
@@ -155,7 +160,7 @@ import { useEffect, useState } from "react";
       selectId, setSelectId,
       taskToBeShow,
       categories,
-      filterTask
+      filterTask,
     };
   }
 

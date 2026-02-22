@@ -5,9 +5,13 @@ import useTodoContext from '../context/TodoContext';
 // console.log("Category rendered")
 
 function Category() {
-  const { categories, filterTask } = useTodoContext()
-
+  const { categories, filterTask, loadTodo } = useTodoContext()
+  
   const handleCat = (cat) => {
+    if(cat == "all") {
+      loadTodo()
+      return;
+    }
     filterTask(cat);
   }
 
