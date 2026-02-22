@@ -5,21 +5,27 @@ import useTodoContext from '../context/TodoContext';
 // console.log("SearchBar rendered")
 
 function SearchBar() {
-    const {searchTask} = useTodoContext()
-    const {  } = useTodoContext()
+    const {searchTask, loadTodo} = useTodoContext()
 
     const timerRef = useRef(null);
-    
-    let timerVal;
+
     const handleSearch = (e) => {
       let val = e.target.value;
-      clearTimeout(timerVal)
+      
+      if(timerRef.current) {
+        clearTimeout(timerRef.current)
+      }
+
       if(!val) {
+        setTimeout(() => {
+          loadTodo();
+        }, 500)
         return;
       }
-      timerVal = setTimeout(() => {
+
+      timerRef.current = setTimeout(() => {
         searchTask(val.trim());
-      }, 3000)
+      }, 2000)
     }
 
   return (

@@ -112,11 +112,8 @@ import { useEffect, useState } from "react";
     }
 
     async function searchTask (keyword) {
+      console.log("searchTaskCalled")
       try {
-        if(keyword === "") {
-          await loadTodo();
-          return;
-        }
         const response = await fetch(`http://localhost:5000/api/todo/${keyword}`)
         if(!response.ok) {
           console.log("Error response is not ok: ", response.status);
