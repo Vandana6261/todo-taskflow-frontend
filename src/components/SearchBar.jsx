@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { IoIosSearch } from "react-icons/io";
 import useTodoContext from '../context/TodoContext';
 
@@ -8,9 +8,18 @@ function SearchBar() {
     const {searchTask} = useTodoContext()
     const {  } = useTodoContext()
 
+    const timerRef = useRef(null);
+    
+    let timerVal;
     const handleSearch = (e) => {
       let val = e.target.value;
-      searchTask(val.trim())
+      clearTimeout(timerVal)
+      if(!val) {
+        return;
+      }
+      timerVal = setTimeout(() => {
+        searchTask(val.trim());
+      }, 3000)
     }
 
   return (
