@@ -8,7 +8,7 @@ import Confirmation from './Confirmation'
 // console.log("TaskItem rendered")
 
 function TaskItem({task}) {
-  const {tasks, updateTask, setSelectId, selectId, categories} = useTodoContext()
+  const {tasks, updateTask, setSelectId} = useTodoContext()
   const [isUpdate, setIsUpdate] = useState(false);
   const [isCompleted, setIsCompleted] = useState(task.isCompleted);
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -44,7 +44,8 @@ function TaskItem({task}) {
                 className='cursor-pointer'
                 type="checkbox"  id='checkbox' name='checkbox' checked={isCompleted}
                 onChange={(e) => {
-                  updateTask(selectId, {...task, isCompleted:e.target.checked})
+                  console.log(e.target.checked)
+                  updateTask(task._id, {...task, isCompleted:e.target.checked})
                   setIsCompleted(e.target.checked)
                 }}
                 />
