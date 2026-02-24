@@ -8,7 +8,8 @@ import { useEffect, useState } from "react";
     const [tasks, setTasks] = useState([])
     const [taskToBeShow, setTaskToBeShow] = useState([])
     const [selectId, setSelectId] = useState(null);
-    const [categories, setCategories] = useState([])
+    const [categories, setCategories] = useState(["Work", "Personal", "Shopping"])
+    // console.log(categories)
     
 
     async function loadTodo() {
@@ -23,7 +24,8 @@ import { useEffect, useState } from "react";
           const data = await response.json();
           setTasks(prev => [...data])
           setTaskToBeShow(prev => [...data])
-          setCategories(prev => data.map(todo => todo.category))
+          // console.log(data)
+          // setCategories(prev => [...prev, data.map(todo => todo.category)])
         }
       } catch (error) {
         console.log("Error occured while loading TODO");
@@ -157,6 +159,7 @@ import { useEffect, useState } from "react";
       selectId, setSelectId,
       taskToBeShow,
       categories,
+      setCategories,
       filterTask,
     };
   }
