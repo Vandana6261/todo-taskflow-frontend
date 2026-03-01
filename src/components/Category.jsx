@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaRegFolderOpen } from "react-icons/fa";
 import useTodoContext from '../context/TodoContext';
 import { FaPlus } from "react-icons/fa";
@@ -6,9 +6,10 @@ import { FaPlus } from "react-icons/fa";
 // console.log("Category rendered")
 
 function Category() {
-  const { categories, setCategories, filterTask, loadTodo } = useTodoContext()
+  const { loadTodo, categories, addCategory, setCategories, filterTask } = useTodoContext()
   const [isAddCat, setIsAddCat] = useState(false)
   const [catName, setCatName] = useState("")
+  const [error, setError] = useState("")
 
   const handleCat = (cat) => {
     if (cat == "all") {
@@ -17,16 +18,24 @@ function Category() {
     }
     filterTask(cat);
   }
-
+  
   const addCat = (cat) => {
-    setCategories(prev => [...prev, cat]);
-    setCatName("");
-    setIsAddCat(false);
+    let isFound = categories.map(item => item.id == cat);
+    // if(isFound) {
+    //     setError("Cat exists")
+    //     return;
+    //   }
+      setIsAddCat(false);
+    addCategory(cat);
   }
+
+  // useEffect(() => {
+
+  // }, [categories])
 
   return (
     <>
-      <div className='bg-red-200 min-h-[85vh] relative'>
+      <div className='min-h-[85vh] relative'>
         {/* heading */}
         <div className='flex items-center gap-2 text-xl '>
           <span className='text-blue-500'>
@@ -45,7 +54,7 @@ function Category() {
           </div>
           {
             categories.length == 0 ?
-              <p>No category to desiplay</p>
+              <p>No category to display</p>
               :
 
               // }
@@ -61,7 +70,7 @@ function Category() {
                       <div className={`rounded-full w-3 h-3 ${color}`}
 
                       ></div>
-                      <span>{item}</span>
+                      <span>{item.name}</span>
                     </div>
                   </div>
                 )
@@ -87,6 +96,7 @@ function Category() {
                   value={catName}
                   onChange={(e) => setCatName(e.target.value)}
                 />
+                {error && <p>{error}</p>}
                 <div className='flex items-center justify-around '>
                   <button className='btn hoverBase bg-update-color text-white w-24'
                     onClick={() => addCat(catName)}
@@ -105,7 +115,7 @@ function Category() {
           >
             <div className='bg-[#1e3b8acb] flex items-center hoverBase btn border-gray-600 gap-2 w-full'>
               <FaPlus />
-              <button className=''>Add Category</button>
+              <button className='' onTouchMove={() => console.log("ggh")}>Add Category</button>
             </div>
           </div>
         }

@@ -54,7 +54,8 @@ function TaskItem({task}) {
                 <h2>{task.title}</h2>
                 <p>{task.description}</p>
                 <div className='flex gap-4 items-center'>
-                  {task.category && <small className='bg-blue-400/60 w-fit rounded px-4 '>{task.category}</small>}
+                  {console.log(task.category)}
+                  {/* {task.category && <small className='bg-blue-400/60 w-fit rounded px-4 '>{task.category}</small>} */}
                   {task.status && <small className='bg-purple-500/40 w-fit rounded px-4 '>{task.status}</small>}
                   {task.dueDate && <small>{task.dueDate} dueDate</small>}
                 </div>

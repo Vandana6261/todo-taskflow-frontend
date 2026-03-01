@@ -22,7 +22,7 @@ function TaskList() {
         </div>
 
         <div className='  '>
-          {taskToBeShow.length === 0 ?
+          {!taskToBeShow?
             <div className='flex justify-center items-center mt-8'>
               <p className='text-xl '>No todos to display</p>
             </div>

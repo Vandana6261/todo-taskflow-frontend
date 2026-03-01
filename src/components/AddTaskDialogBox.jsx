@@ -21,6 +21,16 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
 
     const handleChange = (e) => {
         const { name, value, type } = e.target;
+        // console.log(name, value)
+        if(name == "category") {
+            let category = {
+                name: value,
+                isDefault: false,
+            }
+            console.log(category)
+            setFormData({...formData, category})
+            return;
+        }
         setFormData({ ...formData, [name]: value })
     }
 
@@ -40,7 +50,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
             setError(newError);
             return;
         }
-        
+        console.log(formData, "formData")
         addTask(formData)
 
         setFormData({
@@ -48,7 +58,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
             description: "",
             priority: "medium",
             status: "pending",
-            category: "",
+            category: categories[0]._id,
             dueDate: "",
         })
 
@@ -158,10 +168,11 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
                                         name="category" id="category"
                                         // value={formData.category}
                                         className='inputBase'
+                                        onChange={(e) => handleChange(e)}
                                     >
                                         {categories.map((item, index) => {
                                             return (
-                                                <option key={index}>{item}</option>
+                                                <option key={item._id} value={item._id} >{item.name}</option>
                                             )
                                         })}
                                     </select>

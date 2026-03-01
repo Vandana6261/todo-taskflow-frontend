@@ -8,24 +8,23 @@ import { useEffect, useState } from "react";
     const [tasks, setTasks] = useState([])
     const [taskToBeShow, setTaskToBeShow] = useState([])
     const [selectId, setSelectId] = useState(null);
-    const [categories, setCategories] = useState(["Work", "Personal", "Shopping"])
+    const [categories, setCategories] = useState([])
     // console.log(categories)
     
 
     async function loadTodo() {
-      // console.log("loadTodo called")
+      console.log("loadTodo called")
       try {
         const response = await fetch("http://localhost:5000/api/todo")
         if(!response.ok) {
-          console.log("Internal server Error");
           console.log("Error status : ", response.status);
+          console.log(response)
         }
         else {
           const data = await response.json();
-          setTasks(prev => [...data])
-          setTaskToBeShow(prev => [...data])
-          // console.log(data)
-          // setCategories(prev => [...prev, data.map(todo => todo.category)])
+          setTasks(prev => data.todos)
+          setTaskToBeShow(prev => data.todos)
+          setCategories(prev => [...data.categories])
         }
       } catch (error) {
         console.log("Error occured while loading TODO");
@@ -33,13 +32,29 @@ import { useEffect, useState } from "react";
       }
     }
 
+    async function loadCat() {
+      try {
+        const response = await fetch('http://localhost:5000/api/todo')
+        if(!response.ok()) {
+          console.log("Error status: ", response.status);
+          return;
+        }
+        const data = await response.json();
+        // setCategories(prev => data);
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
     useEffect(() => {
       loadTodo();
+      // loadCat();
     }, [])
 
     async function addTask(task) {
       try {
-        // console.log("addTask called")
+        console.log("addTask called")
         const response = await fetch("http://localhost:5000/api/todo", {
           method: "POST",
           headers: {
@@ -49,11 +64,13 @@ import { useEffect, useState } from "react";
         })
         
         if(!response.ok) {
-          console.log("Error response is not ok: ", response.status)
+          console.log("Error response is not ok: ", response)
+          console.log(response);
           return;
         }
         else {
           const data = await response.json();
+          console.log(data, "data");
           await loadTodo();
         }
       } catch (error) {
@@ -88,7 +105,7 @@ import { useEffect, useState } from "react";
     }
 
     async function updateTask(taskId, task) {
-      // console.log("Update task called")
+      console.log("Update task called")
       try {
         const response = await fetch(`http://localhost:5000/api/todo/${taskId}`, {
           method: "PUT",
@@ -132,20 +149,45 @@ import { useEffect, useState } from "react";
       }
     }
 
+    async function addCategory (catName) {
+      console.log("addCategory called")
+      try {
+        let response = await fetch('http://localhost:5000/api/todo/createCategory', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({name: catName})
+        })
+
+          if(!response.ok) {
+            console.log("Error response is not okay ", response)
+          }
+          else {
+            let data = await response.json()
+            console.log(data, 155);
+            console.log(categories)
+            // setCategories(prev => [...prev], data)
+            await loadTodo()
+          }
+      } catch (error) {
+        console.log("Error occured while creating category: ", error)
+      }
+    }
+
     const filterTask = (cat) => {
+      console.log(cat)
       if(cat == 'all') {
         setTaskToBeShow(tasks);
         return;
       }
       let arr = tasks.filter(item => {
-        cat = cat.toLowerCase();
+        cat.name = cat.name.toLowerCase();
         let category = item.category.toLowerCase()
-        // console.log(item)
-        if(category.includes(cat)) {
+        if(category.includes(cat.name)) {
           return item;
         }
       })
-      // console.log(arr)
       setTaskToBeShow(arr)
     }
 
@@ -158,7 +200,7 @@ import { useEffect, useState } from "react";
       searchTask,
       selectId, setSelectId,
       taskToBeShow,
-      categories,
+      categories, addCategory,
       setCategories,
       filterTask,
     };
