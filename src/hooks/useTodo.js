@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
     
 
     async function loadTodo() {
-      console.log("loadTodo called")
+      // console.log("loadTodo called")
       try {
         const response = await fetch("http://localhost:5000/api/todo")
         if(!response.ok) {
@@ -22,8 +22,10 @@ import { useEffect, useState } from "react";
         }
         else {
           const data = await response.json();
-          setTasks(prev => data.todos)
-          setTaskToBeShow(prev => data.todos)
+
+          let filteredTask = data.todos.filter(item => !item.isDeleted);
+          setTasks(prev => filteredTask)
+          setTaskToBeShow(prev => filteredTask)
           setCategories(prev => [...data.categories])
         }
       } catch (error) {
@@ -68,11 +70,9 @@ import { useEffect, useState } from "react";
           console.log(response);
           return;
         }
-        else {
           const data = await response.json();
           console.log(data, "data");
           await loadTodo();
-        }
       } catch (error) {
         console.log("Error occured while adding task");
         console.log(error)
@@ -176,14 +176,13 @@ import { useEffect, useState } from "react";
     }
 
     const filterTask = (cat) => {
-      console.log(cat)
+      setTaskToBeShow(tasks);
       if(cat == 'all') {
-        setTaskToBeShow(tasks);
         return;
       }
+      cat.name = cat.name.toLowerCase();
       let arr = tasks.filter(item => {
-        cat.name = cat.name.toLowerCase();
-        let category = item.category.toLowerCase()
+        let category = item.category.name.toLowerCase()
         if(category.includes(cat.name)) {
           return item;
         }

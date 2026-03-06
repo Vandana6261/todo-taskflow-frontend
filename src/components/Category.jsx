@@ -6,7 +6,7 @@ import { FaPlus } from "react-icons/fa";
 // console.log("Category rendered")
 
 function Category() {
-  const { loadTodo, categories, addCategory, setCategories, filterTask } = useTodoContext()
+  const { loadTodo, categories, addCategory, filterTask } = useTodoContext()
   const [isAddCat, setIsAddCat] = useState(false)
   const [catName, setCatName] = useState("")
   const [error, setError] = useState("")
@@ -20,12 +20,18 @@ function Category() {
   }
   
   const addCat = (cat) => {
-    let isFound = categories.map(item => item.id == cat);
-    // if(isFound) {
-    //     setError("Cat exists")
-    //     return;
-    //   }
+    if(!cat) {
+      setError("Please add one category name")
+      return;
+    }
+    let isFound = categories.find(item => item.name == cat);
+    if(isFound) {
+        setError("Cat exists")
+        return;
+      }
       setIsAddCat(false);
+      setCatName("")
+      setError("")
     addCategory(cat);
   }
 
@@ -96,13 +102,17 @@ function Category() {
                   value={catName}
                   onChange={(e) => setCatName(e.target.value)}
                 />
-                {error && <p>{error}</p>}
+                {error && <p className='text-red-500'>{error}</p>}
                 <div className='flex items-center justify-around '>
                   <button className='btn hoverBase bg-update-color text-white w-24'
                     onClick={() => addCat(catName)}
                   >Add</button>
                   <button className='btn hoverBase bg-delete-color text-white w-24'
-                    onClick={() => setIsAddCat(false)}
+                    onClick={() => {
+                      setIsAddCat(false)
+                      setError("")
+                      setCatName("")
+                    }}
                   >Cancel</button>
                 </div>
               </div>
