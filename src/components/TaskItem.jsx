@@ -12,7 +12,13 @@ function TaskItem({task}) {
   const [isUpdate, setIsUpdate] = useState(false);
   const [isCompleted, setIsCompleted] = useState(task.isCompleted);
   const [confirmDelete, setConfirmDelete] = useState(false);
-   const [updatedData, setUpdatedData] = useState({})
+  const [updatedData, setUpdatedData] = useState({})
+
+  const styleMap = {
+    complete: "bg-green-400",
+    inProgress: "bg-gray-400",
+    pending: "bg-red-500"
+  }
 
     // const isCompleted = task.status === "completed"
   // console.log(task)
@@ -32,13 +38,14 @@ function TaskItem({task}) {
   }, [isCompleted])
 
   return (
-    <>
-      <div tabIndex={0} className={`py-1 px-4 border-b border-t border-gray-300 rounded mb-4 hover:border-gray-400 `}
+    <>  
+      <div tabIndex={0} className={`py-1 px-4 border-b border-t border-gray-300 rounded mb-4 hover:border-gray-400 flex justify-between items-center`}
       onClick={() => setSelectId(task._id)}
       >
         {/* task title, description, etc. */}
         <div className={`flex flex-col mt-1  rounded-md p-2 ${isCompleted ? "line-through text-gray-400" : ""}`}>
-            <div className='flex-1 flex gap-4'>
+            <div className='flex gap-4'>
+
               <div className=''>
                 <input 
                 className='cursor-pointer'
@@ -50,14 +57,14 @@ function TaskItem({task}) {
                 }}
                 />
               </div>
-              <div className='flex flex-col '>
+
+              <div className='flex flex-col gap-1'>
                 <h2>{task.title}</h2>
                 <p>{task.description}</p>
-                <div className='flex gap-4 items-center'>
-                  {console.log(task.category)}
-                  {/* {task.category && <small className='bg-blue-400/60 w-fit rounded px-4 '>{task.category}</small>} */}
-                  {task.status && <small className='bg-purple-500/40 w-fit rounded px-4 '>{task.status}</small>}
-                  {task.dueDate && <small>{task.dueDate} dueDate</small>}
+                <div className='mt-2 flex gap-4 items-center'>
+                  {task.category && <small className='bg-blue-400/60 w-fit rounded px-4 '>{task.category.name}</small>}
+                  {task.status && <small className={`w-fit rounded px-4 text-white ${styleMap[task.status]}`}>{task.status}</small>}
+                  {task.dueDate && <small className='bg-purple-200 px-2 rounded '>dueDate: {task.dueDate}</small>}
                 </div>
               </div>
               {/* <div className='ml-auto'>
