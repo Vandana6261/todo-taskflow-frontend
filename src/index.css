@@ -38,7 +38,7 @@
     }
 
     .onHoverEffect {
-        @apply transition-all duration-200 ease-linear
+        @apply transition-all duration-300 
     }
 
     .onHoverEffect:hover {
