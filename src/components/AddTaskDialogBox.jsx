@@ -12,20 +12,24 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
     priority: "medium",
     status: "pending",
     // category: categories !== undefined && categories[0]?._id,
-    category: "",
+    category: "work",
     dueDate: "",
   });
 
-  async function loadData() {
-    
-  }
-
   // categories !== undefined && console.log(categories[0]._id);
 
-//   useEffect(() => {}, [categories]);
+  useEffect(() => {
+    if(categories && categories.length > 0) {
+      setFormData(prev => (
+        {...prev, category: categories[0]._id}
+      ))
+    }
+    console.log("category added")
+  }, [categories]);
 
   const today = new Date().toISOString().split("T")[0];
-  const pattern = /[^A-Za-z ]/g;
+  // const pattern = /[^A-Za-z ]/g;
+  const pattern = /^[A-Za-z ]+$/;
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
@@ -36,7 +40,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
     e.preventDefault();
     let newError = {};
     if (formData.title == "") newError.title = "Title is required";
-    if (pattern.test(formData.title)) {
+    if (!pattern.test(formData.title)) {
       newError.title = "Title is not valid, please use characters only";
     }
     if (!formData.description.trim())
