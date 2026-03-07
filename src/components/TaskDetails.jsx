@@ -8,6 +8,10 @@ import useTodoContext from '../context/TodoContext';
 
 function TaskDetails({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
   const { selectId, updateTask, categories } = useTodoContext();
+  const [error, setError] = useState({})
+
+  const today = new Date().toISOString().split("T")[0];
+  const pattern = /^[A-Za-z ]+$/g;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,8 +19,31 @@ function TaskDetails({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
   }
 
   const handleUpdate = () => {
+    console.log("Form submit called")
+    let newError = {};
+    if (updatedData.title == "") newError.title = "Title is required"
+    if (!pattern.test(updatedData.title)) {
+      newError.title = "Title is not valid, please use character only"
+      console.log(updatedData.title, 28)
+    }
+    if (!updatedData.description.trim()) {
+      newError.description = "Description is required"
+    }
+    if (!updatedData.category)
+      newError.category = "Please choose one category";
+    if (updatedData.dueDate < today) {
+      newError.dueDate = "Please choose a valid date";
+    }
+
+    if (Object.keys(newError).length !== 0) {
+      setError(newError);
+      return;
+    }
+
     updateTask(selectId, updatedData);
     setIsUpdate(!isUpdate)
+
+    setUpdatedData({})
   }
 
   return (
@@ -52,6 +79,9 @@ function TaskDetails({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
                   className='inputBase px-2 py-1 text-sm'
                   onChange={(e) => handleChange(e)}
                 />
+                {error && error.title && (
+                  <p className="text-red-500">{error.title}</p>
+                )}
               </div>
 
               <div className='mx-2'>
@@ -60,12 +90,24 @@ function TaskDetails({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
                   htmlFor="description" id='description'>
                   Description
                 </label>
-                <textarea name="description" id="description"
+                {/* <textarea name="d/escription" id="description"
                   value={updatedData?.description}
                   className='inputBase px-2 py-1 text-sm '
                   onChange={(e) => handleChange(e)}
                   rows={4}
-                ></textarea>
+                  
+                ></textarea> */}
+                <input
+                  type="text"
+                  name='description'
+                  maxLength={300}
+                  value={updatedData.description}
+                  onChange={(e) => handleChange(e)}
+                  className='inputBase px-2 py-1 h-12 overflow-y-auto'
+                />
+                {error && error.description && (
+                  <p className="text-red-500">{error.description}</p>
+                )}
               </div>
 
               <div className='mx-2'>
@@ -143,6 +185,9 @@ function TaskDetails({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
                     className='inputBase text-sm '
                   />
                 </p>
+                {error && error.dueDate && (
+                  <p className="text-red-500">{error.dueDate}</p>
+                )}
               </div>
               <div>
                 <p>Created At {updatedData?.dueDate}.....Pending</p>
