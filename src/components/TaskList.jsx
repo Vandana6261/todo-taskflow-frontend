@@ -11,7 +11,7 @@ import SearchBar from './SearchBar';
 
 function TaskList() {
     const [showDialogBox, setShowDialogBox] = useState(false);
-    const {addTask, taskToBeShow} = useTodoContext();
+    const {addTask, taskToBeShow, loading, isData} = useTodoContext();
     const [active, setActive] = useState("");
 
   return (
@@ -22,6 +22,8 @@ function TaskList() {
         </div>
 
         <div className='  '>
+          {loading && <div className='text-5xl w-full min-h-full text-black'>Loading....</div>}
+          {!isData && <div className='text-3xl w-full min-h-full text-black'>Oops! Data is not available</div>}
           {!taskToBeShow?
             <div className='flex justify-center items-center mt-8'>
               <p className='text-xl '>No todos to display</p>

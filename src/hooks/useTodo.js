@@ -9,11 +9,14 @@ import { useEffect, useState } from "react";
     const [taskToBeShow, setTaskToBeShow] = useState([])
     const [selectId, setSelectId] = useState(null);
     const [categories, setCategories] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [isData, setIsData] = useState(true)
     // console.log(categories)
     
 
     async function loadTodo() {
       // console.log("loadTodo called")
+      setLoading(true)
       try {
         const response = await fetch("http://localhost:5000/api/todo")
         if(!response.ok) {
@@ -27,6 +30,8 @@ import { useEffect, useState } from "react";
           setTasks(prev => filteredTask)
           setTaskToBeShow(prev => filteredTask)
           setCategories(prev => [...data.categories])
+          setLoading(false)
+          setIsData(true)
         }
       } catch (error) {
         console.log("Error occured while loading TODO");
@@ -132,6 +137,8 @@ import { useEffect, useState } from "react";
 
     async function searchTask (keyword) {
       console.log("searchTaskCalled")
+      setLoading(true)
+      setTaskToBeShow([])
       try {
         const response = await fetch(`http://localhost:5000/api/todo/${keyword}`)
         if(!response.ok) {
@@ -142,6 +149,8 @@ import { useEffect, useState } from "react";
         else {
           const data = await response.json();
           setTaskToBeShow(prev => [...data])
+          if(data.length === 0) setIsData(false)
+          setLoading(false)
         }
       } catch (error) {
         console.log("Error occured while searching task")
@@ -202,6 +211,7 @@ import { useEffect, useState } from "react";
       categories, addCategory,
       setCategories,
       filterTask,
+      loading, isData
     };
   }
 
