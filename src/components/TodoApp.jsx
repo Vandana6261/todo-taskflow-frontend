@@ -4,6 +4,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { FiCheckSquare } from "react-icons/fi";
 import TaskDetails from './TaskDetails';
 import Category from './Category';
+import DragTest from './DragTest';
 
 // console.log("TodoApp rendered")
 
@@ -35,7 +36,11 @@ function TodoApp() {
           <main className='flex-6 border-r border-gray-300 h-full '>
             <TaskList />
           </main>
+        {/* <div className='flex-1'> */}
+          {/* <DragTest />   */}
+        {/* </div> */}
         </div>
+
 
       </div>
     </>
