@@ -16,7 +16,7 @@ function TaskList() {
   const [showDialogBox, setShowDialogBox] = useState(false);
   const { addTask, taskToBeShow, loading, isData } = useTodoContext();
   const [active, setActive] = useState("");
-  const columns = ["pending", "inProgress", "complete"];
+  // const columns = ["pending", "inProgress", "complete"];
 
   const pendingTask = taskToBeShow.filter(eachTask => {
     return eachTask.status === "pending" && !eachTask.isDeleted
@@ -30,12 +30,12 @@ function TaskList() {
 
   return (
     <>
-      <div className='relative h-full '>
+      <div className='relative h-full select-none'>
         <div className='flex justify-around w-full border-b border-gray-400 p-2 '>
           <SearchBar />
           <button
             onClick={() => setShowDialogBox(true)}
-            className='btn hoverBase text-white border-none w-auto py-2 font-bold bg-[#1e3b8acb]'
+            className='btn hoverBase border-none w-auto py-2 font-semibold bg-[#3753a1cb] '
           >Add Task</button>
           <AddTaskDialogBox showDialogBox={showDialogBox} setShowDialogBox={setShowDialogBox} />
         </div>
@@ -50,26 +50,26 @@ function TaskList() {
 
             :
 
-            <div className='max-w-screen max-h-[100vh] overflow-y-auto pt-2 flex'>
-              <div className='flex-1 m-1 bg-[#7591ad] overflow-y-auto'>
-                <h2 className='text-center text-lg font-semibold'>Pending Task</h2>
+            <div className='max-w-screen max-h-[78vh] pt-2 flex'>
+              <div className='flex-1 m-1 bg-[#7591ad] overflow-y-auto scrollbar-hide relative'>
+                <h2 className='text-center text-lg font-semibold sticky top-0 bg-[#7591ad]'>Pending Task</h2>
                 <div className=' rounded '>
                   {
                     pendingTask.map(item => <TaskItem task={item} />)
                   }
                 </div>
               </div>
-              <div className='flex-1 m-1 bg-[#F8FAFC]'>
-                <h2 className='text-center text-lg font-semibold'>InProgress Task</h2>
-                <div className=' rounded m-1'>
+              <div className='flex-1 m-1 bg-[#7591ad] overflow-y-auto  scrollbar-hide relative'>
+                <h2 className='text-center text-lg font-semibold sticky top-0 bg-[#7591ad]'>InProgress Task</h2>
+                <div className=' rounded '>
                   {
                     inProgressTask.map(item => <TaskItem task={item} />)
                   }
                 </div>
               </div>
-              <div className='flex-1 m-1 bg-[#F8FAFC]'>
-                <h2 className='text-center text-lg font-semibold'>Complete Task</h2>
-                <div className='rounded m-1'>
+              <div className='flex-1 m-1 bg-[#7591ad] overflow-y-auto  scrollbar-hide  relative'>
+                <h2 className='text-center text-lg font-semibold sticky top-0 bg-[#7591ad]'>Complete Task</h2>
+                <div className='rounded '>
                   {
                     completedTask.map(item => <TaskItem task={item} />)
                   }

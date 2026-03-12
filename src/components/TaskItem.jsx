@@ -35,12 +35,13 @@ function TaskItem({task}) {
   
   useEffect(() =>{
     // updateTask(selectId, {...task, isCompleted: true})
+    // console.log(task)
   }, [isCompleted])
 
   return (
     <>  
       <div>
-        <div tabIndex={0} className={`px-4 border-b bg-[#d2d6e2] min-h-38 border border-gray-300 rounded  hover:border-gray-400 text-sm m-1`}
+        <div tabIndex={0} className={`px-4 border-b bg-[#d2d6e2] min-h-30 pb-2 border border-gray-300 rounded  hover:border-gray-400 text-sm m-1`}
         onClick={() => setSelectId(task._id)}
         >
           {/* task title, description, etc. */}
@@ -66,14 +67,11 @@ function TaskItem({task}) {
                     {task.dueDate && <p className='bg-purple-200 px-2 rounded '>dueDate: <br /> {task.dueDate}</p>}
                   </div>
                 </div>
-                {/* <div className='ml-auto'>
-                  flag
-                </div> */}
               </div>
           </div>
 
           {/* button delete and update */}
-          <div className='flex '>
+          <div className='flex'>
             <button className='hoverBase btn px-1 border-gray-600 w-fit mx-2 bg-delete-color text-white'
             onClick={() => handleDelete()}
             >

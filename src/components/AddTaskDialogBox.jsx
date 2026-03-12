@@ -5,6 +5,7 @@ import useTodoContext from "../context/TodoContext";
 function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
   const [error, setError] = useState("");
   const { addTask, categories } = useTodoContext();
+  const [catId, setCatId] = useState({})
 
   const [formData, setFormData] = useState({
     title: "",
@@ -33,7 +34,10 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    setFormData({ ...formData, [name]: value });
+    if(value === "complete") {
+      setFormData({...formData, [name]: value, isCompleted: true})
+    }
+    else setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = (e) => {
@@ -92,7 +96,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
   return (
     <>
       <div
-        className={`min-w-screen min-h-screen fixed top-0 left-0 flex justify-center items-center backdrop-blur-sm ${showDialogBox ? "flex" : "hidden"} text-left`}
+        className={`min-w-screen min-h-screen fixed top-0 left-0 flex justify-center items-center backdrop-blur-sm z-999 ${showDialogBox ? "flex" : "hidden"} text-left`}
         onClick={(e) => {
           setShowDialogBox(false);
         }}
