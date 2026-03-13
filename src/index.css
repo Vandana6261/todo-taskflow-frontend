@@ -9,7 +9,7 @@
     --color-btn-color: #456fa7c5;
     --color-delete-color: #f71818;
     --color-update-color: #1d6b16ce;
-    --color-modal-color: #1E3A8A40;
+    --color-modal-color: #ceceec48;
 }
 
 @layer components {
@@ -18,7 +18,7 @@
     }
 
     .btn {
-        @apply border rounded px-2 py-1 cursor-pointer
+        @apply rounded px-2 py-1 cursor-pointer
     }
 
     .hoverBase {

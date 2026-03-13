@@ -22,27 +22,30 @@ function TaskList() {
     return eachTask.status === "pending" && !eachTask.isDeleted
   })
   const inProgressTask = taskToBeShow.filter(eachTask => {
-    return eachTask.status === "inProgress" && !eachTask.isDeleted
+    return eachTask.status === "inprogress" && !eachTask.isDeleted
   })
   const completedTask = taskToBeShow.filter(eachTask => {
     return eachTask.status === "complete" && !eachTask.isDeleted
   })
+  console.log(pendingTask)
+  console.log(inProgressTask)
+  console.log(completedTask)
 
   return (
     <>
-      <div className='relative h-full select-none'>
-        <div className='flex justify-around w-full border-b border-gray-400 p-2 '>
+      <div className='relative h-full select-none bg-[#F8FAFC]'>
+        <div className='flex justify-center bg-amber-00 border-gray-400 p-2 shadow-[0px_5px_10px_rgba(0,0,0,0.35)] '>
           <SearchBar />
           <button
             onClick={() => setShowDialogBox(true)}
-            className='btn hoverBase border-none w-auto py-2 font-semibold bg-[#3753a1cb] '
+            className='btn hoverBase border-none w-auto py-2 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,35,255,1)]'
           >Add Task</button>
           <AddTaskDialogBox showDialogBox={showDialogBox} setShowDialogBox={setShowDialogBox} />
         </div>
 
         <div className='  '>
-          {loading && <div className='text-5xl w-full min-h-full text-black'>Loading....</div>}
-          {!isData && <div className='text-3xl w-full min-h-full text-black'>Oops! Data is not available</div>}
+          {/* {loading && <div className='text-5xl w-full min-h-full text-black'>Loading....</div>} */}
+          {/* {!isData && <div className='text-3xl w-full min-h-full text-black'>Oops! Data is not available</div>} */}
           {!taskToBeShow ?
             <div className='flex justify-center items-center mt-8'>
               <p className='text-xl '>No todos to display</p>
@@ -50,26 +53,26 @@ function TaskList() {
 
             :
 
-            <div className='max-w-screen max-h-[78vh] pt-2 flex'>
-              <div className='flex-1 m-1 bg-[#7591ad] overflow-y-auto scrollbar-hide relative'>
-                <h2 className='text-center text-lg font-semibold sticky top-0 bg-[#7591ad]'>Pending Task</h2>
-                <div className=' rounded '>
+            <div className='max-w-screen max-h-[78vh] pt-2 flex bg-[#f3f1f1] px-2'>
+              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'>
+                <h2 className='text-center text-lg font-semibold text-[#2a344b] sticky top-0 bg-[#ffffff9d] rounded mb-6'>Pending Task</h2>
+                <div className='rounded flex flex-col gap-2'>
                   {
                     pendingTask.map(item => <TaskItem task={item} />)
                   }
                 </div>
               </div>
-              <div className='flex-1 m-1 bg-[#7591ad] overflow-y-auto  scrollbar-hide relative'>
-                <h2 className='text-center text-lg font-semibold sticky top-0 bg-[#7591ad]'>InProgress Task</h2>
-                <div className=' rounded '>
+              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'>
+                <h2 className='ttext-center text-lg font-semibold text-[#2a344b] sticky top-0 bg-[#ffffff] rounded mb-6'>InProgress Task</h2>
+                <div className='rounded flex flex-col gap-2'>
                   {
                     inProgressTask.map(item => <TaskItem task={item} />)
                   }
                 </div>
               </div>
-              <div className='flex-1 m-1 bg-[#7591ad] overflow-y-auto  scrollbar-hide  relative'>
-                <h2 className='text-center text-lg font-semibold sticky top-0 bg-[#7591ad]'>Complete Task</h2>
-                <div className='rounded '>
+              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'>
+                <h2 className='text-center text-lg font-semibold text-[#2a344b] sticky top-0 bg-[#ffffff] rounded mb-6'>Complete Task</h2>
+                <div className='rounded flex flex-col gap-2'>
                   {
                     completedTask.map(item => <TaskItem task={item} />)
                   }

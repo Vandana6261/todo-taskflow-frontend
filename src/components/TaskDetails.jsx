@@ -46,6 +46,10 @@ function TaskDetails({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
     setUpdatedData({})
   }
 
+  useEffect(() => {
+      
+  }, [categories]);
+  
   return (
     <>
       <div className='min-w-screen min-h-screen fixed top-0 left-0 backdrop-blur-sm flex justify-center items-center'
@@ -90,13 +94,6 @@ function TaskDetails({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
                   htmlFor="description" id='description'>
                   Description
                 </label>
-                {/* <textarea name="d/escription" id="description"
-                  value={updatedData?.description}
-                  className='inputBase px-2 py-1 text-sm '
-                  onChange={(e) => handleChange(e)}
-                  rows={4}
-                  
-                ></textarea> */}
                 <input
                   type="text"
                   name='description'
@@ -163,9 +160,13 @@ function TaskDetails({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
                     className='inputBase text-sm '
                     onChange={(e) => handleChange(e)}
                   >
-                    <option value="work">Work</option>
-                    <option value="personal">Personal</option>
-                    <option value="shopping">Shopping</option>
+                    {categories.map((item, index) => {
+                      return (
+                        <option key={item} value={item}>
+                          {item.name}
+                        </option>
+                      );
+                    })}
                   </select>
                 </p>
               </div>
