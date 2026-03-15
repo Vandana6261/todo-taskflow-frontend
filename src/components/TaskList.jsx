@@ -27,18 +27,15 @@ function TaskList() {
   const completedTask = taskToBeShow.filter(eachTask => {
     return eachTask.status === "complete" && !eachTask.isDeleted
   })
-  console.log(pendingTask)
-  console.log(inProgressTask)
-  console.log(completedTask)
 
   return (
     <>
       <div className='relative h-full select-none bg-[#F8FAFC]'>
-        <div className='flex justify-center bg-amber-00 border-gray-400 p-2 shadow-[0px_5px_10px_rgba(0,0,0,0.35)] '>
+        <div className='flex justify-center gap-4 border-gray-400 p-2'>
           <SearchBar />
           <button
             onClick={() => setShowDialogBox(true)}
-            className='btn hoverBase border-none w-auto py-2 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,35,255,1)]'
+            className='btn hoverBase border-none w-auto py-2 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
           >Add Task</button>
           <AddTaskDialogBox showDialogBox={showDialogBox} setShowDialogBox={setShowDialogBox} />
         </div>
@@ -55,7 +52,7 @@ function TaskList() {
 
             <div className='max-w-screen max-h-[78vh] pt-2 flex bg-[#f3f1f1] px-2'>
               <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'>
-                <h2 className='text-center text-lg font-semibold text-[#2a344b] sticky top-0 bg-[#ffffff9d] rounded mb-6'>Pending Task</h2>
+                <h2 className='text-center text-lg  font-semibold text-[#2a344b] sticky top-0 bg-[#ffffff9d] rounded mb-6'>Pending Task</h2>
                 <div className='rounded flex flex-col gap-2'>
                   {
                     pendingTask.map(item => <TaskItem task={item} />)

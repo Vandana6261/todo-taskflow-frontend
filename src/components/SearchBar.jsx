@@ -32,12 +32,12 @@ function SearchBar() {
     <>
       <div className='w-1/2'>
         <form>
-            <div tabIndex={0} className='w-[80%] md:w-[60%]  border border-gray-400 rounded-full flex items-center gap-2 px-2 focus-within:border focus-within:border-blue-800/50'>
+            <div tabIndex={0} className=' border border-gray-400 rounded-full flex items-center gap-2 px-2 cursor-pointer hover:shadow-[0px_0px_10px_rgba(0,15,205,0.4)] focus-within:border focus-within:border-blue-800/50 focus-within:shadow-[0px_0px_10px_rgba(0,15,205,0.4)]'>
                 <span>
                     <IoIosSearch />
                 </span>
                 <input 
-                className='py-2 px-4 border-none focus:border-none focus:outline-none w-full'
+                className='py-2 px-4 border-none focus:border-none focus:outline-none w-full cursor-pointer'
                 type="text" placeholder='Search' 
                 // onChange={(e) => handleSearch(e)}
                 onKeyUp={(e) => handleSearch(e)}

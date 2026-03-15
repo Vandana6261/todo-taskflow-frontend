@@ -10,12 +10,16 @@ function Category() {
   const [isAddCat, setIsAddCat] = useState(false)
   const [catName, setCatName] = useState("")
   const [error, setError] = useState("")
+  const [selectedCat, setSelectedCat] = useState("all")
 
   const handleCat = (cat) => {
+    console.log(selectedCat)
     if (cat == "all") {
       loadTodo()
+      setSelectedCat(cat)
       return;
     }
+    setSelectedCat(cat._id);
     filterTask(cat);
   }
   
@@ -35,9 +39,21 @@ function Category() {
     addCategory(cat);
   }
 
-  // useEffect(() => {
+  const getRandomColorCode = () => {
+    let str = "1234567890ab";
 
-  // }, [categories])
+    let color = "#"
+    for(let i=0; i<6; i++) {
+      let idx = Math.floor(Math.random() * str.length)
+      color += str[idx];
+    }
+
+    return color;
+  }
+
+  // getRandomColorCode();
+
+
 
   return (
     <>
@@ -55,7 +71,7 @@ function Category() {
           <div
             className='flex items-center gap-1 cursor-pointer px-1 m-1 onHoverEffect'
             onClick={() => handleCat("all")}>
-            <div className='rounded-full w-3 h-3 bg-blue-600'></div>
+            <div className={`rounded-full w-3 h-3 bg-blue-600 ${selectedCat} === "all" ? bg-[#ffffff]`}></div>
             <h2>All</h2>
           </div>
           {
@@ -65,16 +81,17 @@ function Category() {
 
               // }
               (categories.map((item, index) => {
-                const color = colors[index % colors.length]
+                const color = getRandomColorCode();
+                console.log(color)
                 return (
                   <div
-                    key={index}
+                    key={item._id}
                     className='flex flex-col p-1 '
                     onClick={() => handleCat(item)}
                   >
                     <div className={`flex items-center gap-2 cursor-pointer px-1 onHoverEffect`}>
-                      <div className={`rounded-full w-3 h-3 ${color}`}
-
+                      <div className={`rounded-full w-3 h-3 bg-[${color}]`}
+                        style={{backgroundColor: color}}
                       ></div>
                       <span>{item.name}</span>
                     </div>
@@ -84,36 +101,29 @@ function Category() {
           }
         </div>
 
-        {/* <div className='absolute bottom-0 min-w-[90%]'
-          onClick={() => setIsAddCat(true)}
-        >
-          <div className='bg-[#1e3b8acb] flex items-center hoverBase btn border-gray-600 gap-2'>
-            <FaPlus />
-            <button className=''>Add Category</button>
-          </div>
-        </div> */}
-
         {isAddCat ?
 
           <div className='absolute bottom-0 min-w-[90%]'>
               <div className='flex flex-col gap-2'>
                 <input type="text" 
-                  className='inputBase '
+                  className='inputBase bg-[#ffffff] px-2 py-1 font-semibold cursor-pointer text-gray-600 border-gray-400 rounded-xl shadow-[0px_10px_30px_10px_rgba(0,0,0,0.25)]  focus-within:shadow-[0px_10px_30px_10px_rgba(0,0,0,0.25)] text-sm '
+                  placeholder='Enter Category to add'
                   value={catName}
                   onChange={(e) => setCatName(e.target.value)}
                 />
                 {error && <p className='text-red-500'>{error}</p>}
+
                 <div className='flex items-center justify-around '>
-                  <button className='btn hoverBase bg-update-color text-white w-24'
-                    onClick={() => addCat(catName)}
-                  >Add</button>
-                  <button className='btn hoverBase bg-delete-color text-white w-24'
+                  <button className='hoverBase btn mx-2 font-semibold rounded-full bg-red-500/20 text-red-600'
                     onClick={() => {
                       setIsAddCat(false)
                       setError("")
                       setCatName("")
                     }}
                   >Cancel</button>
+                  <button className='hoverBase btn mx-2 font-semibold rounded-full bg-green-500/20 text-[#229c09] w-24'
+                    onClick={() => addCat(catName)}
+                  >Add</button>
                 </div>
               </div>
           </div>
@@ -123,7 +133,7 @@ function Category() {
           <div className='absolute bottom-0 min-w-[90%]'
             onClick={() => setIsAddCat(true)}
           >
-            <div className='bg-[#1e3b8acb] flex items-center hoverBase btn border-gray-600 gap-2 w-full'>
+            <div className='flex items-center btn hoverBase w-full py-2 text-white font-semibold rounded-full border-gray-600 gap-2 bg-[#0019f7a8] hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>
               <FaPlus />
               <button className='' onTouchMove={() => console.log("ggh")}>Add Category</button>
             </div>
@@ -136,16 +146,4 @@ function Category() {
 }
 
 export default Category
-
-let colors = [
-  "bg-[#E11D48]", // red
-  "bg-[#F59E0B]", // amber / yellow-orange
-  "bg-[#22C55E]", // green
-  "bg-[#8B5CF6]", // violet / purple
-  "bg-[#06B6D4]", // cyan
-  "bg-[#F43F5E]", // rose / pink
-  "bg-[#16A34A]", // dark green
-  "bg-[#CA8A04]", // mustard / gold
-  "bg-[#F97316]"  // orange
-]
 

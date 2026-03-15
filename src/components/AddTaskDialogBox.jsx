@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTodo } from "../hooks/useTodo";
 import useTodoContext from "../context/TodoContext";
+import { MdCancel } from "react-icons/md";
 
 function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
   const [error, setError] = useState("");
@@ -22,7 +23,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
   useEffect(() => {
     if(categories && categories.length > 0) {
       setFormData(prev => (
-        {...prev, category: categories[0]._id}
+        { ...prev, category: categories[0]._id }
       ))
     }
     console.log("category added")
@@ -34,8 +35,8 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    if(value === "complete") {
-      setFormData({...formData, [name]: value, isCompleted: true})
+    if (value === "complete") {
+      setFormData({ ...formData, [name]: value, isCompleted: true })
     }
     else setFormData({ ...formData, [name]: value });
   };
@@ -49,8 +50,8 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
     }
     if (!formData.description.trim())
       newError.description = "Description is required";
-    if(!formData.category) 
-        newError.category = "Please choose one category";
+    if (!formData.category)
+      newError.category = "Please choose one category";
     if (formData.dueDate < today) {
       newError.dueDate = "Please choose a valid date";
     }
@@ -96,23 +97,35 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
   return (
     <>
       <div
-        className={`min-w-screen min-h-screen fixed top-0 left-0 flex justify-center items-center backdrop-blur-sm z-999 ${showDialogBox ? "flex" : "hidden"} text-left`}
+        className={`min-w-screen min-h-screen fixed top-0 left-0 flex justify-center items-center bg-black/40 backdrop-blur-sm z-999 ${showDialogBox ? "flex" : "hidden"} text-left`}
         onClick={(e) => {
           setShowDialogBox(false);
         }}
       >
         <div
-          className="modal-content w-[90%] sm:w-1/2 modal bg-modal-color p-4 rounded } min-h-full`"
+          className="flex flex-col gap-1 w-[90%] min-h-full sm:w-1/2 modal bg-[#ffffff] rounded-xl p-4 `"
           onClick={(e) => {
             e.stopPropagation();
           }}
         >
-          <h2 className="text-2xl text-center">Create Task</h2>
+          {/* 1st part */}
+          <div className='flex-1 border-b border-gray-300 rounded px-4 py-2 flex justify-between'
+            onClick={(e) => {
+              setShowDialogBox(false);
+            }}
+          >
+            <h2 className="text-2xl text-center">Create Task</h2>
+            <span className='h-8 w-8 text-2xl rounded-full bg-gray-400/20 flex justify-center items-center cursor-pointer hoverBase'
+              onClick={(e) => handleCancel(e)}
+            ><MdCancel /></span>
+          </div>
+
           <form
             onSubmit={(e) => handleSubmit(e)}
-            className="flex flex-col gap-2 max-h-[70vh] mt-2 relative"
-          >
-            <div className="overflow-y-auto px-2">
+            className="flex flex-col gap-2 max-h-[70vh] relative"
+            >
+            {/* 2nd part */}
+            <div className="overflow-y-auto">
               <div className="flex flex-col gap-1">
                 <label htmlFor="title" className="text-md font-semibold">
                   Title:
@@ -123,17 +136,17 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
                   name="title"
                   placeholder="What needs to be done?"
                   value={formData.title}
+                  className="inputBase px-2 py-1"
                   onChange={(e) => {
                     handleChange(e);
                   }}
-                  className="inputBase px-2 py-1"
                 />
                 {error && error.title && (
                   <p className="text-red-500">{error.title}</p>
                 )}
               </div>
 
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2">
                 <label htmlFor="description" className="text-md font-semibold">
                   Description:
                 </label>
@@ -166,7 +179,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
                     onChange={(e) => {
                       handleChange(e);
                     }}
-                    className="inputBase"
+                    className="inputBase px-2"
                   >
                     <option value="medium">Medium</option>
                     <option value="low">Low</option>
@@ -185,7 +198,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
                     onChange={(e) => {
                       handleChange(e);
                     }}
-                    className="inputBase"
+                    className="inputBase px-2"
                   >
                     <option value="pending">Pending</option>
                     <option value="inProgress">Inprogress</option>
@@ -202,7 +215,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
                     name="category"
                     id="category"
                     // value={formData.category}
-                    className="inputBase"
+                    className="inputBase px-2"
                     onChange={(e) => handleChange(e)}
                   >
                     {categories.map((item, index) => {
@@ -239,18 +252,19 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
                 </div>
               </div>
             </div>
-
-            <div className="flex gap-3 mt-2 relative bottom-0">
+            
+            {/* 3rd part  */}
+            <div className="flex gap-3 self-end mt-2 relative bottom-0">
               <button
                 type="button"
                 onClick={(e) => handleCancel(e)}
-                className="btn hoverBase bg-delete-color text-white"
+                className="hoverBase btn mx-2 font-semibold bg-red-300/20 text-red-600"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="btn hoverBase bg-update-color text-white"
+                className="hoverBase btn mx-2 font-semibold bg-green-500/20 text-[#229c09]"
                 onClick={(e) => handleSubmit(e)}
               >
                 Create Task

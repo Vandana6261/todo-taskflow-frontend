@@ -3,6 +3,7 @@ import { IoMdTime } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
 import { RxUpdate } from "react-icons/rx";
 import useTodoContext from '../context/TodoContext';
+import { MdCancel } from "react-icons/md";
 
 // console.log("TaskDetails rendered")
 
@@ -18,7 +19,8 @@ function TaskDetails({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
     setUpdatedData(prev => ({ ...prev, [name]: value }))
   }
 
-  const handleUpdate = () => {
+  const handleUpdate = (e) => {
+    e.preventDefault();
     console.log("Form submit called")
     let newError = {};
     if (updatedData.title == "") newError.title = "Title is required"
@@ -52,172 +54,167 @@ function TaskDetails({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
   
   return (
     <>
-      <div className='min-w-screen min-h-screen fixed top-0 left-0 backdrop-blur-sm flex justify-center items-center'
+      <div 
+      className='min-w-screen min-h-screen fixed top-0 left-0  flex justify-center items-center bg-black/40 backdrop-blur-sm '
         onClick={() => setIsUpdate(!isUpdate)}
       >
 
-        <div className='flex flex-col gap-4 bg-modal-color min-h-full w-[90vw] sm:w-[70vw] md:w-[40vw] rounded-xl p-1 sm:p-4 '
+        <div className='flex flex-col gap-1 bg-[#ffffff] min-h-full w-[90%] sm:w-[70vw] md:w-[40vw] rounded-xl p-4'
           onClick={(e) => e.stopPropagation()}
         >
           {/* 1st part */}
           <div className='flex-1 border-b border-gray-300 rounded px-4 py-2 flex justify-between'>
-            <p>Task Details</p>
-            <span className='border h-8 w-8 flex justify-center items-center rounded-[100%]  cursor-pointer'
+            <h2 className='text-2xl text-center'>Task Details</h2>
+            <span className='h-8 w-8 text-2xl rounded-full bg-gray-400/20 flex justify-center items-center cursor-pointer hoverBase'
               onClick={() => setIsUpdate(!isUpdate)}
-            >X</span>
+            ><MdCancel /></span>
           </div>
-
-          {/* 2nd part */}
-          <div className='flex-3 max-h-[70vh] overflow-y-auto border-b border-gray-300 '>
-            <div className='flex flex-col gap-2 '>
-
-              <div className='mx-2'>
-                <label
-                  className='heading4 '
-                  htmlFor='title'>
-                  Title:
-                </label>
-                <input
-                  type="text" id='title' name='title'
-                  value={updatedData?.title}
-                  className='inputBase px-2 py-1 text-sm'
-                  onChange={(e) => handleChange(e)}
-                />
-                {error && error.title && (
-                  <p className="text-red-500">{error.title}</p>
-                )}
-              </div>
-
-              <div className='mx-2'>
-                <label
-                  className='heading4'
-                  htmlFor="description" id='description'>
-                  Description
-                </label>
-                <input
-                  type="text"
-                  name='description'
-                  maxLength={300}
-                  value={updatedData.description}
-                  onChange={(e) => handleChange(e)}
-                  className='inputBase px-2 py-1 h-12 overflow-y-auto'
-                />
-                {error && error.description && (
-                  <p className="text-red-500">{error.description}</p>
-                )}
-              </div>
-
-              <div className='mx-2'>
-                <label
-                  className='heading4 '
-                  htmlFor='priority'
-                >
-                  Priority:
-                </label>
-                <p>
-                  <select name="priority" id="priority"
-                    value={updatedData?.priority}
-                    className='inputBase text-sm '
-                    onChange={(e) => handleChange(e)}
-                  >
-                    <option value="medium">Medium</option>
-                    <option value="low">Low</option>
-                    <option value="high">High</option>
-                  </select>
-                </p>
-              </div>
-
-              <div className='mx-2'>
-                <label
-                  className='heading4 '
-                  htmlFor='status'
-                >
-                  Status:
-                </label>
-                <p>
-                  <select name="status" id="status"
-                    value={updatedData?.status}
-                    className='inputBase text-sm '
-                    onChange={(e) => handleChange(e)}
-                  >
-                    <option value="pending">Pending</option>
-                    <option value="inprogress">Inprogress</option>
-                    <option value="complete">Complete</option>
-                  </select>
-                </p>
-              </div>
-
-              <div className='mx-2'>
-                <label
-                  className='heading4'
-                  htmlFor='category'
-                >
-                  Category:
-                </label>
-                <p>
-                  <select name="category" id="category"
-                    value={updatedData?.category}
-                    className='inputBase text-sm '
-                    onChange={(e) => handleChange(e)}
-                  >
-                    {categories.map((item, index) => {
-                      return (
-                        <option key={item} value={item}>
-                          {item.name}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </p>
-              </div>
-
-              <div className='mx-2'>
-                <label
-                  className='heading4 '
-                  htmlFor='dueDate'
-                >
-                  Due Date:
-                </label>
-                <p>
+          
+          <form
+            onSubmit={(e) => handleUpdate(e)}
+            className="flex flex-col gap-2 max-h-[70vh] relative"
+          >
+            {/* 2nd part */}
+            <div className='overflow-y-auto'>
+                <div className='flex flex-col gap-1'>
+                  <label
+                    className='text-md font-semibold '
+                    htmlFor='title'>
+                    Title:
+                  </label>
                   <input
-                    type="date" id='date' name='dueDate'
-                    value={updatedData?.dueDate}
+                    type="text" id='title' name='title'
+                    value={updatedData?.title}
+                    className='inputBase px-2 py-1'
                     onChange={(e) => handleChange(e)}
-                    className='inputBase text-sm '
                   />
-                </p>
-                {error && error.dueDate && (
-                  <p className="text-red-500">{error.dueDate}</p>
-                )}
-              </div>
-              <div>
-                <p>Created At {updatedData?.dueDate}.....Pending</p>
-              </div>
+                  {error && error.title && (
+                    <p className="text-red-500">{error.title}</p>
+                  )}
+                </div>
+                
+                <div className='flex flex-col gap-1'>
+                  <label
+                    className='text-md font-semibold'
+                    htmlFor="description" id='description'>
+                    Description
+                  </label>
+                  <input
+                    type="text"
+                    name='description'
+                    maxLength={300}
+                    value={updatedData.description}
+                    className='inputBase px-2 py-1 h-12 overflow-y-auto'
+                    onChange={(e) => handleChange(e)}
+                  />
+                  {error && error.description && (
+                    <p className="text-red-500">{error.description}</p>
+                  )}
+                </div>
+
+                <div className='flex flex-col gap-1'>
+                  <label
+                    className='text-md font-semibold '
+                    htmlFor='priority'
+                  >
+                    Priority:
+                  </label>
+                  <p>
+                    <select name="priority" id="priority"
+                      value={updatedData?.priority}
+                      className='inputBase text-gray-600'
+                      onChange={(e) => handleChange(e)}
+                    >
+                      <option value="medium">Medium</option>
+                      <option value="low">Low</option>
+                      <option value="high">High</option>
+                    </select>
+                  </p>
+                </div>
+
+                <div className='flex flex-col gap-1'>
+                  <label
+                    className='text-md font-semibold '
+                    htmlFor='status'
+                  >
+                    Status:
+                  </label>
+                  <p>
+                    <select name="status" id="status"
+                      value={updatedData?.status}
+                      className='inputBase px-2 text-gray-600'
+                      onChange={(e) => handleChange(e)}
+                    >
+                      <option value="pending">Pending</option>
+                      <option value="inprogress">Inprogress</option>
+                      <option value="complete">Complete</option>
+                    </select>
+                  </p>
+                </div>
+
+                <div className='flex flex-col gap-1'>
+                  <label
+                    className='text-md font-semibold'
+                    htmlFor='category'
+                  >
+                    Category:
+                  </label>
+                  <p>
+                    <select name="category" id="category"
+                      value={updatedData?.category}
+                      className='inputBase px-2 text-gray-600'
+                      onChange={(e) => handleChange(e)}
+                    >
+                      {categories.map((item, index) => {
+                        return (
+                          <option key={item} value={item}>
+                            {item.name}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </p>
+                </div>
+
+                <div className='flex flex-col gap-1'>
+                  <label
+                    className='text-md font-semibold '
+                    htmlFor='dueDate'
+                  >
+                    Due Date:
+                  </label>
+                  <p>
+                    <input
+                      type="date" id='date' name='dueDate'
+                      value={updatedData?.dueDate}
+                      onChange={(e) => handleChange(e)}
+                      className='inputBase px-2 text-gray-600'
+                    />
+                  </p>
+                  {error && error.dueDate && (
+                    <p className="text-red-500">{error.dueDate}</p>
+                  )}
+                </div>
             </div>
-          </div>
 
-          {/* 3rd part  */}
-          <div className='flex-1 flex items-center justify-between gap-4 px-2 self-end '>
-            <button className='btn hoverBase bg-delete-color text-white flex items-center gap-2'
-              onClick={() => setIsUpdate(!isUpdate)}
-            >
-              <span>
-                <MdDeleteForever />
-              </span>
-              <span>
-                Cancel
-              </span>
-            </button>
-
-            <button className='btn hoverBase bg-update-color text-white flex items-center gap-2'
-              onClick={() => handleUpdate()}
-            >
-              <span>
-                <RxUpdate />
-              </span>
-              <span>Update</span>
-            </button>
-          </div>
+            {/* 3rd part  */}
+            <div className='flex gap-3 self-end mt-2 relative bottom-0'>
+              <button className='hoverBase btn mx-2  font-semibold bg-red-300/20 text-red-600 '
+                onClick={() => setIsUpdate(!isUpdate)}
+              >
+                <span>
+                  Cancel
+                </span>
+              </button>
+              <button className='hoverBase btn mx-2 font-semibold bg-green-500/20 text-[#229c09] hoverBase flex items-center gap-2'
+              >
+                <span>
+                  <RxUpdate />
+                </span>
+                <span>Update</span>
+              </button>
+            </div>
+          </form>
         </div>
 
       </div>
