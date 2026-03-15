@@ -41,7 +41,7 @@ function TaskItem({task}) {
   return (
     <>  
       <div>
-        <div tabIndex={0} className={`px-4 border-b bg-[#ffffff] min-h-30 pb-2 border border-gray-300 rounded-xl shadow-[0px_5px_10px_rgba(0,0,0,0.25)]  hover:shadow-[0px_10px_10px_rgba(0,0,0,0.25)] text-sm m-1`}
+        <div tabIndex={0} className={`px-4 border-b bg-[#ffffff] min-h-30 pb-2 text-sm m-1 border border-gray-300 rounded-xl shadow-[0px_5px_10px_2px_rgba(0,0,0,0.25)]  hover:shadow-[0px_5px_10px_rgba(0,0,0,0.25)] hover:border-gray-400 `}
         onClick={() => setSelectId(task._id)}
         >
           {/* task title, description, etc. */}

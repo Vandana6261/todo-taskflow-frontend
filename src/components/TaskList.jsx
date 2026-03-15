@@ -60,7 +60,7 @@ function TaskList() {
                 </div>
               </div>
               <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'>
-                <h2 className='ttext-center text-lg font-semibold text-[#2a344b] sticky top-0 bg-[#ffffff] rounded mb-6'>InProgress Task</h2>
+                <h2 className='text-center text-lg font-semibold text-[#2a344b] sticky top-0 bg-[#ffffff] rounded mb-6'>InProgress Task</h2>
                 <div className='rounded flex flex-col gap-2'>
                   {
                     inProgressTask.map(item => <TaskItem task={item} />)
