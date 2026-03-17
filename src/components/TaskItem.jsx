@@ -4,6 +4,8 @@ import useTodoContext from '../context/TodoContext'
 import TaskDetails from './TaskDetails'
 import { createPortal } from 'react-dom'
 import Confirmation from './Confirmation'
+import { MdDeleteForever } from "react-icons/md";
+import { GrUpdate } from "react-icons/gr";
 
 // console.log("TaskItem rendered")
 
@@ -74,16 +76,16 @@ function TaskItem({task}) {
           <div className='flex justify-between'>
             <div>{task.dueDate && <small className=' px-2 rounded  text-gray-500'>Due: {task.dueDate}</small>}</div>
             <div>
-              <button className='hoverBase btn mx-2 font-semibold bg-gray-300/20  text-gray-600 hover:text-red-600'
+              <button className='hoverBase btn mx-2 font-semibold bg-red-300/20  text-red-600 hover:text-red-600'
               onClick={() => handleDelete()}
               >
-                Delete
+                <MdDeleteForever />
               </button>
               <button className={`hoverBase btn mx-2 font-semibold bg-blue-600/10 text-[#4F39F6] ${isCompleted ? "line-through  " : ""}`}
               onClick={() => handleUpdate()}
               disabled={isCompleted}
               >
-                Update
+                <GrUpdate />
               </button>
             </div>
           </div>
