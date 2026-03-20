@@ -69,7 +69,7 @@ function Category() {
         {/* category */}
         <div className='flex flex-col '>
           <div
-            className='flex items-center gap-1 cursor-pointer px-1 m-1 onHoverEffect'
+            className={`flex items-center gap-1 cursor-pointer px-1 m-1 onHoverEffect rounded-full  ${selectedCat === "all" ? "bg-[#ffffff] shadow-[0_0_0_2px_rgba(59,130,246,0.6)]": "bg-transparent"} `}
             onClick={() => handleCat("all")}>
             <div className={`rounded-full w-3 h-3 bg-blue-600 ${selectedCat} === "all" ? bg-[#ffffff]`}></div>
             <h2>All</h2>
@@ -82,14 +82,13 @@ function Category() {
               // }
               (categories.map((item, index) => {
                 const color = getRandomColorCode();
-                console.log(color)
                 return (
                   <div
                     key={item._id}
                     className='flex flex-col p-1 '
                     onClick={() => handleCat(item)}
                   >
-                    <div className={`flex items-center gap-2 cursor-pointer px-1 onHoverEffect`}>
+                    <div className={`flex items-center gap-2 cursor-pointer px-1 onHoverEffect rounded-full ${selectedCat === item._id ? "bg-[#ffffff] shadow-[0_0_0_2px_rgba(59,130,246,0.6)]": "bg-transparent"} `}>
                       <div className={`rounded-full w-3 h-3 bg-[${color}]`}
                         style={{backgroundColor: color}}
                       ></div>
