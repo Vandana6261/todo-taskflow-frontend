@@ -14,7 +14,7 @@ import CompledTodo from './CompledTodo';
 
 function TaskList() {
   const [showDialogBox, setShowDialogBox] = useState(false);
-  const { addTask, taskToBeShow, loading, isData } = useTodoContext();
+  const { addTask, taskToBeShow, updateTask, loading, isData } = useTodoContext();
   const [active, setActive] = useState("");
   // const columns = ["pending", "inProgress", "complete"];
 
@@ -22,11 +22,41 @@ function TaskList() {
     return eachTask.status === "pending" && !eachTask.isDeleted
   })
   const inProgressTask = taskToBeShow.filter(eachTask => {
-    return eachTask.status === "inprogress" && !eachTask.isDeleted
+    return eachTask.status === "inProgress" && !eachTask.isDeleted
   })
   const completedTask = taskToBeShow.filter(eachTask => {
     return eachTask.status === "complete" && !eachTask.isDeleted
   })
+
+  const handleDragStart = (e, item) => {
+    console.log("onDragStart")
+    console.log(item)
+    e.dataTransfer.setData("todoItem", JSON.stringify(item))
+  }
+
+  const handleDragOver = (e) => {
+    console.log("onDragOver")
+    e.preventDefault();
+  }
+
+  const handleDrop = (e, status) => {
+    e.preventDefault();
+    console.log("onDrop")
+    console.log(status)
+    const data = JSON.parse(e.dataTransfer.getData("todoItem"));
+    console.log(data)
+    if (data.status == status) {
+      return;
+    }
+    if(status == "complete") {
+      data.isCompleted = true;
+    }
+    else {
+      data.isCompleted = false;
+    }
+    data.status = status;
+    updateTask(data._id, data);
+  }
 
   return (
     <>
@@ -51,27 +81,76 @@ function TaskList() {
             :
 
             <div className='max-w-screen max-h-[78vh] pt-2 flex bg-[#f3f1f1] px-2'>
-              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'>
+
+              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
+                onDragEnter={e => console.log('onDragEnter')}
+                onDragLeave={e => console.log('onDragLeave')}
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, "pending")}
+              >
                 <h2 className='text-center text-lg  font-semibold text-[#2a344b] sticky top-0 bg-[#ffffff9d] rounded mb-6'>Pending Task</h2>
                 <div className='rounded flex flex-col gap-2'>
                   {
-                    pendingTask.map(item => <TaskItem task={item} />)
+                    pendingTask.map(item => (
+                      <div
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, item)}
+                        onDragEnd={(e) => console.log("onDragEnd")}
+
+                        onDragEnter={e => console.log('onDragEnter')}
+                        onDragLeave={e => console.log('onDragLeave')}
+                        onDragOver={handleDragOver}
+                        onDrop={(e) => handleDrop(e, item.status)}
+                      >
+                        <TaskItem task={item}
+                        />
+                      </div>
+                    ))
                   }
                 </div>
               </div>
-              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'>
+
+              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
+                onDragEnter={e => console.log('onDragEnter')}
+                onDragLeave={e => console.log('onDragLeave')}
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, "inProgress")}
+              >
                 <h2 className='text-center text-lg font-semibold text-[#2a344b] sticky top-0 bg-[#ffffff] rounded mb-6'>InProgress Task</h2>
-                <div className='rounded flex flex-col gap-2'>
+                <div className='rounded flex flex-col gap-2'
+                >
                   {
-                    inProgressTask.map(item => <TaskItem task={item} />)
+                    inProgressTask.map(item => (
+                      <div
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, item)}
+                        onDragEnd={(e) => console.log("onDragEnd")}
+                      >
+                        <TaskItem task={item} />
+                      </div>
+                    ))
                   }
                 </div>
               </div>
-              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'>
+
+              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
+                onDragEnter={e => console.log('onDragEnter')}
+                onDragLeave={e => console.log('onDragLeave')}
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, "complete")}
+              >
                 <h2 className='text-center text-lg font-semibold text-[#2a344b] sticky top-0 bg-[#ffffff] rounded mb-6'>Complete Task</h2>
                 <div className='rounded flex flex-col gap-2'>
                   {
-                    completedTask.map(item => <TaskItem task={item} />)
+                    completedTask.map(item => (
+                      <div
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, item)}
+                        onDragEnd={(e) => console.log("onDragEnd")}
+                      >
+                        <TaskItem task={item} />
+                      </div>
+                    ))
                   }
                 </div>
               </div>
