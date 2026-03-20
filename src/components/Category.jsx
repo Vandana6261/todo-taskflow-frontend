@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { FaRegFolderOpen } from "react-icons/fa";
 import useTodoContext from '../context/TodoContext';
 import { FaPlus } from "react-icons/fa";
@@ -41,18 +41,25 @@ function Category() {
 
   const getRandomColorCode = () => {
     let str = "1234567890ab";
-
     let color = "#"
+    
     for(let i=0; i<6; i++) {
       let idx = Math.floor(Math.random() * str.length)
       color += str[idx];
     }
-
+    
     return color;
   }
 
-  // getRandomColorCode();
+  const categoryColor = useMemo(() => {
+    const colorMap = {};
 
+    categories.map(item => {
+      colorMap[item._id] = getRandomColorCode();
+    })
+
+    return colorMap;
+  }, [categories])
 
 
   return (
@@ -81,7 +88,7 @@ function Category() {
 
               // }
               (categories.map((item, index) => {
-                const color = getRandomColorCode();
+                const color = categoryColor[item._id];
                 return (
                   <div
                     key={item._id}
@@ -105,7 +112,7 @@ function Category() {
           <div className='absolute bottom-0 min-w-[90%]'>
               <div className='flex flex-col gap-2'>
                 <input type="text" 
-                  className='inputBase bg-[#ffffff] px-2 py-1 font-semibold cursor-pointer text-gray-600 border-gray-400 rounded-xl shadow-[0px_10px_30px_10px_rgba(0,0,0,0.25)]  focus-within:shadow-[0px_10px_30px_10px_rgba(0,0,0,0.25)] text-sm '
+                  className='inputBase bg-[#ffffff] px-2 py-1 font-semibold text-gray-600 border-gray-400 rounded-xl shadow-[0px_10px_30px_10px_rgba(0,0,0,0.25)]  focus-within:shadow-[0px_10px_30px_10px_rgba(0,0,0,0.25)] text-sm '
                   placeholder='Enter Category to add'
                   value={catName}
                   onChange={(e) => setCatName(e.target.value)}
