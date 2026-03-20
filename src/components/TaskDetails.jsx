@@ -146,7 +146,7 @@ function TaskDetails({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
                       onChange={(e) => handleChange(e)}
                     >
                       <option value="pending">Pending</option>
-                      <option value="inprogress">Inprogress</option>
+                      <option value="inProgress">Inprogress</option>
                       <option value="complete">Complete</option>
                     </select>
                   </p>
