@@ -2,9 +2,7 @@ import React, { useState } from 'react'
 import TaskList from './TaskList';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FiCheckSquare } from "react-icons/fi";
-import TaskDetails from './TaskDetails';
 import Category from './Category';
-import DragTest from './DragTest';
 
 // console.log("TodoApp rendered")
 

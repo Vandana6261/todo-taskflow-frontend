@@ -6,9 +6,6 @@ import AddTaskDialogBox from './AddTaskDialogBox'
 import TaskItem from './TaskItem';
 import useTodoContext from '../context/TodoContext';
 import SearchBar from './SearchBar';
-import InProgressTodo from './InProgressTodo';
-import PendingTodo from './PendingTodo'
-import CompledTodo from './CompledTodo';
 
 // console.log("TaskList rendered")
 
