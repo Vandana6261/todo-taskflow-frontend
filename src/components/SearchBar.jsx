@@ -39,7 +39,6 @@ function SearchBar() {
                 <input 
                 className='py-2 px-4 border-none focus:border-none focus:outline-none w-full cursor-pointer'
                 type="text" placeholder='Search' 
-                // onChange={(e) => handleSearch(e)}
                 onKeyUp={(e) => handleSearch(e)}
                 />
             </div>

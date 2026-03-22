@@ -96,11 +96,6 @@ function TaskList() {
                         draggable
                         onDragStart={(e) => handleDragStart(e, item)}
                         onDragEnd={(e) => console.log("onDragEnd")}
-
-                        onDragEnter={e => console.log('onDragEnter')}
-                        onDragLeave={e => console.log('onDragLeave')}
-                        onDragOver={handleDragOver}
-                        onDrop={(e) => handleDrop(e, item.status)}
                       >
                         <TaskItem task={item}
                         />

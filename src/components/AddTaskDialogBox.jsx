@@ -3,6 +3,8 @@ import { useTodo } from "../hooks/useTodo";
 import useTodoContext from "../context/TodoContext";
 import { MdCancel } from "react-icons/md";
 
+// AddTaskDialogBox render
+
 function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
   const [error, setError] = useState("");
   const { addTask, categories } = useTodoContext();
@@ -13,12 +15,9 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
     description: "",
     priority: "medium",
     status: "pending",
-    // category: categories !== undefined && categories[0]?._id,
     category: "work",
     dueDate: "",
   });
-
-  // categories !== undefined && console.log(categories[0]._id);
 
   useEffect(() => {
     if(categories && categories.length > 0) {
@@ -30,7 +29,6 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
   }, [categories]);
 
   const today = new Date().toISOString().split("T")[0];
-  // const pattern = /[^A-Za-z ]/g;
   const pattern = /^[A-Za-z ]+$/;
 
   const handleChange = (e) => {
@@ -90,7 +88,6 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
       dueDate: "",
     });
 
-    // newError = {}
     setError({});
   };
 
@@ -210,7 +207,6 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
                   <label htmlFor="category" className="text-md font-semibold">
                     Category:
                   </label>
-                  {/* new try */}
                   <select
                     name="category"
                     id="category"

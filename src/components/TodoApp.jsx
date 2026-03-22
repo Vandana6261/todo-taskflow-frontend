@@ -37,17 +37,11 @@ function TodoApp() {
           <main className='flex-6 border-r border-gray-300 h-full '>
             <TaskList />
           </main>
-        {/* <div className='flex-1'> */}
-          {/* <DragTest />   */}
-        {/* </div> */}
         </div>
-
-
+        
       </div>
     </>
   )
 }
 
 export default TodoApp
-
-  {/* <TaskList /> */}
