@@ -210,7 +210,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
                   <select
                     name="category"
                     id="category"
-                    // value={formData.category}
+                    value={formData.category._id}
                     className="inputBase px-2"
                     onChange={(e) => handleChange(e)}
                   >
