@@ -6,6 +6,7 @@ import { FaPlus } from "react-icons/fa";
 // console.log("Category rendered")
 
 function Category() {
+
   const { loadTodo, categories, addCategory, filterTask } = useTodoContext()
   const [isAddCat, setIsAddCat] = useState(false)
   const [catName, setCatName] = useState("")
@@ -59,7 +60,7 @@ function Category() {
     })
 
     return colorMap;
-  }, [categories])
+  }, [categories.length])
 
 
   return (
