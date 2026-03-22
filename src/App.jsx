@@ -5,6 +5,7 @@ import './App.css'
 import TaskList from './components/TaskList'
 import TodoApp from './components/TodoApp'
 import { TodoProvider } from './context/TodoContext'
+import SignUp from './components/SignUp'
 
 function App() {
 
@@ -14,6 +15,8 @@ function App() {
       {/* <TaskList /> */}
       <TodoProvider>
         <TodoApp />
+
+        {/* <SignUp /> */}
       </TodoProvider>
     </>
   )
