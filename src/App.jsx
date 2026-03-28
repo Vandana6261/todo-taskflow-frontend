@@ -6,6 +6,8 @@ import TaskList from './components/TaskList'
 import TodoApp from './components/TodoApp'
 import { TodoProvider } from './context/TodoContext'
 import SignUp from './components/SignUp'
+import Dashboard from './components/Dashboard'
+
 
 function App() {
 
@@ -14,8 +16,8 @@ function App() {
       {/* <div>hello</div> */}
       {/* <TaskList /> */}
       <TodoProvider>
-        <TodoApp />
-
+        {/* <TodoApp /> */}
+        <Dashboard />
         {/* <SignUp /> */}
       </TodoProvider>
     </>
