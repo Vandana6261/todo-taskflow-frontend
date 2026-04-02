@@ -16,8 +16,8 @@ function App() {
       {/* <div>hello</div> */}
       {/* <TaskList /> */}
       <TodoProvider>
-        {/* <TodoApp /> */}
-        <Dashboard />
+        <TodoApp />
+        {/* <Dashboard /> */}
         {/* <SignUp /> */}
       </TodoProvider>
     </>
