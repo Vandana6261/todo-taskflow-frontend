@@ -14,7 +14,7 @@
 
 @layer components {
     .inputBase {
-        @apply px-0 py-1 w-full text-gray-700 border-1 border-gray-300/40 rounded-lg cursor-pointer hover:bg-gray-200/40 focus:border-[#e6e3e3d8] focus:outline-none focus:bg-gray-200/40  
+        @apply px-0 py-1 w-full text-gray-700 border-1 border-gray-300/40 rounded-lg hover:bg-gray-200/40 focus:border-[#e6e3e3d8] focus:outline-none focus:bg-gray-200/40  
     }
 
     .btn {
@@ -53,5 +53,9 @@
     .scrollbar-hide::-webkit-scrollbar {
         display: none;      /* Chrome, Safari, Edge */
 
+    }
+
+    .inputBase2 {
+        @apply px-0 py-1 w-full text-gray-900 text-sm placeholder-gray-400  border-1 border-gray-300/40 rounded-lg hover:bg-gray-300/40 focus:border-[#c9c7c7d8] focus:outline-none focus:bg-gray-200/40 
     }
 }

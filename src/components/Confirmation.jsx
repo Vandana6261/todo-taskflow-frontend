@@ -10,6 +10,7 @@ function Confirmation({ task, taskId, setConfirmDelete }) {
     setConfirmDelete(prev => !prev);
   }
 
+
   const handleDelete = () => {
     deleteTask(taskId, { ...task, isDeleted: true });
     setConfirmDelete(prev => !prev);
@@ -19,7 +20,7 @@ function Confirmation({ task, taskId, setConfirmDelete }) {
       <div className='w-screen h-screen fixed top-0 left-0 flex items-center justify-center bg-black/40 backdrop-blur-sm'
         onClick={() => handleCancel()}
       >
-        <div className='bg-[#ffffff]  p-2 rounded-xl min-h-40 flex flex-col justify-center items-center gap-2 font-semibold'
+        <div className='bg-[#ffffff] p-2 rounded-xl min-h-40 flex flex-col justify-center items-center gap-2 font-semibold'
           onClick={(e) => e.stopPropagation()}
         >
           <p className='text-gray-800 font-semibold'>Are you sure you want to delete this?</p>
