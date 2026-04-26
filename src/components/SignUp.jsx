@@ -43,7 +43,8 @@ function SignUp({ isSignUp, setIsSignUp }) {
     return (
         <>
             {isSignUp &&
-                <div className='min-w-screen min-h-screen flex justify-center items-center bg-black/10 backdrop-blur-sm z-999 fixed top-0 '
+                <div 
+                // className='min-w-screen min-h-screen flex justify-center items-center bg-black/10 backdrop-blur-sm z-999 fixed top-0 '
                     onClick={() => {
                         setIsSignUp(!isSignUp)
                     }}

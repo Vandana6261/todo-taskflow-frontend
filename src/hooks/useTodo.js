@@ -194,10 +194,11 @@ export function useTodo() {
     setTaskToBeShow(arr);
   };
 
-  // -------------
+  // ---------------------------------------------------------------------------------------------------------------------
 
   async function registerUser(userData) {
-    try {
+    try 
+    {
       console.log(userData);
       let response = await fetch("http://localhost:5000/api/user/register", {
         method: "POST",
@@ -206,10 +207,25 @@ export function useTodo() {
         },
         body: JSON.stringify(userData),
       });
-      const isLoggedIn = await response.json();
-      if(isLoggedIn.success) return true;
-      return false;
-      
+      const loginResponse = await response.json();
+      // if (isLoggedIn.success) return true;
+      // return false;
+
+      // ------
+
+      if (loginResponse.success) 
+      {
+        const token = loginResponse.token;
+        setUserData(loginResponse.user);
+        console.log(loginResponse, 220);
+        document.cookie = `token=${token}; path=/; max-age:86400`;
+        return { success: true };
+      } 
+      else 
+      {
+        return { success: false };
+      }
+
     } catch (error) {
       console.log("Error occured while creating User: ", error);
     }
@@ -225,28 +241,53 @@ export function useTodo() {
         },
         body: JSON.stringify(userData),
       });
-      const data = await response.json();
-      console.log(data);
-      if (data.success) {
-        console.log(data)
-        const loginResponse = await loginUser({
-          email: data.user.email,
-          password: userData.password,
-        });
-        if (loginResponse.success) {
-          const token = loginResponse.token;
-          setUserData(loginResponse.user);
 
-          document.cookie = `token=${token}; path="/"; max-age:86400`;
-          return { success: true };
-        }
-      }
-      else {
-        return {success: false}
+      const loginResponse = await response.json();
+      console.log(loginResponse);
+
+      if (loginResponse.success) 
+      {
+        const token = loginResponse.token;
+        setUserData(loginResponse.user);
+
+        document.cookie = `token=${token}; path="/"; max-age:86400`;
+        return { success: true };
+      } 
+      else 
+      {
+        return { success: false };
       }
     } catch (error) {
       console.log("Error occurred while creating: ", error);
     }
+  }
+
+  async function getProfile(data) {
+    console.log("getProfile called");
+    const token = await getToken("token")
+    const response = await fetch("http://localhost:5000/api/user/profile", {
+      method: "GET",
+      headers : {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+    const userInfo = await response.json();
+    console.log(userInfo);
+  }
+
+
+  function getToken(name) {           // name = "token"
+    console.log("GetToken called");
+    const cookieString = document.cookie;     // get all cookies in string
+    const cookies = cookieString.split("; ");
+    for(let cookie of cookies) 
+    {
+      // console.log(cookie);
+      const [key, value] = cookie.split("=");
+      
+      if(key === name) return value;
+    }
+    return null;
   }
 
   return {
@@ -265,21 +306,24 @@ export function useTodo() {
     filterTask,
     loading,
     isData,
+
     registerUser,
-    loginUser
+    loginUser,
+    getProfile,
+    getToken
   };
 }
 
-{
-  message: "User register successfully";
-  success: true;
-  user: {
-    __v: 0;
-    _id: "69e2027c2633e59f4860f44b";
-    email: "a@gmail.com";
-    firstName: "Anish";
-    lastName: "Patidar";
-    mobileNo: "9752131385";
-    password: "$2b$10$neoTXHRMfE1v1EEhG2z8UuTjpgYoZFhaXU0WLDb0Nn2y.VaGxTNnS";
-  }
-}
+// {
+//   message: "User register successfully";
+//   success: true;
+//   user: {
+//     __v: 0;
+//     _id: "69e2027c2633e59f4860f44b";
+//     email: "a@gmail.com";
+//     firstName: "Anish";
+//     lastName: "Patidar";
+//     mobileNo: "9752131385";
+//     password: "$2b$10$neoTXHRMfE1v1EEhG2z8UuTjpgYoZFhaXU0WLDb0Nn2y.VaGxTNnS";
+//   }
+// }

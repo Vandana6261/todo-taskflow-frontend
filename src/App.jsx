@@ -6,12 +6,12 @@ import TaskList from './components/TaskList'
 import TodoApp from './components/TodoApp'
 import { TodoProvider } from './context/TodoContext'
 // import SignUp from './components/SignUp'
-import Dashboard from './components/Dashboard'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp'
 import Home from './pages/Home'
+import Dashboard from './pages/Dashboard';
 
 
 function App() {
@@ -34,12 +34,12 @@ function App() {
           path: "/login",
           element: <Login />
         },
-        {
-          path: "/dashboard",
-          element: <Dashboard />,
-          // loader: 
-        }
       ]
+    },
+    {
+      path: "/dashboard",
+      element: <Dashboard />,
+      // loader: 
     }
   ])
 
