@@ -5,7 +5,7 @@ import { redirect, useNavigate } from 'react-router-dom';
 
 
 function SignUp() {
-  const { registerUser } = useTodoContext();
+  const { registerUser, getToken, getProfile } = useTodoContext();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -87,9 +87,12 @@ function SignUp() {
     // const response = registerUser(formData);
     const response = await registerUser(formData);
     // console.log(formData)
+    console.log(response);
     if(response) {
-      redirect("/dashboard")
+      // redirect("/dashboard")
+      await getProfile();
     }
+    
     console.log("Form submitted")
   }
 
@@ -140,7 +143,7 @@ function SignUp() {
                 placeholder="Enter Email" 
                 name="email" 
                 className="inputBase2 px-2 py-1"
-                onChange={(e) => handleChange(e)}
+                onBlur={(e) => handleBlur(e)}
               />
               {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
             </div>
@@ -156,7 +159,7 @@ function SignUp() {
                 minLength={8}
                 maxLength={20}
                 className="inputBase2 px-2 py-1"
-                onChange={(e) => handleChange(e)}
+                onBlur={(e) => handleBlur(e)}
               />
               {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
             </div>
@@ -172,7 +175,7 @@ function SignUp() {
                  minLength={10}
                  maxLength={10}
                 className="inputBase2 px-2 py-1"
-                onChange={(e) => handleChange(e)}
+                onBlur={(e) => handleBlur(e)}
               />
               {errors.mobileNo && <p className="text-sm text-red-600">{errors.mobileNo}</p>}
             </div>
