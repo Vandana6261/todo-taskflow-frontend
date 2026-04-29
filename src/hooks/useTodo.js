@@ -13,22 +13,32 @@ export function useTodo() {
   // console.log(categories)
 
   async function loadTodo() {
-    // console.log("loadTodo called")
+    console.log("loadTodo called")
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/todo");
+      const token = getToken("token")
+      console.log(token)
+      const response = await fetch("http://localhost:5000/api/todo/getTodo", {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+      console.log(response, "response")
       if (!response.ok) {
         console.log("Error status : ", response.status);
         console.log(response);
       } else {
         const data = await response.json();
-
-        let filteredTask = data.todos.filter((item) => !item.isDeleted);
-        setTasks((prev) => filteredTask);
-        setTaskToBeShow((prev) => filteredTask);
-        setCategories((prev) => [...data.categories]);
-        setLoading(false);
-        setIsData(true);
+        if(data) {
+          console.log(data, "data")
+          let filteredTask = data.length ? data.todos.filter((item) => !item.isDeleted) : [];
+          setTasks((prev) => filteredTask);
+          setTaskToBeShow((prev) => filteredTask);
+          // setCategories((prev) => [...data.categories]);
+          setLoading(false);
+          setIsData(true);
+        }
       }
     } catch (error) {
       console.log("Error occured while loading TODO");
@@ -37,14 +47,22 @@ export function useTodo() {
   }
 
   async function loadCat() {
+    console.log("loadCat called")
     try {
-      const response = await fetch("http://localhost:5000/api/todo");
+      const token = getToken("token");
+      const response = await fetch("http://localhost:5000/api/todo/getCat", {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+      console.log(response, "response");
       if (!response.ok()) {
         console.log("Error status: ", response.status);
         return;
       }
       const data = await response.json();
-      // setCategories(prev => data);
+      setCategories(prev => data);
     } catch (error) {
       console.log(error);
     }
@@ -292,6 +310,7 @@ export function useTodo() {
 
   return {
     loadTodo,
+    loadCat,
     addTask,
     tasks,
     deleteTask,

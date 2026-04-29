@@ -6,12 +6,13 @@ import TaskList from './components/TaskList'
 import TodoApp from './components/TodoApp'
 import { TodoProvider } from './context/TodoContext'
 // import SignUp from './components/SignUp'
-import {createBrowserRouter, RouterProvider} from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp'
 import Home from './pages/Home'
 import Dashboard from './pages/Dashboard';
+// import ErrorBoundary from './pages/ErrorBoundary'
 
 
 function App() {
@@ -45,10 +46,12 @@ function App() {
 
   return (
     <>
-      <TodoProvider>
-        <RouterProvider router = {router}/>
-        {/* <TodoApp /> */}
-      </TodoProvider>
+      {/* <ErrorBoundary> */}
+        <TodoProvider>
+          <RouterProvider router={router} />
+          {/* <TodoApp /> */}
+        </TodoProvider>
+      {/* </ErrorBoundary> */}
     </>
   )
 }
@@ -58,10 +61,10 @@ export default App
 
 
 
-{/* <div>hello</div> */}
-{/* <TaskList /> */}
+{/* <div>hello</div> */ }
+{/* <TaskList /> */ }
 {/* <TodoProvider>
   <TodoApp />
 </TodoProvider> */}
-  {/* <Dashboard /> */}
-  {/* <SignUp /> */}
+{/* <Dashboard /> */ }
+{/* <SignUp /> */ }

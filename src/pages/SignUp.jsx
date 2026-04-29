@@ -5,14 +5,15 @@ import { redirect, useNavigate } from 'react-router-dom';
 
 
 function SignUp() {
-  const { registerUser, getToken, getProfile } = useTodoContext();
+  const { registerUser, getToken, getProfile, loadTodo, loadCat } = useTodoContext();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    mobileNo: ""
+    firstName: "Vandana",
+    lastName: "Patidar",
+    email: "v@gmail.com",
+    password: "Vandana@1234",
+    mobileNo: "6261000435"
   })
 
   const [errors, setErrors] = useState({})
@@ -20,7 +21,7 @@ function SignUp() {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,20}$/;
   
- 
+  
 
   const handleBlur = (e) => {
     const {name, value} = e.target;
@@ -89,8 +90,11 @@ function SignUp() {
     // console.log(formData)
     console.log(response);
     if(response) {
-      // redirect("/dashboard")
-      await getProfile();
+      // console.log("redirect")
+      // navigate("/dashboard")
+      // await getProfile();
+      await loadTodo()
+      await loadCat();
     }
     
     console.log("Form submitted")
