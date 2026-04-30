@@ -7,56 +7,10 @@ import Category from '../components/Category';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FiCheckSquare } from "react-icons/fi";
 
-// export async function loadProfile({request}) {
-//   // const cookieString = document.cookie;     // get all cookies in string
-
-//   const cookieHeader = request.headers.get("cookie");
-//   console.log(cookieString);
-//   // const cookies = cookieString.split("; ");
-
-//   // for (let cookie of cookies) {
-//   //   // console.log(cookie);
-//   //   const [key, value] = cookie.split("=");
-
-//   //   if (key === "token") {
-//   //     // await getProfile();
-
-//   //     const response = await fetch("http://localhost:5000/api/user/profile", {
-//   //       method: "GET",
-//   //       headers: {
-//   //         "Authorization": `Bearer ${token}`
-//   //       }
-//   //     });
-//   //     const userInfo = await response.json();
-//   //     console.log(userInfo);
-//   //     return userInfo
-//   //   }
-//   // }
-
-//   // for(let i=0; i<cookies.length; i++) {
-//   //   const [key, value] = cookie.split("=");
-//   //   if (key === "token") {
-//   //     // await getProfile();
-//   //     const response = await fetch("http://localhost:5000/api/user/profile", {
-//   //       method: "GET",
-//   //       headers: {
-//   //         "Authorization": `Bearer ${token}`
-//   //       }
-//   //     });
-//   //     const userInfo = await response.json();
-//   //     console.log(userInfo);
-//   //     return userInfo
-//   //   }
-//   // }
-//   // return null;
-//   return {success: true};
-// }
-
-
 export async function loadProfile({ request }) {
   const cookieHeader = request.headers.get("cookie");
 
-  let token;
+  let token = 3;
 
   if (cookieHeader) {
     const cookies = cookieHeader.split("; ");
@@ -76,8 +30,8 @@ export async function loadProfile({ request }) {
 
 function Dashboard() {
   // const { getToken } = useTodoContext()
-  // const {userInfo} = useLoaderData();
-  // console.log(userInfo, "userInfo");
+  const {userInfo} = useLoaderData();
+  console.log(userInfo, "userInfo");
 
   const [showCategory, setShowCategory] = useState(false)
 
