@@ -1,7 +1,7 @@
 
 // main content here filter + todos + Add Task Button.
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AddTaskDialogBox from './AddTaskDialogBox'
 import TaskItem from './TaskItem';
 import useTodoContext from '../context/TodoContext';
@@ -11,7 +11,7 @@ import SearchBar from './SearchBar';
 
 function TaskList() {
   const [showDialogBox, setShowDialogBox] = useState(false);
-  const { addTask, taskToBeShow, updateTask, loading, isData } = useTodoContext();
+  const { addTask, taskToBeShow, updateTask, loading, isData, loadTodo } = useTodoContext();
   const [active, setActive] = useState("");
   // const columns = ["pending", "inProgress", "complete"];
 
@@ -23,6 +23,12 @@ function TaskList() {
   })
   const completedTask = taskToBeShow.filter(eachTask => {
     return eachTask.status === "complete" && !eachTask.isDeleted
+  })
+
+  useEffect(() => {
+    async function loadData() {
+      await loadTodo();
+    }
   })
 
   const handleDragStart = (e, item) => {

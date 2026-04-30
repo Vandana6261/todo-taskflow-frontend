@@ -91,10 +91,10 @@ function SignUp() {
     console.log(response);
     if(response) {
       // console.log("redirect")
-      // navigate("/dashboard")
+      navigate("/dashboard")
       // await getProfile();
-      await loadTodo()
-      await loadCat();
+      // await loadTodo()
+      // await loadCat();
     }
     
     console.log("Form submitted")

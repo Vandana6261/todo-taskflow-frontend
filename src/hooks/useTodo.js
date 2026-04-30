@@ -69,7 +69,7 @@ export function useTodo() {
   }
 
   useEffect(() => {
-    loadTodo();
+    // loadTodo();
     // loadCat();
   }, []);
 

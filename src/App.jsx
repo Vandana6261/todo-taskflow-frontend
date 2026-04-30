@@ -11,7 +11,7 @@ import Landing from './pages/Landing';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp'
 import Home from './pages/Home'
-import Dashboard from './pages/Dashboard';
+import Dashboard, { loadProfile } from './pages/Dashboard';
 // import ErrorBoundary from './pages/ErrorBoundary'
 
 
@@ -40,7 +40,7 @@ function App() {
     {
       path: "/dashboard",
       element: <Dashboard />,
-      // loader: 
+      loader: loadProfile
     }
   ])
 

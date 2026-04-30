@@ -13,6 +13,12 @@ function Category() {
   const [error, setError] = useState("")
   const [selectedCat, setSelectedCat] = useState("all")
 
+  useEffect(() => {
+    async function loadData() {
+      await loadCat();
+    }
+  })
+
   const handleCat = (cat) => {
     console.log(selectedCat)
     if (cat == "all") {
