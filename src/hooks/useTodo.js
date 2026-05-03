@@ -16,7 +16,7 @@ export function useTodo() {
     console.log("loadTodo called")
     setLoading(true);
     try {
-      const token = getToken("token")
+      const token = await agetToken();
       console.log(token)
       const response = await fetch("http://localhost:5000/api/todo/getTodo", {
         method: "GET",
@@ -49,7 +49,7 @@ export function useTodo() {
   async function loadCat() {
     console.log("loadCat called")
     try {
-      const token = getToken("token");
+      const token = await getToken();
       const response = await fetch("http://localhost:5000/api/todo/getCat", {
         method: "GET",
         headers: {
@@ -75,11 +75,13 @@ export function useTodo() {
 
   async function addTask(task) {
     try {
+      const token = await getToken();
       console.log("addTask called");
       const response = await fetch("http://localhost:5000/api/todo", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(task),
       });
@@ -236,7 +238,7 @@ export function useTodo() {
         const token = loginResponse.token;
         setUserData(loginResponse.user);
         console.log(loginResponse, 220);
-        document.cookie = `token=${token}; path=/; max-age:86400`;
+        localStorage.setItem("token", JSON.stringify(token))
         return { success: true };
       } 
       else 
@@ -268,7 +270,8 @@ export function useTodo() {
         const token = loginResponse.token;
         setUserData(loginResponse.user);
 
-        document.cookie = `token=${token}; path="/"; max-age:86400`;
+        // document.cookie = `token=${token}; path="/"; max-age:86400`;
+        await localStorage.setItem("token", JSON.stringify(token))
         return { success: true };
       } 
       else 
@@ -296,16 +299,7 @@ export function useTodo() {
 
   function getToken(name) {           // name = "token"
     console.log("GetToken called");
-    const cookieString = document.cookie;     // get all cookies in string
-    const cookies = cookieString.split("; ");
-    for(let cookie of cookies) 
-    {
-      // console.log(cookie);
-      const [key, value] = cookie.split("=");
-      
-      if(key === name) return value;
-    }
-    return null;
+    const token = JSON.parse(localStorage.getItem("token")) || [];
   }
 
   return {
