@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp'
 import Home from './pages/Home'
 import Dashboard, { loadProfile } from './pages/Dashboard';
+import VarifyOtp from './pages/VarifyOtp'
 // import ErrorBoundary from './pages/ErrorBoundary'
 
 
@@ -29,7 +30,18 @@ function App() {
         },
         {
           path: "/signUp",
-          element: <SignUp />
+          element: <SignUp />,
+          // children: [
+          //   {
+          //     path: "varifyOtp",
+          //     element: <VarifyOtp />
+          //   }
+          // ]
+        },
+        {
+          path: "/signUp/varifyOtp",
+          element: <VarifyOtp />,
+          
         },
         {
           path: "/login",
@@ -43,6 +55,9 @@ function App() {
       loader: loadProfile
     }
   ])
+
+  // /signup/verify-otp
+  // /auth/forgot-password
 
   return (
     <>
