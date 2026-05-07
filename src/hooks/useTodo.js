@@ -16,7 +16,7 @@ export function useTodo() {
     console.log("loadTodo called")
     setLoading(true);
     try {
-      const token = await agetToken();
+      const token = await getToken();
       console.log(token)
       const response = await fetch("http://localhost:5000/api/todo/getTodo", {
         method: "GET",
@@ -64,6 +64,7 @@ export function useTodo() {
       const data = await response.json();
       setCategories(prev => data);
     } catch (error) {
+      console.log("Error occured while loadCat")
       console.log(error);
     }
   }
@@ -220,34 +221,64 @@ export function useTodo() {
     try 
     {
       console.log(userData);
-      let response = await fetch("http://localhost:5000/api/user/register", {
+      let response = await fetch("http://localhost:5000/api/user/send-otp", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
         },
         body: JSON.stringify(userData),
       });
-      const loginResponse = await response.json();
+      const isRegister = await response.json();
+      if(!isRegister.success) {
+        return {success: false};
+      }
+
+      localStorage.setItem("token", JSON.stringify(isRegister.token))
+      return { success: true };
       // if (isLoggedIn.success) return true;
       // return false;
 
       // ------
 
-      if (loginResponse.success) 
-      {
-        const token = loginResponse.token;
-        setUserData(loginResponse.user);
-        console.log(loginResponse, 220);
-        localStorage.setItem("token", JSON.stringify(token))
-        return { success: true };
-      } 
-      else 
-      {
-        return { success: false };
-      }
+      // if (loginResponse.success) 
+      // {
+      //   const token = loginResponse.token;
+      //   setUserData(loginResponse.user);
+      //   console.log(loginResponse, 220);
+        // localStorage.setItem("token", JSON.stringify(token))
+        // return { success: true };
+      // } 
+      // else 
+      // {
+      //   return { success: false };
+      // }
 
     } catch (error) {
       console.log("Error occured while creating User: ", error);
+    }
+  }
+
+  async function varifyOtp(otp) {
+    try {
+      const token = getToken("token");
+      console.log(otp, typeof(otp))
+      // console.log(token, "token")
+      const response = await fetch("http://localhost:5000/api/user/varifyOtp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({otp})
+      })
+
+      const isVarified = await response.json();
+      console.log(isVarified);
+      setUserData(isVarified.user);
+      
+      return isVarified;
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -299,7 +330,8 @@ export function useTodo() {
 
   function getToken(name) {           // name = "token"
     console.log("GetToken called");
-    const token = JSON.parse(localStorage.getItem("token")) || [];
+    const token = JSON.parse(localStorage.getItem("token")) || "";
+    return token;
   }
 
   return {
@@ -321,6 +353,8 @@ export function useTodo() {
     isData,
 
     registerUser,
+    varifyOtp,
+
     loginUser,
     getProfile,
     getToken
