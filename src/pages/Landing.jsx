@@ -27,6 +27,11 @@ function Landing() {
             className='btn hoverBase border-none w-auto py-2 px-4  text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
             onClick={() => navigate("/signUp")}
           >SignUp</NavLink>
+          <NavLink
+            to="/signUp/varifyOtp"
+            className='btn hoverBase border-none w-auto py-2 px-4  text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
+            onClick={() => navigate("/varifyOtp")}
+          >Varify Otp</NavLink>
         </div>
       </div>
       <Outlet />
