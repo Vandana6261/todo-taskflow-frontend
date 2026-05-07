@@ -89,12 +89,13 @@ function SignUp() {
     const response = await registerUser(formData);
     // console.log(formData)
     console.log(response);
-    if(response) {
+    if(!response.success) {
       // console.log("redirect")
-      navigate("/dashboard")
-      // await getProfile();
-      // await loadTodo()
-      // await loadCat();
+      alert("You have an account please login")
+      navigate("/login")
+    }
+    else {
+      navigate("/signUp/varifyOtp")
     }
     
     console.log("Form submitted")
@@ -184,7 +185,7 @@ function SignUp() {
               {errors.mobileNo && <p className="text-sm text-red-600">{errors.mobileNo}</p>}
             </div>
 
-            <button className='btn hoverBase border-none w-fit py-2 px-4 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>Sign Up</button>
+            <button className='btn hoverBase border-none w-fit py-2 px-4 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>Submit</button>
           </form>
         </div>
       </div>
