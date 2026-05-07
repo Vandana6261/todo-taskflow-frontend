@@ -27,6 +27,7 @@ function TaskList() {
 
   useEffect(() => {
     async function loadData() {
+      console.log("TaskList useEffect for loadTodo")
       await loadTodo();
     }
   })

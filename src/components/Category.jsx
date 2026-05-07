@@ -15,6 +15,7 @@ function Category() {
 
   useEffect(() => {
     async function loadData() {
+      console.log("Category loadCat")
       await loadCat();
     }
   })
