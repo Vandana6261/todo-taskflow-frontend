@@ -12,13 +12,8 @@ function Category() {
   const [catName, setCatName] = useState("")
   const [error, setError] = useState("")
   const [selectedCat, setSelectedCat] = useState("all")
-
-  useEffect(() => {
-    async function loadData() {
-      console.log("Category loadCat")
-      await loadCat();
-    }
-  })
+  console.log(categories)
+  
 
   const handleCat = (cat) => {
     console.log(selectedCat)
@@ -93,26 +88,28 @@ function Category() {
             categories.length == 0 ?
               <p>No category to display</p>
               :
-
+              <p>hello </p>
               // }
-              (categories.map((item, index) => {
-                const color = categoryColor[item._id];
-                return (
-                  <div
-                    key={item._id}
-                    className='flex flex-col p-1 '
-                    onClick={() => handleCat(item)}
-                  >
-                    <div className={`flex items-center gap-2 cursor-pointer px-1 onHoverEffect rounded-full ${selectedCat === item._id ? "bg-[#ffffff] shadow-[0_0_0_2px_rgba(59,130,246,0.6)]": "bg-transparent"} `}>
-                      <div className={`rounded-full w-3 h-3 bg-[${color}]`}
-                        style={{backgroundColor: color}}
-                      ></div>
-                      <span>{item.name}</span>
-                    </div>
-                  </div>
-                )
-              }))
-          }
+              // (categories.map((item, index) => {
+              //   const color = categoryColor[item._id];
+              //   return (
+              //     <div
+              //       key={item._id}
+              //       className='flex flex-col p-1 '
+              //       onClick={() => handleCat(item)}
+              //     >
+              //       <div className={`flex items-center gap-2 cursor-pointer px-1 onHoverEffect rounded-full ${selectedCat === item._id ? "bg-[#ffffff] shadow-[0_0_0_2px_rgba(59,130,246,0.6)]": "bg-transparent"} `}>
+              //         <div className={`rounded-full w-3 h-3 bg-[${color}]`}
+              //           style={{backgroundColor: color}}
+              //         ></div>
+              //         <span>{item.name}</span>
+              //       </div>
+              //     </div>
+              //   )
+              // }))
+
+            }
+            {console.log(categories)}
         </div>
 
         {isAddCat ?
