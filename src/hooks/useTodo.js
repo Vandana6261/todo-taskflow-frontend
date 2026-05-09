@@ -10,32 +10,26 @@ export function useTodo() {
   const [loading, setLoading] = useState(false);
   const [isData, setIsData] = useState(true);
   const [userData, setUserData] = useState({});
-  // console.log(categories)
 
   async function loadTodo() {
     console.log("loadTodo called")
     setLoading(true);
     try {
       const token = await getToken();
-      console.log(token)
       const response = await fetch("http://localhost:5000/api/todo/getTodo", {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`
         }
       });
-      console.log(response, "response")
       if (!response.ok) {
         console.log("Error status : ", response.status);
         console.log(response);
       } else {
         const data = await response.json();
         if(data) {
-          console.log(data, "data")
-          let filteredTask = data.length ? data.todos.filter((item) => !item.isDeleted) : [];
-          setTasks((prev) => filteredTask);
-          setTaskToBeShow((prev) => filteredTask);
-          // setCategories((prev) => [...data.categories]);
+          setTasks(data);
+          setTaskToBeShow(data);
           setLoading(false);
           setIsData(true);
         }
@@ -56,13 +50,12 @@ export function useTodo() {
           "Authorization": `Bearer ${token}`
         }
       });
-      console.log(response, "response");
-      if (!response.ok()) {
+      if (!response.ok) {
         console.log("Error status: ", response.status);
         return;
       }
       const data = await response.json();
-      setCategories(prev => data);
+      setCategories(data.categories || []);
     } catch (error) {
       console.log("Error occured while loadCat")
       console.log(error);
@@ -78,7 +71,7 @@ export function useTodo() {
     try {
       const token = await getToken();
       console.log("addTask called");
-      const response = await fetch("http://localhost:5000/api/todo", {
+      const response = await fetch("http://localhost:5000/api/todo/createTodo", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -93,7 +86,6 @@ export function useTodo() {
         return;
       }
       const data = await response.json();
-      console.log(data, "data");
       await loadTodo();
     } catch (error) {
       console.log("Error occured while adding task");
@@ -190,7 +182,6 @@ export function useTodo() {
         console.log("Error response is not okay ", response);
       } else {
         let data = await response.json();
-        console.log(data, 155);
         console.log(categories);
         // setCategories(prev => [...prev], data)
         await loadTodo();
@@ -220,7 +211,6 @@ export function useTodo() {
   async function registerUser(userData) {
     try 
     {
-      console.log(userData);
       let response = await fetch("http://localhost:5000/api/user/send-otp", {
         method: "POST",
         headers: {
@@ -261,8 +251,6 @@ export function useTodo() {
   async function varifyOtp(otp) {
     try {
       const token = getToken("token");
-      console.log(otp, typeof(otp))
-      // console.log(token, "token")
       const response = await fetch("http://localhost:5000/api/user/varifyOtp", {
         method: "POST",
         headers: {
@@ -273,7 +261,6 @@ export function useTodo() {
       })
 
       const isVarified = await response.json();
-      console.log(isVarified);
       setUserData(isVarified.user);
       
       return isVarified;
@@ -294,7 +281,6 @@ export function useTodo() {
       });
 
       const loginResponse = await response.json();
-      console.log(loginResponse);
 
       if (loginResponse.success) 
       {
@@ -324,7 +310,6 @@ export function useTodo() {
       }
     });
     const userInfo = await response.json();
-    console.log(userInfo);
   }
 
 
@@ -339,12 +324,14 @@ export function useTodo() {
     loadCat,
     addTask,
     tasks,
+    setTasks,
     deleteTask,
     updateTask,
     searchTask,
     selectId,
     setSelectId,
     taskToBeShow,
+    setTaskToBeShow,
     categories,
     addCategory,
     setCategories,

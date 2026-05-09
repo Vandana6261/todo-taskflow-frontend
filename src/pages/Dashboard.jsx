@@ -1,31 +1,64 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import useTodoContext from '../context/TodoContext'
 import { useLoaderData } from 'react-router-dom';
 import TaskList from '../components/TaskList';
 import Category from '../components/Category';
-
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FiCheckSquare } from "react-icons/fi";
 
 export async function loadProfile({ request }) {
-
   let token = JSON.parse(localStorage.getItem("token")) || {}
+  let todoResponse;
+  let catResponse;
+  let todoData = null;
+  let catData = null;
+  
+  try {
+    todoResponse = await fetch("http://localhost:5000/api/todo/getTodo", {
+    method: "GET",
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
+  });
+  todoData = await todoResponse.json();
+  } catch (error) {
+    console.log(error);
+  }
 
-
-  console.log("Token:", token);
-
-  return { token };
+  try {
+    catResponse = await fetch("http://localhost:5000/api/todo/getCat", {
+    method: "GET",
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
+  });
+  catData = await catResponse.json();
+  } catch (error) {
+    console.log(error);
+  }
+  let catArr = catData.categories
+  return {todoData, catArr}
 }
 
 function Dashboard() {
-  // const { getToken } = useTodoContext()
-  const {userInfo} = useLoaderData();
-  console.log(userInfo, "userInfo");
+  const { setTasks, setTaskToBeShow, setCategories } = useTodoContext()
+  const { todoData, catArr } = useLoaderData();
 
   const [showCategory, setShowCategory] = useState(false)
 
+  useEffect(() => {
+    console.log("Dashboard useEffect")
+    if (todoData) {
+      setTasks(todoData);
+      setTaskToBeShow(todoData);
+    }
+    if (catArr) {
+      setCategories(catArr);
+    }
+  }, [todoData, catArr, setTasks, setTaskToBeShow, setCategories]);
+
   return (
-     <>
+    <>
       {/* <h2>Hello</h2> */}
       <div className='max-w-[1400px] mx-auto h-screen flex flex-col bg-[#c7c7ee71]'>
         {/* previous ui-bg :- e0e5ebd2 */}
@@ -53,7 +86,7 @@ function Dashboard() {
             <TaskList />
           </main>
         </div>
-        
+
       </div>
     </>
   )
