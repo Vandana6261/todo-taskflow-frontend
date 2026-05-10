@@ -96,10 +96,12 @@ export function useTodo() {
   async function deleteTask(taskId, task) {
     // console.log("deleteTask is called", taskId);
     try {
+      const token = await getToken();
       const response = await fetch(`http://localhost:5000/api/todo/${taskId}`, {
         method: "DELETE",
         headers: {
           "content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(task),
       });
@@ -120,10 +122,12 @@ export function useTodo() {
   async function updateTask(taskId, task) {
     console.log("Update task called");
     try {
+      const token = await getToken();
       const response = await fetch(`http://localhost:5000/api/todo/${taskId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(task),
       });
@@ -147,7 +151,14 @@ export function useTodo() {
     setLoading(true);
     setTaskToBeShow([]);
     try {
-      const response = await fetch(`http://localhost:5000/api/todo/${keyword}`);
+      const token = await getToken();
+      const response = await fetch(`http://localhost:5000/api/todo/${keyword}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
       if (!response.ok) {
         console.log("Error response is not ok: ", response.status);
         console.log(response);
@@ -167,12 +178,14 @@ export function useTodo() {
   async function addCategory(catName) {
     console.log("addCategory called");
     try {
+      const token = await getToken();
       let response = await fetch(
         "http://localhost:5000/api/todo/createCategory",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({ name: catName }),
         },
@@ -182,9 +195,10 @@ export function useTodo() {
         console.log("Error response is not okay ", response);
       } else {
         let data = await response.json();
-        console.log(categories);
-        // setCategories(prev => [...prev], data)
-        await loadTodo();
+        // console.log(categories);
+        console.log(data)
+        setCategories(prev => [...prev], data)
+        // await loadTodo();
       }
     } catch (error) {
       console.log("Error occured while creating category: ", error);
@@ -289,12 +303,8 @@ export function useTodo() {
 
         // document.cookie = `token=${token}; path="/"; max-age:86400`;
         await localStorage.setItem("token", JSON.stringify(token))
-        return { success: true };
-      } 
-      else 
-      {
-        return { success: false };
       }
+      return loginResponse;
     } catch (error) {
       console.log("Error occurred while creating: ", error);
     }
