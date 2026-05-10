@@ -197,7 +197,7 @@ export function useTodo() {
         let data = await response.json();
         // console.log(categories);
         console.log(data)
-        setCategories(prev => [...prev], data)
+        setCategories(prev => [...prev, data])
         // await loadTodo();
       }
     } catch (error) {
