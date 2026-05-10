@@ -1,43 +1,74 @@
 import React, { useState, useEffect } from 'react'
 import useTodoContext from '../context/TodoContext'
-import { useLoaderData } from 'react-router-dom';
+import { redirect, useLoaderData } from 'react-router-dom';
 import TaskList from '../components/TaskList';
 import Category from '../components/Category';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FiCheckSquare } from "react-icons/fi";
+import { toast } from 'react-toastify';
 
 export async function loadProfile({ request }) {
-  let token = JSON.parse(localStorage.getItem("token")) || {}
+  let token = JSON.parse(localStorage.getItem("token"));
+  if (!token) {
+    toast.error("You cannot access the dashboard before signup or login!");
+    return redirect("/");
+  }
+
   let todoResponse;
   let catResponse;
   let todoData = null;
   let catData = null;
-  
+
   try {
     todoResponse = await fetch("http://localhost:5000/api/todo/getTodo", {
-    method: "GET",
-    headers: {
-      "Authorization": `Bearer ${token}`
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    if (todoResponse.status === 401) {
+      localStorage.removeItem("token");
+      toast.error("Session expired, please login again!");
+      return redirect("/login");
     }
-  });
-  todoData = await todoResponse.json();
+    if (todoResponse.status === 404) {
+      localStorage.removeItem("token");
+      toast.error("User doesn't exist, please sign up!");
+      return redirect("/signUp");
+    }
+
+    todoData = await todoResponse.json();
   } catch (error) {
     console.log(error);
   }
 
   try {
     catResponse = await fetch("http://localhost:5000/api/todo/getCat", {
-    method: "GET",
-    headers: {
-      "Authorization": `Bearer ${token}`
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    if (catResponse.status === 401) {
+      localStorage.removeItem("token");
+      toast.error("Session expired, please login again!");
+      return redirect("/login");
     }
-  });
-  catData = await catResponse.json();
+    if (catResponse.status === 404) {
+      localStorage.removeItem("token");
+      toast.error("User doesn't exist, please sign up!");
+      return redirect("/signUp");
+    }
+
+    catData = await catResponse.json();
   } catch (error) {
     console.log(error);
   }
-  let catArr = catData.categories
-  return {todoData, catArr}
+
+  let catArr = catData?.categories || null;
+  return { todoData, catArr }
 }
 
 function Dashboard() {
