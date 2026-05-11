@@ -109,14 +109,14 @@ function SignUp() {
 
   return (
     <>
-      <div className="w-full min-h-screen fixed top-0 z-0  flex justify-center items-center bg-gradient-to-br from-white to-blue-500/30">
+      <div className="w-full min-h-screen fixed mt-0 top-0 z-0  flex justify-center items-center bg-gradient-to-br from-white to-blue-500/30">
       {isLoading ? 
         <Loader message={"Sending Otp"}/>
       :
         <div className="flex flex-col gap-1 w-[40vw] bg-[#ffffff] rounded-xl border border-gray-400 px-4 py-4 ">
           <h2 className="text-2xl text-center font-bold">Sign Up</h2>
           <form
-            className="flex flex-col gap-2 max-h-[70vh] relative "
+            className="flex flex-col gap-2 h-[65vh] overflow-y-auto relative pr-2"
             onSubmit={(e) => handleSubmit(e)}
           >
             <div className="flex flex-col gap-1"> 
