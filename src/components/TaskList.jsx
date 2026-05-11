@@ -6,14 +6,15 @@ import AddTaskDialogBox from './AddTaskDialogBox'
 import TaskItem from './TaskItem';
 import useTodoContext from '../context/TodoContext';
 import SearchBar from './SearchBar';
+import Loader from './Loader';
 
 // console.log("TaskList rendered")
 
 function TaskList() {
   const [showDialogBox, setShowDialogBox] = useState(false);
-  const { addTask, taskToBeShow, updateTask, loading, isData, loadTodo } = useTodoContext();
+  const { addTask, taskToBeShow, updateTask, isData, loadTodo } = useTodoContext();
   const [active, setActive] = useState("");
-  // const columns = ["pending", "inProgress", "complete"];
+  const [isLoading, setisLoading] = useState(false);
 
   const pendingTask = taskToBeShow.filter(eachTask => {
     return eachTask.status === "pending" && !eachTask.isDeleted
@@ -52,7 +53,7 @@ function TaskList() {
     if (data.status == status) {
       return;
     }
-    if(status == "complete") {
+    if (status == "complete") {
       data.isCompleted = true;
     }
     else {
@@ -66,7 +67,7 @@ function TaskList() {
     <>
       <div className='relative h-full select-none bg-[#F8FAFC]'>
         <div className='flex justify-center gap-4 border-gray-400 p-2'>
-          <SearchBar />
+          <SearchBar setisLoading={setisLoading} />
           <button
             onClick={() => setShowDialogBox(true)}
             className='btn hoverBase border-none w-auto py-2 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
@@ -74,16 +75,16 @@ function TaskList() {
           <AddTaskDialogBox showDialogBox={showDialogBox} setShowDialogBox={setShowDialogBox} />
         </div>
 
-        <div className='  '>
-          {/* {loading && <div className='text-5xl w-full min-h-full text-black'>Loading....</div>} */}
-          {/* {!isData && <div className='text-3xl w-full min-h-full text-black'>Oops! Data is not available</div>} */}
-          {!taskToBeShow ?
-            <div className='flex justify-center items-center mt-8'>
-              <p className='text-xl '>No todos to display</p>
-            </div>
-
+        <div className=''>
+          {taskToBeShow.length === 0 ?
+            (isLoading ? 
+              (<Loader />)
+              :
+              (<div className='flex justify-center items-center mt-8'>
+                <p className='text-xl '>No todos to display</p>
+              </div>)
+            )
             :
-
             <div className='max-w-screen max-h-[78vh] pt-2 flex bg-[#f3f1f1] px-2'>
 
               <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
@@ -156,6 +157,7 @@ function TaskList() {
             </div>
           }
         </div>
+        
       </div>
     </>
   )

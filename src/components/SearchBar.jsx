@@ -4,7 +4,7 @@ import useTodoContext from '../context/TodoContext';
 
 // console.log("SearchBar rendered")
 
-function SearchBar() {
+function SearchBar({setisLoading}) {
     const {searchTask, loadTodo} = useTodoContext()
 
     const timerRef = useRef(null);
@@ -23,8 +23,10 @@ function SearchBar() {
         return;
       }
 
-      timerRef.current = setTimeout(() => {
-        searchTask(val.trim());
+      timerRef.current = setTimeout(async () => {
+        setisLoading(true);
+        let response = await searchTask(val.trim());
+        setisLoading(false);
       }, 2000)
     }
 

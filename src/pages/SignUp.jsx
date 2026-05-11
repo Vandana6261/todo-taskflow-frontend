@@ -2,11 +2,14 @@ import React, { useActionState, useState } from "react";
 import { MdCancel } from "react-icons/md";
 import useTodoContext from "../context/TodoContext";
 import { redirect, useNavigate } from 'react-router-dom';
+import Loader from "../components/Loader";
 
 
 function SignUp() {
   const { registerUser, getToken, getProfile, loadTodo, loadCat } = useTodoContext();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: "Vandana",
@@ -86,13 +89,16 @@ function SignUp() {
       return;
     }
     // const response = registerUser(formData);
+    setIsLoading(true);
     const response = await registerUser(formData);
     // console.log(formData)
     console.log(response);
+    setIsLoading(false);
     if(!response.success) {
       // console.log("redirect")
-      alert("You have an account please login")
-      navigate("/login")
+      // alert("You have an account please login")
+      // navigate("/login")
+      setIsRegistered(true);
     }
     else {
       navigate("/signUp/varifyOtp")
@@ -104,6 +110,9 @@ function SignUp() {
   return (
     <>
       <div className="w-full min-h-screen fixed top-0 z-0  flex justify-center items-center bg-gradient-to-br from-white to-blue-500/30">
+      {isLoading ? 
+        <Loader message={"Sending Otp"}/>
+      :
         <div className="flex flex-col gap-1 w-[40vw] bg-[#ffffff] rounded-xl border border-gray-400 px-4 py-4 ">
           <h2 className="text-2xl text-center font-bold">Sign Up</h2>
           <form
@@ -184,10 +193,11 @@ function SignUp() {
               />
               {errors.mobileNo && <p className="text-sm text-red-600">{errors.mobileNo}</p>}
             </div>
-
-            <button className='btn hoverBase border-none w-fit py-2 px-4 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>Submit</button>
+            {isRegistered && <p className="text-sm text-red-600">Account already exists with this email. Please login</p>}
+            <button className='btn hoverBase border-none w-fit py-2 px-4 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>Send OTP</button>
           </form>
         </div>
+      }
       </div>
     </>
   );
