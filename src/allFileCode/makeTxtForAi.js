@@ -11,10 +11,10 @@ files.forEach(file=>{
     })
 })
 
-// files2.forEach(file => {
-//     fs.readFile(`../pages/${file}`, 'utf-8', (err, data) => {
-//         if(err)
-//             throw err;
-//         fs.appendFileSync('AI_Prompt.txt', data+"\n")
-//     })
-// })
+files2.forEach(file => {
+    fs.readFile(`../pages/${file}`, 'utf-8', (err, data) => {
+        if(err)
+            throw err;
+        fs.appendFileSync('AI_Prompt.txt', data+"\n")
+    })
+})
