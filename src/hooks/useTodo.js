@@ -162,12 +162,12 @@ export function useTodo() {
       if (!response.ok) {
         console.log("Error response is not ok: ", response.status);
         console.log(response);
-        return;
+        return false;
       } else {
         const data = await response.json();
-        setTaskToBeShow((prev) => [...data]);
+        setTaskToBeShow((prev) => [...data.todo]);
         if (data.length === 0) setIsData(false);
-        setLoading(false);
+        return data.success
       }
     } catch (error) {
       console.log("Error occured while searching task");
@@ -208,12 +208,12 @@ export function useTodo() {
   const filterTask = (cat) => {
     setTaskToBeShow(tasks);
     if (cat == "all") {
-      return;
+      return tasks;
     }
     cat.name = cat.name.toLowerCase();
     let arr = tasks.filter((item) => {
       let category = item.category.name.toLowerCase();
-      if (category.includes(cat.name)) {
+      if (category == cat.name) {
         return item;
       }
     });
@@ -333,41 +333,27 @@ export function useTodo() {
     loadTodo,
     loadCat,
     addTask,
-    tasks,
-    setTasks,
     deleteTask,
     updateTask,
     searchTask,
-    selectId,
-    setSelectId,
+    addCategory,
+    filterTask,
+
+    tasks,
+    setTasks,
+    loading,
+    isData,
     taskToBeShow,
     setTaskToBeShow,
     categories,
-    addCategory,
     setCategories,
-    filterTask,
-    loading,
-    isData,
+    selectId,
+    setSelectId,
 
     registerUser,
     varifyOtp,
-
     loginUser,
     getProfile,
     getToken
   };
 }
-
-// {
-//   message: "User register successfully";
-//   success: true;
-//   user: {
-//     __v: 0;
-//     _id: "69e2027c2633e59f4860f44b";
-//     email: "a@gmail.com";
-//     firstName: "Anish";
-//     lastName: "Patidar";
-//     mobileNo: "9752131385";
-//     password: "$2b$10$neoTXHRMfE1v1EEhG2z8UuTjpgYoZFhaXU0WLDb0Nn2y.VaGxTNnS";
-//   }
-// }
