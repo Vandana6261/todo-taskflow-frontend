@@ -2,23 +2,12 @@
 import React from 'react';
 import { FiCheckSquare, FiShield, FiZap, FiLayout } from "react-icons/fi";
 import { HiOutlineArrowRight } from "react-icons/hi";
+import { useNavigate } from 'react-router-dom';
 
-const Home = ({ onGetStarted }) => {
+const Home = () => {
+  const navigate = useNavigate();
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#1E293B] selection:bg-blue-100">
-      {/* Navigation */}
-      <nav className="max-w-[1400px] mx-auto flex justify-between items-center p-6">
-        <div className="flex items-center gap-3 text-2xl font-bold text-[#0019f7a8]">
-          <FiCheckSquare className="text-3xl" />
-          <span>TaskFlow</span>
-        </div>
-        <button 
-          onClick={onGetStarted}
-          className="px-6 py-2 rounded-full border border-[#0019f7a8] text-[#0019f7a8] font-semibold hover:bg-[#0019f7a8] hover:text-white transition-all duration-300"
-        >
-          Login
-        </button>
-      </nav>
+    <div className="min-h-screen bg-[#F8FAFC] text-[#1E293B] selection:bg-blue-100 bg-gradient-to-br from-white to-blue-500/30">
 
       {/* Hero Section */}
       <section className="max-w-[1200px] mx-auto px-6 pt-20 pb-32 flex flex-col items-center text-center">
@@ -42,7 +31,7 @@ const Home = ({ onGetStarted }) => {
 
         <div className="flex flex-col sm:flex-row gap-4">
           <button 
-            onClick={onGetStarted}
+            onClick={() => navigate("/signUp")}
             className="flex items-center gap-2 px-8 py-4 bg-[#0019f7a8] text-white font-bold rounded-full shadow-[0px_10px_20px_rgba(0,25,247,0.3)] hover:shadow-[0px_15px_25px_rgba(0,25,247,0.4)] hover:-translate-y-1 transition-all duration-300"
           >
             Get Started for Free <HiOutlineArrowRight />

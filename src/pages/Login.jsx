@@ -11,7 +11,6 @@ function Login() {
         password: "",
     })
     const [errors, setErrors] = useState({});
-    const [isUser, setIsUser] = useState(true);
 
     const navigate = useNavigate()
 
@@ -66,19 +65,16 @@ function Login() {
 
         console.log(formData);
         const loginResponse = await loginUser(formData);
-        // console.log(response)
         if(loginResponse.success) {
             navigate("/dashboard")
         }
         else {
             let loginError = null;
             if(loginResponse.message == "User don't exists") {
-                setIsUser(false);
                 loginError = "User doesn't exists with this email please signUp first";
                 setErrors({loginError});
             }
             else if(loginResponse.message == "Password doesn't match") {
-                setIsUser(true)
                 loginError = loginResponse.message;
                 setErrors({loginError});
             }
@@ -89,7 +85,6 @@ function Login() {
             password: "",
         })
         return;
-        // console.log("Form submitted")
     }
 
     return (
@@ -132,9 +127,6 @@ function Login() {
                         {errors.loginError && <p className="text-sm text-red-600">{errors.loginError}</p>}
 
                         <button className='btn hoverBase border-none w-fit py-2 px-4 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>Login</button>
-
-                        {!isUser && <button className='btn hoverBase border-none w-fit py-2 px-4 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]' onClick={() => redirect('/signUp')}>SignUp</button>}
-
                     </form>
                 </div>
             </div>
