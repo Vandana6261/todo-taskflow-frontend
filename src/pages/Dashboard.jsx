@@ -6,6 +6,7 @@ import Category from '../components/Category';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FiCheckSquare } from "react-icons/fi";
 import { toast } from 'react-toastify';
+import { BASE_URL } from '../config';
 
 export async function loadProfile({ request }) {
   let token = JSON.parse(localStorage.getItem("token"));
@@ -20,7 +21,7 @@ export async function loadProfile({ request }) {
   let catData = null;
 
   try {
-    todoResponse = await fetch("http://localhost:5000/api/todo/getTodo", {
+    todoResponse = await fetch(`${BASE_URL}/api/todo/getTodo`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`
@@ -44,7 +45,7 @@ export async function loadProfile({ request }) {
   }
 
   try {
-    catResponse = await fetch("http://localhost:5000/api/todo/getCat", {
+    catResponse = await fetch(`${BASE_URL}/api/todo/getCat`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`

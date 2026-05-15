@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { BASE_URL } from "../config";
 
 const generateId = () => Math.random().toString(36).substring(2, 9);
 
@@ -16,7 +17,7 @@ export function useTodo() {
     setLoading(true);
     try {
       const token = await getToken();
-      const response = await fetch("http://localhost:5000/api/todo/getTodo", {
+      const response = await fetch(`${BASE_URL}/api/todo/getTodo`, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`
@@ -44,7 +45,7 @@ export function useTodo() {
     console.log("loadCat called")
     try {
       const token = await getToken();
-      const response = await fetch("http://localhost:5000/api/todo/getCat", {
+      const response = await fetch(`${BASE_URL}/api/todo/getCat`, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`
@@ -71,7 +72,7 @@ export function useTodo() {
     try {
       const token = await getToken();
       console.log("addTask called");
-      const response = await fetch("http://localhost:5000/api/todo/createTodo", {
+      const response = await fetch(`${BASE_URL}/api/todo/createTodo`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -97,7 +98,7 @@ export function useTodo() {
     // console.log("deleteTask is called", taskId);
     try {
       const token = await getToken();
-      const response = await fetch(`http://localhost:5000/api/todo/${taskId}`, {
+      const response = await fetch(`${BASE_URL}/api/todo/${taskId}`, {
         method: "DELETE",
         headers: {
           "content-Type": "application/json",
@@ -123,7 +124,7 @@ export function useTodo() {
     console.log("Update task called");
     try {
       const token = await getToken();
-      const response = await fetch(`http://localhost:5000/api/todo/${taskId}`, {
+      const response = await fetch(`${BASE_URL}/api/todo/${taskId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -152,7 +153,7 @@ export function useTodo() {
     setTaskToBeShow([]);
     try {
       const token = await getToken();
-      const response = await fetch(`http://localhost:5000/api/todo/${keyword}`, {
+      const response = await fetch(`${BASE_URL}/api/todo/${keyword}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -180,7 +181,7 @@ export function useTodo() {
     try {
       const token = await getToken();
       let response = await fetch(
-        "http://localhost:5000/api/todo/createCategory",
+        `${BASE_URL}/api/todo/createCategory`,
         {
           method: "POST",
           headers: {
@@ -225,7 +226,7 @@ export function useTodo() {
   async function registerUser(userData) {
     try 
     {
-      let response = await fetch("http://localhost:5000/api/user/send-otp", {
+      let response = await fetch(`${BASE_URL}/api/user/send-otp`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -265,7 +266,7 @@ export function useTodo() {
   async function varifyOtp(otp) {
     try {
       const token = getToken("token");
-      const response = await fetch("http://localhost:5000/api/user/varifyOtp", {
+      const response = await fetch(`${BASE_URL}/api/user/varifyOtp`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -286,7 +287,7 @@ export function useTodo() {
   async function loginUser(userData) {
     try {
       console.log(userData);
-      const response = await fetch("http://localhost:5000/api/user/login", {
+      const response = await fetch(`${BASE_URL}/api/user/login`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -313,7 +314,7 @@ export function useTodo() {
   async function getProfile(data) {
     console.log("getProfile called");
     const token = await getToken("token")
-    const response = await fetch("http://localhost:5000/api/user/profile", {
+    const response = await fetch(`${BASE_URL}/api/user/profile`, {
       method: "GET",
       headers : {
         "Authorization": `Bearer ${token}`
