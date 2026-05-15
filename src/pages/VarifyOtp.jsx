@@ -81,7 +81,7 @@ function VarifyOtp() {
               value={data}
               onChange={(e) => handleChange(e.target, index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
-              className={`w-12 h-14 text-center text-xl font-semibold rounded-xl border transition-all outline-none
+              className={`w-9 h-11 sm:w-12 sm:h-14 text-center text-xl font-semibold rounded-xl border transition-all outline-none
                 ${isError 
                   ? 'border-red-400 bg-red-50 text-red-600' 
                   : 'border-slate-200 bg-slate-50 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-100'}`}

@@ -100,7 +100,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
         }}
       >
         <div
-          className="flex flex-col gap-1 w-[90%] min-h-full sm:w-1/2 modal bg-[#ffffff] rounded-xl p-4"
+          className="flex flex-col gap-1 w-[90%] max-w-[500px] h-auto modal bg-[#ffffff] rounded-xl p-4"
           onClick={(e) => {
             e.stopPropagation();
           }}

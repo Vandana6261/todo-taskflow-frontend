@@ -85,9 +85,9 @@ function TaskList() {
               </div>)
             )
             :
-            <div className='max-w-screen max-h-[78vh] pt-2 flex bg-[#f3f1f1] px-2'>
+            <div className='max-w-screen md:max-h-[78vh] pt-2 flex flex-col md:flex-row bg-[#f3f1f1] px-2 overflow-y-auto md:overflow-hidden'>
 
-              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
+              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[40vh] md:min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
                 onDragEnter={e => console.log('onDragEnter')}
                 onDragLeave={e => console.log('onDragLeave')}
                 onDragOver={handleDragOver}
@@ -98,6 +98,7 @@ function TaskList() {
                   {
                     pendingTask.map(item => (
                       <div
+                        key={item._id}
                         draggable
                         onDragStart={(e) => handleDragStart(e, item)}
                         onDragEnd={(e) => console.log("onDragEnd")}
@@ -110,7 +111,7 @@ function TaskList() {
                 </div>
               </div>
 
-              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
+              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[40vh] md:min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
                 onDragEnter={e => console.log('onDragEnter')}
                 onDragLeave={e => console.log('onDragLeave')}
                 onDragOver={handleDragOver}
@@ -122,6 +123,7 @@ function TaskList() {
                   {
                     inProgressTask.map(item => (
                       <div
+                        key={item._id}
                         draggable
                         onDragStart={(e) => handleDragStart(e, item)}
                         onDragEnd={(e) => console.log("onDragEnd")}
@@ -133,7 +135,7 @@ function TaskList() {
                 </div>
               </div>
 
-              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
+              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[40vh] md:min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
                 onDragEnter={e => console.log('onDragEnter')}
                 onDragLeave={e => console.log('onDragLeave')}
                 onDragOver={handleDragOver}
@@ -144,6 +146,7 @@ function TaskList() {
                   {
                     completedTask.map(item => (
                       <div
+                        key={item._id}
                         draggable
                         onDragStart={(e) => handleDragStart(e, item)}
                         onDragEnd={(e) => console.log("onDragEnd")}

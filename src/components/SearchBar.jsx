@@ -32,7 +32,7 @@ function SearchBar({setisLoading}) {
 
   return (
     <>
-      <div className='w-1/2'>
+      <div className='w-full max-w-md'>
         <form>
             <div tabIndex={0} className=' border border-gray-400 rounded-full flex items-center gap-2 px-2 cursor-pointer hover:shadow-[0px_0px_10px_rgba(0,15,205,0.4)] focus-within:border focus-within:border-blue-800/50 focus-within:shadow-[0px_0px_10px_rgba(0,15,205,0.4)]'>
                 <span>
