@@ -2,89 +2,96 @@ import React, { useState } from 'react'
 import useTodoContext from '../context/TodoContext'
 import { redirect, useNavigate } from 'react-router-dom';
 
-
 function Login() {
-
     const { loginUser } = useTodoContext()
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     })
     const [errors, setErrors] = useState({});
-
     const navigate = useNavigate()
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,20}$/;
 
-    console.log(errors)
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+        
+        // Clear errors as user types
+        if (errors[name] || errors.loginError) {
+            setErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors[name];
+                delete newErrors.loginError;
+                return newErrors;
+            });
+        }
+    }
+
     const handleBlur = (e) => {
         const { name, value } = e.target;
-        const newError = {};
         let errorMessage = null;
-        if (name == 'email') {
+        
+        if (name === 'email') {
             if (!value) {
-                errorMessage = "Please Provide some value"
+                errorMessage = "Please Provide some value";
             } else if (!emailPattern.test(value)) {
-                errorMessage = "Please give us valid email"
+                errorMessage = "Please give us valid email";
             }
         }
-        if (name == 'password') {
+        if (name === 'password') {
             if (!value) {
-                errorMessage = "Please Provide some value"
+                errorMessage = "Please Provide some value";
             } else if (!passwordPattern.test(value)) {
-                errorMessage = "Please use strong password, Password should have atleast 1 uppercase, 1 special character, 1 numeric val"
+                errorMessage = "Please use strong password, Password should have atleast 1 uppercase, 1 special character, 1 numeric val";
             }
         }
 
-        setErrors(prev => {
-            const updatedError = { ...prev };
-            delete updatedError.loginError;
-            if (errorMessage) {
-                updatedError[name] = errorMessage;
-            } else {
-                delete updatedError[name];
-            }
-            return updatedError;
-        })
-
-        if (!errorMessage) {
-            setFormData({ ...formData, [name]: value })
+        if (errorMessage) {
+            setErrors(prev => ({ ...prev, [name]: errorMessage }));
         }
-        console.log(name, value)
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(errors)
 
-        if (Object.keys(errors).length > 0) {
-            console.log("Please fill valid values in all of the field");
+        // Validate all fields before submission
+        const newErrors = {};
+        if (!formData.email) newErrors.email = "Please Provide some value";
+        else if (!emailPattern.test(formData.email)) newErrors.email = "Please give us valid email";
+        
+        if (!formData.password) newErrors.password = "Please Provide some value";
+        else if (!passwordPattern.test(formData.password)) newErrors.password = "Please use strong password, Password should have atleast 1 uppercase, 1 special character, 1 numeric val";
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
             return;
         }
 
-        console.log(formData);
         const loginResponse = await loginUser(formData);
-        if(loginResponse.success) {
+        
+        if (!loginResponse) {
+            setErrors({loginError: "Network Error: Could not connect to the backend server. Please try again."});
+            return;
+        }
+
+        if(loginResponse?.success) {
             navigate("/dashboard")
         }
         else {
             let loginError = null;
-            if(loginResponse.message == "User don't exists") {
+            if(loginResponse?.message == "User don't exists") {
                 loginError = "User doesn't exists with this email please signUp first";
                 setErrors({loginError});
             }
-            else if(loginResponse.message == "Password doesn't match") {
+            else if(loginResponse?.message == "Password doesn't match") {
                 loginError = loginResponse.message;
                 setErrors({loginError});
+            } else {
+                setErrors({loginError: "An error occurred during login. Please try again."});
             }
         }
-        console.log(formData)
-        setFormData({
-            email: "",
-            password: "",
-        })
-        return;
     }
 
     return (
@@ -93,7 +100,7 @@ function Login() {
                 <div className="flex flex-col gap-1 w-full max-w-[450px] md:w-[40vw] bg-[#ffffff] rounded-xl border border-gray-400 px-4 py-4 ">
                     <form
                         className="flex flex-col gap-2 max-h-[70vh] relative "
-                        onSubmit={(e) => handleSubmit(e)}
+                        onSubmit={handleSubmit}
                     >
                         <div className="flex flex-col gap-1">
                             <label htmlFor="email"
@@ -103,8 +110,10 @@ function Login() {
                                 type="email"
                                 placeholder="Enter Email"
                                 name="email"
+                                value={formData.email}
                                 className="inputBase2 px-2 py-1"
-                                onBlur={(e) => handleBlur(e)}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
                             />
                             {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
                         </div>
@@ -117,16 +126,18 @@ function Login() {
                                 type="password"
                                 placeholder="Enter Password"
                                 name="password"
+                                value={formData.password}
                                 minLength={8}
                                 maxLength={20}
                                 className="inputBase2 px-2 py-1"
-                                onBlur={(e) => handleBlur(e)}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
                             />
+                            {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
                         </div>
-                        {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
                         {errors.loginError && <p className="text-sm text-red-600">{errors.loginError}</p>}
 
-                        <button className='btn hoverBase border-none w-fit py-2 px-4 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>Login</button>
+                        <button type='submit' className='btn hoverBase border-none w-fit py-2 px-4 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>Login</button>
                     </form>
                 </div>
             </div>
