@@ -139,7 +139,7 @@ function TaskList() {
                 onDragOver={handleDragOver}
                 onDrop={(e) => handleDrop(e, "complete")}
               >
-                <h2 className='text-center text-lg font-semibold text-[#2a344b] sticky top-0 bg-[#ffffff] rounded mb-6'>Complete Task</h2>
+                <h2 className='text-center text-lg font-semibold text-[#2a344b] sticky top-0 bg-[#ffffff] rounded mb-6'>Completed Task</h2>
                 <div className='rounded flex flex-col gap-2'>
                   {
                     completedTask.map(item => (
