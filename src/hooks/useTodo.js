@@ -235,11 +235,11 @@ export function useTodo() {
       });
       const isRegister = await response.json();
       if(!isRegister.success) {
-        return {success: false};
+        return {success: false, message: isRegister.message};
       }
 
       localStorage.setItem("token", JSON.stringify(isRegister.token))
-      return { success: true };
+      return { success: true, message: isRegister.message };
       // if (isLoggedIn.success) return true;
       // return false;
 

@@ -100,7 +100,11 @@ function SignUp() {
       setErrors({ email: "Network Error: Could not connect to the backend server. Please try again." });
     }
     else if(!response.success) {
-      setIsRegistered(true);
+      if (response.message === "User already exists, Please login first") {
+        setIsRegistered(true);
+      } else {
+        setErrors({ email: response.message || "An error occurred during signup" });
+      }
     }
     else {
       navigate("/signUp/varifyOtp")
