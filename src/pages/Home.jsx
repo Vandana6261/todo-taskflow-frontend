@@ -3,6 +3,7 @@ import React from 'react';
 import { FiCheckSquare, FiShield, FiZap, FiLayout } from "react-icons/fi";
 import { HiOutlineArrowRight } from "react-icons/hi";
 import { useNavigate } from 'react-router-dom';
+import Preview from '../components/Preview';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -43,13 +44,8 @@ const Home = () => {
 
         {/* Abstract UI Preview */}
         <div className="mt-20 w-full max-w-5xl rounded-2xl border border-slate-200 bg-white shadow-2xl overflow-hidden p-2 transform rotate-1 hover:rotate-0 transition-transform duration-700">
-           <div className="bg-slate-50 rounded-xl p-4 h-64 md:h-96 flex gap-4">
-              <div className="w-1/4 bg-white rounded-lg border border-slate-200 hidden md:block"></div>
-              <div className="flex-1 grid grid-cols-3 gap-4">
-                <div className="bg-blue-50/50 rounded-lg border-2 border-dashed border-blue-100"></div>
-                <div className="bg-blue-50/50 rounded-lg border-2 border-dashed border-blue-100"></div>
-                <div className="bg-blue-50/50 rounded-lg border-2 border-dashed border-blue-100"></div>
-              </div>
+           <div className="bg-slate-50 rounded-xl p-4 h-72 md:h-102 flex gap-4">
+              <Preview />
            </div>
         </div>
       </section>
