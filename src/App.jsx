@@ -11,7 +11,7 @@ import Landing from './pages/Landing';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp'
 import Home from './pages/Home'
-import Dashboard, { loadProfile } from './pages/Dashboard';
+import Dashboard from './pages/Dashboard';
 import VarifyOtp from './pages/VarifyOtp'
 // import ErrorBoundary from './pages/ErrorBoundary'
 
@@ -52,7 +52,7 @@ function App() {
     {
       path: "/dashboard",
       element: <Dashboard />,
-      loader: loadProfile
+      // loader: loadProfile
     }
   ])
 

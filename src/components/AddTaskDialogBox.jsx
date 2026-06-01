@@ -25,8 +25,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
         { ...prev, category: categories[0]._id }
       ))
     }
-    console.log("category added")
-  }, [categories]);
+  }, []);
 
   const today = new Date().toISOString().split("T")[0];
   const pattern = /^[A-Za-z ]+$/;
@@ -58,7 +57,6 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
       setError(newError);
       return;
     }
-    console.log(formData, "formData");
     addTask(formData);
 
     setFormData({

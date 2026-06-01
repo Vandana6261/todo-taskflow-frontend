@@ -28,10 +28,9 @@ function TaskList() {
 
   useEffect(() => {
     async function loadData() {
-      console.log("TaskList useEffect for loadTodo")
       await loadTodo();
     }
-  })
+  }, [])
 
   const handleDragStart = (e, item) => {
     console.log("onDragStart")

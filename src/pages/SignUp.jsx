@@ -5,7 +5,7 @@ import { redirect, useNavigate } from 'react-router-dom';
 import Loader from "../components/Loader";
 
 function SignUp() {
-  const { registerUser, getToken, getProfile, loadTodo, loadCat } = useTodoContext();
+  const { registerUser, getProfile, loadTodo, loadCat } = useTodoContext();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);

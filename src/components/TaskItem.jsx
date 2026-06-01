@@ -34,7 +34,6 @@ function TaskItem({ task }) {
   }
 
   useEffect(() => {
-
   }, [isCompleted])
 
   return (
@@ -50,7 +49,6 @@ function TaskItem({ task }) {
                 className='cursor-pointer'
                 type="checkbox" id='checkbox' name='checkbox' checked={isCompleted}
                 onChange={(e) => {
-                  console.log(e.target.checked)
                   const status = task.status !== "complete" ? "complete" : "inProgress";
                   updateTask(task._id, { ...task, isCompleted: e.target.checked, status })
                   setIsCompleted(e.target.checked)

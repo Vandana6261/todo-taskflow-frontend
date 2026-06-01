@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../config";
+import { customFetch } from "../utils/api";
 
 const generateId = () => Math.random().toString(36).substring(2, 9);
 
@@ -16,16 +17,12 @@ export function useTodo() {
     console.log("loadTodo called")
     setLoading(true);
     try {
-      const token = await getToken();
-      const response = await fetch(`${BASE_URL}/api/todo/getTodo`, {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
+      // const token = await getToken();
+      const response = await customFetch(`${BASE_URL}/api/todo/getTodo`, {
+        method: "GET"
       });
       if (!response.ok) {
         console.log("Error status : ", response.status);
-        console.log(response);
       } else {
         const data = await response.json();
         if(data) {
@@ -44,12 +41,8 @@ export function useTodo() {
   async function loadCat() {
     console.log("loadCat called")
     try {
-      const token = await getToken();
-      const response = await fetch(`${BASE_URL}/api/todo/getCat`, {
+      const response = await customFetch(`${BASE_URL}/api/todo/getCat`, {
         method: "GET",
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
       });
       if (!response.ok) {
         console.log("Error status: ", response.status);
@@ -63,21 +56,12 @@ export function useTodo() {
     }
   }
 
-  useEffect(() => {
-    // loadTodo();
-    // loadCat();
-  }, []);
 
   async function addTask(task) {
     try {
-      const token = await getToken();
       console.log("addTask called");
-      const response = await fetch(`${BASE_URL}/api/todo/createTodo`, {
+      const response = await customFetch(`${BASE_URL}/api/todo/createTodo`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
         body: JSON.stringify(task),
       });
 
@@ -97,13 +81,8 @@ export function useTodo() {
   async function deleteTask(taskId, task) {
     // console.log("deleteTask is called", taskId);
     try {
-      const token = await getToken();
-      const response = await fetch(`${BASE_URL}/api/todo/${taskId}`, {
+      const response = await customFetch(`${BASE_URL}/api/todo/${taskId}`, {
         method: "DELETE",
-        headers: {
-          "content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
         body: JSON.stringify(task),
       });
       if (!response.ok) {
@@ -123,13 +102,8 @@ export function useTodo() {
   async function updateTask(taskId, task) {
     console.log("Update task called");
     try {
-      const token = await getToken();
-      const response = await fetch(`${BASE_URL}/api/todo/${taskId}`, {
+      const response = await customFetch(`${BASE_URL}/api/todo/${taskId}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
         body: JSON.stringify(task),
       });
 
@@ -152,13 +126,8 @@ export function useTodo() {
     setLoading(true);
     setTaskToBeShow([]);
     try {
-      const token = await getToken();
-      const response = await fetch(`${BASE_URL}/api/todo/${keyword}`, {
+      const response = await customFetch(`${BASE_URL}/api/todo/${keyword}`, {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        }
       });
       if (!response.ok) {
         console.log("Error response is not ok: ", response.status);
@@ -179,15 +148,10 @@ export function useTodo() {
   async function addCategory(catName) {
     console.log("addCategory called");
     try {
-      const token = await getToken();
-      let response = await fetch(
+      let response = await customFetch(
         `${BASE_URL}/api/todo/createCategory`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          },
           body: JSON.stringify({ name: catName }),
         },
       );
@@ -226,11 +190,8 @@ export function useTodo() {
   async function registerUser(userData) {
     try 
     {
-      let response = await fetch(`${BASE_URL}/api/user/send-otp`, {
+      let response = await customFetch(`${BASE_URL}/api/user/send-otp`, {
         method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
         body: JSON.stringify(userData),
       });
       const isRegister = await response.json();
@@ -238,25 +199,8 @@ export function useTodo() {
         return {success: false, message: isRegister.message};
       }
 
-      localStorage.setItem("token", JSON.stringify(isRegister.token))
       return { success: true, message: isRegister.message };
-      // if (isLoggedIn.success) return true;
-      // return false;
-
-      // ------
-
-      // if (loginResponse.success) 
-      // {
-      //   const token = loginResponse.token;
-      //   setUserData(loginResponse.user);
-      //   console.log(loginResponse, 220);
-        // localStorage.setItem("token", JSON.stringify(token))
-        // return { success: true };
-      // } 
-      // else 
-      // {
-      //   return { success: false };
-      // }
+   
 
     } catch (error) {
       console.log("Error occured while creating User: ", error);
@@ -265,17 +209,13 @@ export function useTodo() {
 
   async function varifyOtp(otp) {
     try {
-      const token = getToken("token");
-      const response = await fetch(`${BASE_URL}/api/user/varifyOtp`, {
+      const response = await customFetch(`${BASE_URL}/api/user/varifyOtp`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "authorization": `Bearer ${token}`
-        },
         body: JSON.stringify({otp})
       })
 
       const isVarified = await response.json();
+      localStorage.setItem("user", json.stringify(isVarified.user))
       setUserData(isVarified.user);
       
       return isVarified;
@@ -287,11 +227,8 @@ export function useTodo() {
   async function loginUser(userData) {
     try {
       console.log(userData);
-      const response = await fetch(`${BASE_URL}/api/user/login`, {
+      const response = await customFetch(`${BASE_URL}/api/user/login`, {
         method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
         body: JSON.stringify(userData),
       });
 
@@ -299,11 +236,7 @@ export function useTodo() {
 
       if (loginResponse.success) 
       {
-        const token = loginResponse.token;
         setUserData(loginResponse.user);
-
-        // document.cookie = `token=${token}; path="/"; max-age:86400`;
-        await localStorage.setItem("token", JSON.stringify(token))
       }
       return loginResponse;
     } catch (error) {
@@ -313,12 +246,8 @@ export function useTodo() {
 
   async function getProfile(data) {
     console.log("getProfile called");
-    const token = await getToken("token")
-    const response = await fetch(`${BASE_URL}/api/user/profile`, {
+    const response = await customFetch(`${BASE_URL}/api/user/profile`, {
       method: "GET",
-      headers : {
-        "Authorization": `Bearer ${token}`
-      }
     });
     const userInfo = await response.json();
   }

@@ -8,86 +8,21 @@ import { FiCheckSquare } from "react-icons/fi";
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../config';
 
-export async function loadProfile({ request }) {
-  let token = JSON.parse(localStorage.getItem("token"));
-  if (!token) {
-    toast.error("You cannot access the dashboard before signup or login!");
-    return redirect("/");
-  }
-
-  let todoResponse;
-  let catResponse;
-  let todoData = null;
-  let catData = null;
-
-  try {
-    todoResponse = await fetch(`${BASE_URL}/api/todo/getTodo`, {
-      method: "GET",
-      headers: {
-        "Authorization": `Bearer ${token}`
-      }
-    });
-
-    if (todoResponse.status === 401) {
-      localStorage.removeItem("token");
-      toast.error("Session expired, please login again!");
-      return redirect("/login");
-    }
-    if (todoResponse.status === 404) {
-      localStorage.removeItem("token");
-      toast.error("User doesn't exist, please sign up!");
-      return redirect("/signUp");
-    }
-
-    todoData = await todoResponse.json();
-  } catch (error) {
-    console.log(error);
-  }
-
-  try {
-    catResponse = await fetch(`${BASE_URL}/api/todo/getCat`, {
-      method: "GET",
-      headers: {
-        "Authorization": `Bearer ${token}`
-      }
-    });
-
-    if (catResponse.status === 401) {
-      localStorage.removeItem("token");
-      toast.error("Session expired, please login again!");
-      return redirect("/login");
-    }
-    if (catResponse.status === 404) {
-      localStorage.removeItem("token");
-      toast.error("User doesn't exist, please sign up!");
-      return redirect("/signUp");
-    }
-
-    catData = await catResponse.json();
-  } catch (error) {
-    console.log(error);
-  }
-
-  let catArr = catData?.categories || null;
-  return { todoData, catArr }
-}
 
 function Dashboard() {
-  const { setTasks, setTaskToBeShow, setCategories } = useTodoContext()
-  const { todoData, catArr } = useLoaderData();
+  const { setTasks, setTaskToBeShow, setCategories, loadTodo, loadCat } = useTodoContext()
+  // const { todoData, catArr } = useLoaderData();
 
   const [showCategory, setShowCategory] = useState(false)
+  async function fetchData() {
+        await loadTodo()
+        await loadCat()
+  }
+
 
   useEffect(() => {
-    console.log("Dashboard useEffect")
-    if (todoData) {
-      setTasks(todoData);
-      setTaskToBeShow(todoData);
-    }
-    if (catArr) {
-      setCategories(catArr);
-    }
-  }, [todoData, catArr, setTasks, setTaskToBeShow, setCategories]);
+    fetchData();
+  }, [])
 
   return (
     <>

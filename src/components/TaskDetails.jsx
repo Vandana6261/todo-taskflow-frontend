@@ -21,12 +21,10 @@ function TaskDetails({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    console.log("Form submit called")
     let newError = {};
     if (updatedData.title == "") newError.title = "Title is required"
     if (!pattern.test(updatedData.title)) {
       newError.title = "Title is not valid, please use character only"
-      console.log(updatedData.title, 28)
     }
     if (!updatedData.description.trim()) {
       newError.description = "Description is required"
@@ -49,8 +47,7 @@ function TaskDetails({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
   }
 
   useEffect(() => {
-      
-  }, [categories]);
+  }, []);
   
   return (
     <>
