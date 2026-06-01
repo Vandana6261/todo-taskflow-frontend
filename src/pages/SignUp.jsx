@@ -3,12 +3,15 @@ import { MdCancel } from "react-icons/md";
 import useTodoContext from "../context/TodoContext";
 import { redirect, useNavigate } from 'react-router-dom';
 import Loader from "../components/Loader";
+import { FaEye } from "react-icons/fa6";
+import { FaEyeSlash } from "react-icons/fa6";
 
 function SignUp() {
   const { registerUser, getProfile, loadTodo, loadCat } = useTodoContext();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -176,17 +179,20 @@ function SignUp() {
               <label htmlFor="password"
                 className="text-md font-semibold"
               >Password: </label>
-              <input 
-                type="password" 
-                placeholder="Enter Password"
-                name="password" 
-                value={formData.password}
-                minLength={8}
-                maxLength={20}
-                className="inputBase2 px-2 py-1"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
+              <div className="flex gap-1 pr-1">
+                <input
+                  type={isVisible ? "text" : "password"}
+                  placeholder="Enter Password"
+                  name="password"
+                  value={formData.password}
+                  minLength={8}
+                  maxLength={20}
+                  className="inputBase2 px-2 py-1 flex-1"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <button onClick={() => setIsVisible(!isVisible)}>{isVisible ? <FaEyeSlash /> : <FaEye />}</button>
+              </div>
               {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
             </div>
 
