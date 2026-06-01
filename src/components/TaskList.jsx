@@ -7,14 +7,18 @@ import TaskItem from './TaskItem';
 import useTodoContext from '../context/TodoContext';
 import SearchBar from './SearchBar';
 import Loader from './Loader';
+import { useNavigate } from 'react-router-dom';
+
 
 // console.log("TaskList rendered")
 
 function TaskList() {
   const [showDialogBox, setShowDialogBox] = useState(false);
-  const { addTask, taskToBeShow, updateTask, isData, loadTodo } = useTodoContext();
+  const { addTask, taskToBeShow, updateTask, isData, loadTodo , logout} = useTodoContext();
   const [active, setActive] = useState("");
   const [isLoading, setisLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const pendingTask = taskToBeShow.filter(eachTask => {
     return eachTask.status === "pending" && !eachTask.isDeleted
@@ -62,6 +66,11 @@ function TaskList() {
     updateTask(data._id, data);
   }
 
+  const handleLogout = async () => {
+    await logout();
+    navigate("/")
+  }
+
   return (
     <>
       <div className='relative h-full select-none bg-[#F8FAFC]'>
@@ -71,6 +80,12 @@ function TaskList() {
             onClick={() => setShowDialogBox(true)}
             className='btn hoverBase border-none w-auto py-2 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
           >Add Task</button>
+          <button 
+            onClick={() => handleLogout()}
+            className='btn hoverBase border-none w-auto py-2 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
+          >
+            Log Out
+          </button>
           <AddTaskDialogBox showDialogBox={showDialogBox} setShowDialogBox={setShowDialogBox} />
         </div>
 

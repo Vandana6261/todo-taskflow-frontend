@@ -244,6 +244,18 @@ export function useTodo() {
     }
   }
 
+  async function logout() {
+    try {
+      let response = await customFetch(`${BASE_URL}/api/user/logout`, {
+        method: "POST",
+      });
+
+      const logoutResponse = await response.json();
+    } catch (error) {
+      console.log("Error occurred while logout: ", error);
+    }
+  }
+
   async function getProfile(data) {
     console.log("getProfile called");
     const response = await customFetch(`${BASE_URL}/api/user/profile`, {
@@ -283,6 +295,7 @@ export function useTodo() {
     registerUser,
     varifyOtp,
     loginUser,
+    logout,
     getProfile,
     getToken
   };
