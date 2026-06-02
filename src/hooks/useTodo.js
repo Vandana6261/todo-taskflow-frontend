@@ -17,7 +17,6 @@ export function useTodo() {
     console.log("loadTodo called")
     setLoading(true);
     try {
-      // const token = await getToken();
       const response = await customFetch(`${BASE_URL}/api/todo/getTodo`, {
         method: "GET"
       });
@@ -215,7 +214,6 @@ export function useTodo() {
       })
 
       const isVarified = await response.json();
-      localStorage.setItem("user", json.stringify(isVarified.user))
       setUserData(isVarified.user);
       
       return isVarified;
@@ -265,11 +263,7 @@ export function useTodo() {
   }
 
 
-  function getToken(name) {           // name = "token"
-    console.log("GetToken called");
-    const token = JSON.parse(localStorage.getItem("token")) || "";
-    return token;
-  }
+
 
   return {
     loadTodo,
@@ -297,6 +291,5 @@ export function useTodo() {
     loginUser,
     logout,
     getProfile,
-    getToken
   };
 }

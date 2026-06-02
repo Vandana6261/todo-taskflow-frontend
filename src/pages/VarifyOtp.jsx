@@ -6,7 +6,6 @@ function VarifyOtp() {
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [isError, setIsError] = useState(false);
   const inputRefs = useRef([]);
-  const token = localStorage.getItem("token")
 
   const {varifyOtp} = useTodoContext();
   const navigate = useNavigate()
