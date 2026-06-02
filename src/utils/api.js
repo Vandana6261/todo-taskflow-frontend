@@ -29,15 +29,12 @@ export async function customFetch(url, options = {}) {
         console.log("Refresh successful! Retrying original request...");
         return await fetch(url, options);
       }
-      else {
-        // window.location.href = "/";
-      }
     } catch (refreshError) {
       console.error("Refresh token network error:", refreshError);
     }
 
     console.warn("Session expired completely. Redirecting to auth node.");
-    // window.location.href = "/dashboard";
+    // window.location.href = "/";
   }
 
   return response;
