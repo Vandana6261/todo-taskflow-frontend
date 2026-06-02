@@ -30,7 +30,7 @@ export async function customFetch(url, options = {}) {
         return await fetch(url, options);
       }
       else {
-        window.location.href = "/";
+        // window.location.href = "/";
       }
     } catch (refreshError) {
       console.error("Refresh token network error:", refreshError);
