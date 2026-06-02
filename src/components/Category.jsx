@@ -56,7 +56,7 @@ function Category() {
   const categoryColor = useMemo(() => {
     const colorMap = {};
 
-    categories.map(item => {
+    categories.forEach(item => {
       colorMap[item._id] = getRandomColorCode();
     })
 
