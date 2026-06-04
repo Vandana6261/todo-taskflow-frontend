@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import useTodoContext from '../context/TodoContext'
 import { redirect, useNavigate } from 'react-router-dom';
+import Loader from '../components/Loader'
 
 function Login() {
     const { loginUser } = useTodoContext()
@@ -9,6 +10,7 @@ function Login() {
         password: "",
     })
     const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -69,8 +71,9 @@ function Login() {
             return;
         }
 
+        setLoading(true);
         const loginResponse = await loginUser(formData);
-        
+        setLoading(false)
         if (!loginResponse) {
             setErrors({loginError: "Network Error: Could not connect to the backend server. Please try again."});
             return;
@@ -97,49 +100,53 @@ function Login() {
     return (
         <>
             <div className="w-full min-h-screen bg-[#dbdae9e5] fixed top-0 z-0 flex justify-center items-center p-4">
-                <div className="flex flex-col gap-1 w-full max-w-[450px] md:w-[40vw] bg-[#ffffff] rounded-xl border border-gray-400 px-4 py-4 ">
-                    <form
-                        className="flex flex-col gap-2 max-h-[70vh] relative "
-                        onSubmit={handleSubmit}
-                    >
-                        <div className="flex flex-col gap-1">
-                            <label htmlFor="email"
-                                className="text-md font-semibold"
-                            >Email: </label>
-                            <input
-                                type="email"
-                                placeholder="Enter Email"
-                                name="email"
-                                value={formData.email}
-                                className="inputBase2 px-2 py-1"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                            {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
-                        </div>
+                {loading ? 
+                    <Loader />   
+                    : 
+                    <div className="flex flex-col gap-1 w-full max-w-[450px] md:w-[40vw] bg-[#ffffff] rounded-xl border border-gray-400 px-4 py-4 ">
+                        <form
+                            className="flex flex-col gap-2 max-h-[70vh] relative "
+                            onSubmit={handleSubmit}
+                        >
+                            <div className="flex flex-col gap-1">
+                                <label htmlFor="email"
+                                    className="text-md font-semibold"
+                                >Email: </label>
+                                <input
+                                    type="email"
+                                    placeholder="Enter Email"
+                                    name="email"
+                                    value={formData.email}
+                                    className="inputBase2 px-2 py-1"
+                                    onChange={handleChange}
+                                    // onBlur={handleBlur}
+                                />
+                                {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
+                            </div>
 
-                        <div className="flex flex-col gap-1">
-                            <label htmlFor="password"
-                                className="text-md font-semibold"
-                            >Password: </label>
-                            <input
-                                type="password"
-                                placeholder="Enter Password"
-                                name="password"
-                                value={formData.password}
-                                minLength={8}
-                                maxLength={20}
-                                className="inputBase2 px-2 py-1"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                            {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
-                        </div>
-                        {errors.loginError && <p className="text-sm text-red-600">{errors.loginError}</p>}
+                            <div className="flex flex-col gap-1">
+                                <label htmlFor="password"
+                                    className="text-md font-semibold"
+                                >Password: </label>
+                                <input
+                                    type="password"
+                                    placeholder="Enter Password"
+                                    name="password"
+                                    value={formData.password}
+                                    minLength={8}
+                                    maxLength={20}
+                                    className="inputBase2 px-2 py-1"
+                                    onChange={handleChange}
+                                    // onBlur={handleBlur}
+                                />
+                                {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
+                            </div>
+                            {errors.loginError && <p className="text-sm text-red-600">{errors.loginError}</p>}
 
-                        <button type='submit' className='btn hoverBase border-none w-fit py-2 px-4 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>Login</button>
-                    </form>
-                </div>
+                            <button type='submit' className='btn hoverBase border-none w-fit py-2 px-4 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>Login</button>
+                        </form>
+                    </div>
+                }
             </div>
         </>
     )
