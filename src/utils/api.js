@@ -10,7 +10,7 @@ export async function customFetch(url, options = {}) {
   options.credentials = "include";
 
   let response = await fetch(url, options);
-  console.log(response, "response")
+
   if ((response.status === 401 || response.status === 403) && !options._retry) {
     options._retry = true;
 
