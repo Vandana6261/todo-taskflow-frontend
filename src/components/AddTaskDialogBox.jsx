@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useTodo } from "../hooks/useTodo";
 import useTodoContext from "../context/TodoContext";
 import { MdCancel } from "react-icons/md";
+import { RxCross1 } from "react-icons/rx";
 
 // AddTaskDialogBox render
 
@@ -75,7 +76,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
     setShowDialogBox(false);
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setShowDialogBox(false);
 
     setFormData({
@@ -95,7 +96,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
       <div
         className={`min-w-screen min-h-screen fixed top-0 left-0 flex justify-center items-center bg-black/40 backdrop-blur-sm z-999 ${showDialogBox ? "flex" : "hidden"} text-left`}
         onClick={(e) => {
-          setShowDialogBox(false);
+          handleCancel()
         }}
       >
         <div
@@ -111,9 +112,12 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
             }}
           >
             <h2 className="text-2xl text-center">Create Task</h2>
-            <span className='h-8 w-8 text-2xl rounded-full bg-gray-400/20 flex justify-center items-center cursor-pointer hoverBase'
+            <span 
+              className='p-1 h-6 w-6 text-2xl rounded-full bg-gray-400/30 flex justify-center items-center cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 hover:bg-gray-400/50'
               onClick={(e) => handleCancel(e)}
-            ><MdCancel /></span>
+            >
+              <RxCross1 />
+            </span>
           </div>
 
           <form

@@ -1,9 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import { FaRegFolderOpen } from "react-icons/fa";
+import React, { useState, useMemo } from 'react'
+import { FaRegFolderOpen, FaPlus } from "react-icons/fa";
 import useTodoContext from '../context/TodoContext';
-import { FaPlus } from "react-icons/fa";
-
-// console.log("Category rendered")
 
 function Category() {
 
@@ -24,7 +21,7 @@ function Category() {
     setSelectedCat(cat._id);
     filterTask(cat);
   }
-  
+
   const addCat = (cat) => {
     if(!cat) {
       setError("Please add one category name")
@@ -32,12 +29,12 @@ function Category() {
     }
     let isFound = categories.find(item => item.name == cat);
     if(isFound) {
-        setError("Cat exists")
-        return;
-      }
-      setIsAddCat(false);
-      setCatName("")
-      setError("")
+      setError("Category exists")
+      return;
+    }
+    setIsAddCat(false);
+    setCatName("")
+    setError("")
     addCategory(cat);
   }
 
@@ -49,7 +46,7 @@ function Category() {
       let idx = Math.floor(Math.random() * str.length)
       color += str[idx];
     }
-    
+
     return color;
   }
 
@@ -61,98 +58,98 @@ function Category() {
     })
 
     return colorMap;
-  }, [categories.length])
-
+  }, [categories])
 
   return (
-    <>
-      <div className='min-h-[85vh] relative'>
-        {/* heading */}
-        <div className='flex items-center gap-2 text-xl '>
-          <span className='text-blue-500'>
+    <div className='min-h-[85vh] relative flex flex-col justify-between p-2 select-none'>
+      <div>
+        {/* Heading */}
+        <div className='flex items-center gap-2 text-xl font-semibold text-gray-700 px-2 py-3 mb-2'>
+          <span className='text-blue-600 transition-transform duration-300 hover:rotate-12'>
             <FaRegFolderOpen />
           </span>
           <h2>Category</h2>
         </div>
 
-        {/* category */}
-        <div className='flex flex-col '>
+        {/* Categories List */}
+        <div className='flex flex-col gap-1.5'>
           <div
-            className={`flex items-center gap-1 cursor-pointer px-1 m-1 onHoverEffect rounded-full  ${selectedCat === "all" ? "bg-[#ffffff] shadow-[0_0_0_2px_rgba(59,130,246,0.6)]": "bg-transparent"} `}
-            onClick={() => handleCat("all")}>
-            <div className={`rounded-full w-3 h-3 bg-blue-600 ${selectedCat} === "all" ? bg-[#ffffff]`}></div>
-            <h2>All</h2>
-          </div>
-          {
-            categories.length == 0 ?
-              <p>No category to display</p>
-              :
-              // <p>hello </p>
-              // }
-              (categories.map((item, index) => {
-                const color = categoryColor[item._id];
-                return (
-                  <div
-                    key={item._id}
-                    className='flex flex-col p-1 '
-                    onClick={() => handleCat(item)}
-                  >
-                    <div className={`flex items-center gap-2 cursor-pointer px-1 onHoverEffect rounded-full ${selectedCat === item._id ? "bg-[#ffffff] shadow-[0_0_0_2px_rgba(59,130,246,0.6)]": "bg-transparent"} `}>
-                      <div className={`rounded-full w-3 h-3 bg-[${color}]`}
-                        style={{backgroundColor: color}}
-                      ></div>
-                      <span>{item.name}</span>
-                    </div>
-                  </div>
-                )
-              }))
-
-            }
-        </div>
-
-        {isAddCat ?
-
-          <div className='absolute bottom-0 min-w-[90%]'>
-              <div className='flex flex-col gap-2'>
-                <input type="text" 
-                  className='inputBase bg-[#ffffff] px-2 py-1 font-semibold text-gray-600 border-gray-400 rounded-xl shadow-[0px_10px_30px_10px_rgba(0,0,0,0.25)]  focus-within:shadow-[0px_10px_30px_10px_rgba(0,0,0,0.25)] text-sm '
-                  placeholder='Enter Category to add'
-                  value={catName}
-                  onChange={(e) => setCatName(e.target.value)}
-                />
-                {error && <p className='text-red-500'>{error}</p>}
-
-                <div className='flex items-center justify-around '>
-                  <button className='hoverBase btn mx-2 font-semibold rounded-full bg-red-500/20 text-red-600'
-                    onClick={() => {
-                      setIsAddCat(false)
-                      setError("")
-                      setCatName("")
-                    }}
-                  >Cancel</button>
-                  <button className='hoverBase btn mx-2 font-semibold rounded-full bg-green-500/20 text-[#229c09] w-24'
-                    onClick={() => addCat(catName)}
-                  >Add</button>
-                </div>
-              </div>
-          </div>
-
-          :
-
-          <div className='absolute bottom-0 min-w-[90%]'
-            onClick={() => setIsAddCat(true)}
+            className={`flex items-center gap-3 cursor-pointer px-4 py-2.5 rounded-xl transition-all duration-300 transform active:scale-95 ${
+              selectedCat === "all" 
+                ? "bg-white text-blue-600 shadow-sm border border-blue-100"   
+                : "text-gray-600 hover:bg-gray-100/80"
+            }`}
+            onClick={() => handleCat("all")}
           >
-            <div className='flex items-center btn hoverBase w-full py-2 text-white font-semibold rounded-full border-gray-600 gap-2 bg-[#0019f7a8] hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>
-              <FaPlus />
-              <button className='' onTouchMove={() => console.log("ggh")}>Add Category</button>
+            <div className={`rounded-full w-2.5 h-2.5 transition-all duration-300 ${selectedCat === "all" ? "bg-blue-600 scale-125" : "bg-gray-400"}`}></div>
+            <h2 className="text-sm font-medium">All Tasks</h2>
+          </div>
+
+          {categories.length === 0 ? (
+            <p className="text-xs text-gray-400 text-center py-4">No categories added yet</p>
+          ) : (
+            categories.map((item) => {
+              const color = categoryColor[item._id];
+              const isSelected = selectedCat === item._id;
+              return (
+                <div
+                  key={item._id}
+                  className={`flex items-center gap-3 cursor-pointer px-4 py-2.5 rounded-xl transition-all duration-300 transform active:scale-95 ${
+                    isSelected 
+                      ? "bg-white text-blue-600 shadow-sm border border-blue-100" 
+                      : "text-gray-600 hover:bg-gray-100/80"
+                  }`}
+                  onClick={() => handleCat(item)}
+                >
+                  <div 
+                    className="rounded-full w-2.5 h-2.5 transition-transform duration-300"
+                    style={{ backgroundColor: color, transform: isSelected ? 'scale(1.25)' : 'scale(1)' }}
+                  ></div>
+                  <span className='text-sm font-medium line-clamp-1'>{item.name}</span>
+                </div>
+              )
+            })
+          )}
+        </div>
+      </div>
+
+      {/* Dynamic Action Section (Bottom Anchor) */}
+      <div className="w-full mt-4">
+        {isAddCat ? (
+          <div className='bg-[#a4acbdd5] border border-gray-100 rounded-2xl p-3 shadow-xl shadow-gray-200/50 animate-in fade-in slide-in-from-bottom-4 duration-300 flex flex-col gap-3'>
+            <input 
+              type="text" 
+              className='w-full bg-gray-50 border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100 outline-none px-3 py-2 text-sm text-gray-700 rounded-xl transition-all duration-200'
+              placeholder='Category name...'
+              value={catName}
+              onChange={(e) => setCatName(e.target.value)}
+              autoFocus
+            />
+            {error && <p className='text-xs text-red-500 font-medium px-1 animate-pulse'>{error}</p>}
+
+            <div className='flex items-center justify-end gap-2 text-xs'>
+              <button 
+                className='px-3 py-1.5 font-medium rounded-lg text-gray-500 hover:bg-gray-100 transition-colors'
+                onClick={() => { setIsAddCat(false); setError(""); setCatName(""); }}
+              >Cancel</button>
+              <button 
+                className='px-4 py-1.5 font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 shadow-sm transition-colors'
+                onClick={() => addCat(catName)}
+              >Add</button>
             </div>
           </div>
-        }
-
+        ) : (
+          <button 
+            className='flex items-center justify-center gap-2 w-full py-2.5 text-sm bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-all duration-300 transform active:scale-[0.98] shadow-md shadow-blue-200 hover:shadow-lg hover:shadow-blue-300'
+            onClick={() => setIsAddCat(true)}
+          >
+            <FaPlus className="text-xs" />
+            <span>Add Category</span>
+          </button>
+        )}
       </div>
-    </>
+    </div>
   )
 }
 
-export default Category
-
+export default Category;
