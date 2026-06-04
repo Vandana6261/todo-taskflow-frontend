@@ -34,7 +34,7 @@ export async function customFetch(url, options = {}) {
     }
 
     console.warn("Session expired completely. Redirecting to auth node.");
-    // window.location.href = "/";
+    window.location.href = "/";
   }
 
   return response;
