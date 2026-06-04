@@ -8,8 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Home = () => {
   const navigate = useNavigate();
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#1E293B] selection:bg-blue-100 bg-gradient-to-br from-white to-blue-500/30">
-
+    <div className="min-h-screen bg-[#dbdae9e5] text-[#1E293B] selection:bg-blue-100 ">
       {/* Hero Section */}
       <section className="max-w-[1200px] mx-auto px-6 pt-20 pb-32 flex flex-col items-center text-center">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-blue-600 text-sm font-medium mb-8 animate-fade-in">

@@ -96,7 +96,7 @@ function Login() {
 
     return (
         <>
-            <div className="w-full min-h-screen fixed top-0 z-0 flex justify-center items-center bg-gradient-to-br from-white to-blue-500/30 p-4">
+            <div className="w-full min-h-screen bg-[#dbdae9e5] fixed top-0 z-0 flex justify-center items-center p-4">
                 <div className="flex flex-col gap-1 w-full max-w-[450px] md:w-[40vw] bg-[#ffffff] rounded-xl border border-gray-400 px-4 py-4 ">
                     <form
                         className="flex flex-col gap-2 max-h-[70vh] relative "

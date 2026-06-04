@@ -73,7 +73,7 @@ function TaskList() {
 
   return (
     <>
-      <div className='relative h-full select-none bg-[#F8FAFC]'>
+      <div className='relative h-full select-none bg-[#fcfaf8b6]'>
         <div className='flex justify-center gap-4 border-gray-400 p-2'>
           <SearchBar setisLoading={setisLoading} />
           <button
@@ -101,7 +101,7 @@ function TaskList() {
             :
             <div className='max-w-screen md:max-h-[78vh] pt-2 flex flex-col md:flex-row bg-[#f3f1f1] px-2 overflow-y-auto md:overflow-hidden'>
 
-              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[40vh] md:min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
+              <div className='flex-1 m-1 border border-gray-300 bg-[#d2d2ec83] min-h-[40vh] md:min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
                 onDragEnter={e => console.log('onDragEnter')}
                 onDragLeave={e => console.log('onDragLeave')}
                 onDragOver={handleDragOver}
@@ -116,6 +116,7 @@ function TaskList() {
                         draggable
                         onDragStart={(e) => handleDragStart(e, item)}
                         onDragEnd={(e) => console.log("onDragEnd")}
+                        className='cursor-grab active:cursor-grabbing'
                       >
                         <TaskItem task={item}
                         />
@@ -125,7 +126,7 @@ function TaskList() {
                 </div>
               </div>
 
-              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[40vh] md:min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
+              <div className='flex-1 m-1 border border-gray-300 bg-[#d2d2ec83] min-h-[40vh] md:min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
                 onDragEnter={e => console.log('onDragEnter')}
                 onDragLeave={e => console.log('onDragLeave')}
                 onDragOver={handleDragOver}
@@ -141,6 +142,7 @@ function TaskList() {
                         draggable
                         onDragStart={(e) => handleDragStart(e, item)}
                         onDragEnd={(e) => console.log("onDragEnd")}
+                        className='cursor-grab active:cursor-grabbing'
                       >
                         <TaskItem task={item} />
                       </div>
@@ -149,7 +151,7 @@ function TaskList() {
                 </div>
               </div>
 
-              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[40vh] md:min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
+              <div className='flex-1 m-1 border border-gray-300 bg-[#d2d2ec83] min-h-[40vh] md:min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
                 onDragEnter={e => console.log('onDragEnter')}
                 onDragLeave={e => console.log('onDragLeave')}
                 onDragOver={handleDragOver}
@@ -164,6 +166,7 @@ function TaskList() {
                         draggable
                         onDragStart={(e) => handleDragStart(e, item)}
                         onDragEnd={(e) => console.log("onDragEnd")}
+                        className='cursor-grab active:cursor-grabbing'
                       >
                         <TaskItem task={item} />
                       </div>

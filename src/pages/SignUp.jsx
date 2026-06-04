@@ -116,7 +116,7 @@ function SignUp() {
 
   return (
     <>
-      <div className="w-full min-h-screen fixed mt-0 top-0 z-0  flex justify-center items-center bg-gradient-to-br from-white to-blue-500/30 p-4">
+      <div className="w-full min-h-screen bg-[#dbdae9e5] fixed mt-0 top-0 z-0  flex justify-center items-center p-4">
       {isLoading ? 
         <Loader message={"Sending Otp"}/>
       :

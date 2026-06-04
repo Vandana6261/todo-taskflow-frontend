@@ -7,7 +7,7 @@ function Landing() {
   const navigate = useNavigate();
   return (
     <>
-      <header className='w-full text-center flex flex-col sm:flex-row justify-between items-center p-4 bg-gradient-to-br from-white to-blue-50 z-10 relative gap-4'>
+      <header className='w-full text-center bg-[#EFEDED] flex flex-col sm:flex-row justify-between items-center p-4 z-10 relative gap-4'>
         <div className="flex items-center justify-center gap-3 text-2xl font-bold text-[#0019f7a8]">
           <FiCheckSquare className="text-3xl" />
           <span>TaskFlow</span>
