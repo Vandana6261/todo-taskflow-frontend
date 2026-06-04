@@ -3,7 +3,6 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import TaskList from './components/TaskList'
-import TodoApp from './components/TodoApp'
 import { TodoProvider } from './context/TodoContext'
 // import SignUp from './components/SignUp'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
@@ -78,7 +77,7 @@ export default App
 {/* <div>hello</div> */ }
 {/* <TaskList /> */ }
 {/* <TodoProvider>
-  <TodoApp />
+
 </TodoProvider> */}
 {/* <Dashboard /> */ }
 {/* <SignUp /> */ }
