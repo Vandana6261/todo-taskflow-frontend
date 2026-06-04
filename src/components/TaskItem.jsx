@@ -10,11 +10,11 @@ import { GrUpdate } from "react-icons/gr";
 // console.log("TaskItem rendered")
 
 function TaskItem({ task }) {
-  const { tasks, updateTask, setSelectId } = useTodoContext()
+  const { tasks, updateTask, setSelectId, deleteTask } = useTodoContext()
   const [isUpdate, setIsUpdate] = useState(false);
   const [isCompleted, setIsCompleted] = useState(task.isCompleted);
-  const [confirmDelete, setConfirmDelete] = useState(false);
   const [updatedData, setUpdatedData] = useState({})
+  const [isOpen, setIsOpen] = useState(false)
 
   const styleMap = {
     complete: "bg-orange-300/20 text-orange-600",
@@ -29,8 +29,8 @@ function TaskItem({ task }) {
     setUpdatedData(taskToBeUpdated)
   }
 
-  const handleDelete = () => {
-    setConfirmDelete(!confirmDelete)
+  const handleDelete = async () => {
+    const response = await deleteTask(task._id, { ...task, isDeleted: true });
   }
 
   useEffect(() => {
@@ -61,7 +61,8 @@ function TaskItem({ task }) {
                 <h2>{task.title}</h2>
                 <div className=''>
                   <button className='hoverBase btn mx-2 font-semibold bg-red-500/20  text-red-600 hover:text-red-600'
-                    onClick={() => handleDelete()}
+                    onClick={() => setIsOpen(!isOpen)
+                    }
                   >
                     <MdDeleteForever />
                   </button>
@@ -98,7 +99,7 @@ function TaskItem({ task }) {
       {/* confirmation (delete) */}
       <div>
         {createPortal(
-          confirmDelete ? <Confirmation task={task} taskId={task._id} setConfirmDelete={setConfirmDelete} /> : "", document.body
+          isOpen ? <Confirmation setIsOpen={setIsOpen} handleConfirmation={handleDelete} text={"Delet this todo"}  /> : "", document.body
         )}
       </div>
     </>

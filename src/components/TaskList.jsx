@@ -8,6 +8,8 @@ import useTodoContext from '../context/TodoContext';
 import SearchBar from './SearchBar';
 import Loader from './Loader';
 import { useNavigate } from 'react-router-dom';
+import { createPortal } from 'react-dom';
+import Confirmation from './Confirmation';
 
 
 // console.log("TaskList rendered")
@@ -17,6 +19,8 @@ function TaskList() {
   const { addTask, taskToBeShow, updateTask, isData, loadTodo , logout} = useTodoContext();
   const [active, setActive] = useState("");
   const [isLoading, setisLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
+  
 
   const navigate = useNavigate();
 
@@ -81,7 +85,7 @@ function TaskList() {
             className='btn hoverBase border-none w-auto py-2 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
           >Add Task</button>
           <button 
-            onClick={() => handleLogout()}
+            onClick={() => setIsOpen(!isOpen)}
             className='btn hoverBase border-none w-auto py-2 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
           >
             Log Out
@@ -178,6 +182,11 @@ function TaskList() {
           }
         </div>
         
+      </div>
+      <div>
+        {createPortal(
+          isOpen ? <Confirmation setIsOpen={setIsOpen} handleConfirmation={handleLogout} text={"Logout"}  /> : "", document.body
+        )}
       </div>
     </>
   )
