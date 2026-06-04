@@ -10,7 +10,7 @@ function Landing() {
       <header className='w-full text-center bg-[#EFEDED] flex flex-col sm:flex-row justify-between items-center p-4 z-10 relative gap-4'>
         <div className="flex items-center justify-center gap-3 text-2xl font-bold text-[#0019f7a8]">
           <FiCheckSquare className="text-3xl" />
-          <span>TaskFlow</span>
+          <h2 className='cursor-pointer' onClick={() => navigate('/')}>TaskFlow</h2>
         </div>
         
         <div className='flex items-center gap-4'>

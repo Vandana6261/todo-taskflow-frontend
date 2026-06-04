@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import useTodoContext from '../context/TodoContext'
-import { redirect, useLoaderData } from 'react-router-dom';
+import { redirect, useLoaderData, useNavigate } from 'react-router-dom';
 import TaskList from '../components/TaskList';
 import Category from '../components/Category';
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -14,6 +14,8 @@ function Dashboard() {
   // const { todoData, catArr } = useLoaderData();
 
   const [showCategory, setShowCategory] = useState(false)
+  const navigate = useNavigate();
+
   async function fetchData() {
         await loadTodo()
         await loadCat()
@@ -37,7 +39,7 @@ function Dashboard() {
             </span>
             <div className="flex items-center gap-3 text-xl md:text-2xl font-bold text-[#0019f7a8]">
               <FiCheckSquare className="text-2xl md:text-3xl" />
-              <span>TaskFlow</span>
+              <span className='cursor-pointer' onClick={() => navigate('/')}>TaskFlow</span>
             </div>
           </div>
         </header>
