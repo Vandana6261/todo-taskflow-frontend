@@ -64,7 +64,6 @@ function App() {
       {/* <ErrorBoundary> */}
         <TodoProvider>
           <RouterProvider router={router} />
-          {/* <TodoApp /> */}
         </TodoProvider>
       {/* </ErrorBoundary> */}
     </>
