@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useTodo } from '../hooks/useTodo'
 import useTodoContext from '../context/TodoContext'
-import TaskDetails from './TaskDetails'
+import UpdateTodo from './UpdateTodo'
 import { createPortal } from 'react-dom'
 import Confirmation from './Confirmation'
 import { MdDeleteForever } from "react-icons/md";
@@ -90,12 +90,11 @@ function TaskItem({ task }) {
         </div>
       </div>
 
-      {/* TaskDetails (update) */}
-      <div className=''>
-        {createPortal(
-          isUpdate ? <TaskDetails isUpdate={isUpdate} setIsUpdate={setIsUpdate} updatedData={updatedData} setUpdatedData={setUpdatedData} /> : "", document.body
-        )}
-      </div>
+      {/* UpdateTodo (update) */}
+      {createPortal(
+        isUpdate ? <UpdateTodo isUpdate={isUpdate} setIsUpdate={setIsUpdate} updatedData={updatedData} setUpdatedData={setUpdatedData} /> : "",
+        document.body
+      )}
       {/* confirmation (delete) */}
       <div>
         {createPortal(

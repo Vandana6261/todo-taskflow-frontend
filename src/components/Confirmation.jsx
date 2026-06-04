@@ -17,7 +17,7 @@ function Confirmation({ task, taskId, setConfirmDelete }) {
   }
   return (
     <>
-      <div className='w-screen h-screen fixed top-0 left-0 flex items-center justify-center bg-black/40 backdrop-blur-sm'
+      <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm'
         onClick={() => handleCancel()}
       >
         <div className='bg-[#ffffff] p-2 rounded-xl min-h-40 flex flex-col justify-center items-center gap-2 font-semibold'
