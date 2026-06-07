@@ -43,7 +43,7 @@ function TaskItem({ task }) {
       >
         {/* task title, description, etc. */}
         <div className={`flex flex-col rounded-md py-2 ${isCompleted ? "line-through text-gray-400" : ""}`}>
-          <div className='flex gap-2'>
+          <div className=''>
             <div className=''>
               <input
                 className='cursor-pointer'
@@ -58,8 +58,8 @@ function TaskItem({ task }) {
 
             <div className='flex flex-col w-full'>
               <div className='flex justify-between'>
-                <h2>{task.title}</h2>
-                <div className=''>
+                <h2 className=''>{task.title}</h2>
+                <div className='flex-1'>
                   <button className='hoverBase btn mx-2 font-semibold bg-red-500/20  text-red-600 hover:text-red-600'
                     onClick={() => setIsOpen(!isOpen)
                     }
@@ -75,8 +75,8 @@ function TaskItem({ task }) {
                 </div>
               </div>
               <p className='text-gray-500'>{task.description}</p>
-              <div className='mt-2 flex gap-3 items-center'>
-                {task.category && <p className='bg-gray-300/30 text-gray-900 w-fit rounded px-4'>{task.category.name}</p>}
+              <div className='mt-2 flex items-center justify-between '>
+                {task.category && <p className='bg-gray-300/30 text-gray-900 w-fit rounded'>{task.category.name}</p>}
                 {task.status && <p className={`w-fit rounded px-4 font-semibold ${styleMap[task.status]}`}>{task.status}</p>}
               </div>
             </div>
