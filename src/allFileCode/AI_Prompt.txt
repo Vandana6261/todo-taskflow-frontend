@@ -1,3 +1,162 @@
+import React, { useState, useEffect, useMemo } from 'react'
+import { FaRegFolderOpen } from "react-icons/fa";
+import useTodoContext from '../context/TodoContext';
+import { FaPlus } from "react-icons/fa";
+
+// console.log("Category rendered")
+
+function Category() {
+
+  const { loadTodo, categories, addCategory, filterTask } = useTodoContext()
+  const [isAddCat, setIsAddCat] = useState(false)
+  const [catName, setCatName] = useState("")
+  const [error, setError] = useState("")
+  const [selectedCat, setSelectedCat] = useState("all")
+  
+
+  const handleCat = (cat) => {
+    console.log(selectedCat)
+    if (cat == "all") {
+      loadTodo()
+      setSelectedCat(cat)
+      return;
+    }
+    setSelectedCat(cat._id);
+    filterTask(cat);
+  }
+  
+  const addCat = (cat) => {
+    if(!cat) {
+      setError("Please add one category name")
+      return;
+    }
+    let isFound = categories.find(item => item.name == cat);
+    if(isFound) {
+        setError("Cat exists")
+        return;
+      }
+      setIsAddCat(false);
+      setCatName("")
+      setError("")
+    addCategory(cat);
+  }
+
+  const getRandomColorCode = () => {
+    let str = "1234567890ab";
+    let color = "#"
+    
+    for(let i=0; i<6; i++) {
+      let idx = Math.floor(Math.random() * str.length)
+      color += str[idx];
+    }
+    
+    return color;
+  }
+
+  const categoryColor = useMemo(() => {
+    const colorMap = {};
+
+    categories.map(item => {
+      colorMap[item._id] = getRandomColorCode();
+    })
+
+    return colorMap;
+  }, [categories.length])
+
+
+  return (
+    <>
+      <div className='min-h-[85vh] relative'>
+        {/* heading */}
+        <div className='flex items-center gap-2 text-xl '>
+          <span className='text-blue-500'>
+            <FaRegFolderOpen />
+          </span>
+          <h2>Category</h2>
+        </div>
+
+        {/* category */}
+        <div className='flex flex-col '>
+          <div
+            className={`flex items-center gap-1 cursor-pointer px-1 m-1 onHoverEffect rounded-full  ${selectedCat === "all" ? "bg-[#ffffff] shadow-[0_0_0_2px_rgba(59,130,246,0.6)]": "bg-transparent"} `}
+            onClick={() => handleCat("all")}>
+            <div className={`rounded-full w-3 h-3 bg-blue-600 ${selectedCat} === "all" ? bg-[#ffffff]`}></div>
+            <h2>All</h2>
+          </div>
+          {
+            categories.length == 0 ?
+              <p>No category to display</p>
+              :
+              // <p>hello </p>
+              // }
+              (categories.map((item, index) => {
+                const color = categoryColor[item._id];
+                return (
+                  <div
+                    key={item._id}
+                    className='flex flex-col p-1 '
+                    onClick={() => handleCat(item)}
+                  >
+                    <div className={`flex items-center gap-2 cursor-pointer px-1 onHoverEffect rounded-full ${selectedCat === item._id ? "bg-[#ffffff] shadow-[0_0_0_2px_rgba(59,130,246,0.6)]": "bg-transparent"} `}>
+                      <div className={`rounded-full w-3 h-3 bg-[${color}]`}
+                        style={{backgroundColor: color}}
+                      ></div>
+                      <span className='line-clamp-1'>{item.name}</span>
+                    </div>
+                  </div>
+                )
+              }))
+
+            }
+        </div>
+
+        {isAddCat ?
+
+          <div className='absolute bottom-0 min-w-[90%]'>
+              <div className='flex flex-col gap-2'>
+                <input type="text" 
+                  className='inputBase bg-[#ffffff] px-2 py-1 font-semibold text-gray-600 border-gray-400 rounded-xl shadow-[0px_10px_30px_10px_rgba(0,0,0,0.25)]  focus-within:shadow-[0px_10px_30px_10px_rgba(0,0,0,0.25)] text-sm '
+                  placeholder='Enter Category to add'
+                  value={catName}
+                  onChange={(e) => setCatName(e.target.value)}
+                />
+                {error && <p className='text-red-500'>{error}</p>}
+
+                <div className='flex items-center justify-around '>
+                  <button className='hoverBase btn mx-2 font-semibold rounded-full bg-red-500/20 text-red-600'
+                    onClick={() => {
+                      setIsAddCat(false)
+                      setError("")
+                      setCatName("")
+                    }}
+                  >Cancel</button>
+                  <button className='hoverBase btn mx-2 font-semibold rounded-full bg-green-500/20 text-[#229c09] w-24'
+                    onClick={() => addCat(catName)}
+                  >Add</button>
+                </div>
+              </div>
+          </div>
+
+          :
+
+          <div className='absolute bottom-0 min-w-[90%]'
+            onClick={() => setIsAddCat(true)}
+          >
+            <div className='flex items-center btn hoverBase w-full py-2 text-white font-semibold rounded-full border-gray-600 gap-2 bg-[#0019f7a8] hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>
+              <FaPlus />
+              <button className='' onTouchMove={() => console.log("ggh")}>Add Category</button>
+            </div>
+          </div>
+        }
+
+      </div>
+    </>
+  )
+}
+
+export default Category
+
+
 import React, { useEffect, useState } from "react";
 import { useTodo } from "../hooks/useTodo";
 import useTodoContext from "../context/TodoContext";
@@ -25,8 +184,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
         { ...prev, category: categories[0]._id }
       ))
     }
-    console.log("category added")
-  }, [categories]);
+  }, []);
 
   const today = new Date().toISOString().split("T")[0];
   const pattern = /^[A-Za-z ]+$/;
@@ -58,7 +216,6 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
       setError(newError);
       return;
     }
-    console.log(formData, "formData");
     addTask(formData);
 
     setFormData({
@@ -100,7 +257,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
         }}
       >
         <div
-          className="flex flex-col gap-1 w-[90%] min-h-full sm:w-1/2 modal bg-[#ffffff] rounded-xl p-4"
+          className="flex flex-col gap-1 w-[90%] max-w-[500px] h-auto modal bg-[#ffffff] rounded-xl p-4"
           onClick={(e) => {
             e.stopPropagation();
           }}
@@ -328,13 +485,29 @@ function Confirmation({ task, taskId, setConfirmDelete }) {
 
 export default Confirmation
 
+import React from 'react'
+// import preview from '../data/preview'
+
+function Preview() {
+  return (
+    <div className="flex-1 grid grid-cols-3 gap-4">
+        {preview.map(item => (
+            <div key={item.id} className="bg-blue-50/50 rounded-lg border-2 border-dashed border-blue-100 h-full overflow-hidden">
+                <img src={item.path} />
+            </div>
+        ))}
+    </div>
+  )
+}
+
+export default Preview
 import React, { useRef } from 'react'
 import { IoIosSearch } from "react-icons/io";
 import useTodoContext from '../context/TodoContext';
 
 // console.log("SearchBar rendered")
 
-function SearchBar() {
+function SearchBar({setisLoading}) {
     const {searchTask, loadTodo} = useTodoContext()
 
     const timerRef = useRef(null);
@@ -353,14 +526,16 @@ function SearchBar() {
         return;
       }
 
-      timerRef.current = setTimeout(() => {
-        searchTask(val.trim());
+      timerRef.current = setTimeout(async () => {
+        setisLoading(true);
+        let response = await searchTask(val.trim());
+        setisLoading(false);
       }, 2000)
     }
 
   return (
     <>
-      <div className='w-1/2'>
+      <div className='w-full max-w-md'>
         <form>
             <div tabIndex={0} className=' border border-gray-400 rounded-full flex items-center gap-2 px-2 cursor-pointer hover:shadow-[0px_0px_10px_rgba(0,15,205,0.4)] focus-within:border focus-within:border-blue-800/50 focus-within:shadow-[0px_0px_10px_rgba(0,15,205,0.4)]'>
                 <span>
@@ -380,323 +555,57 @@ function SearchBar() {
 
 export default SearchBar
 
-import React, { useState, useEffect, useMemo } from 'react'
-import { FaRegFolderOpen } from "react-icons/fa";
-import useTodoContext from '../context/TodoContext';
-import { FaPlus } from "react-icons/fa";
+import React from 'react';
 
-// console.log("Category rendered")
-
-function Category() {
-
-  const { loadTodo, categories, addCategory, filterTask } = useTodoContext()
-  const [isAddCat, setIsAddCat] = useState(false)
-  const [catName, setCatName] = useState("")
-  const [error, setError] = useState("")
-  const [selectedCat, setSelectedCat] = useState("all")
-
-  useEffect(() => {
-    async function loadData() {
-      await loadCat();
-    }
-  })
-
-  const handleCat = (cat) => {
-    console.log(selectedCat)
-    if (cat == "all") {
-      loadTodo()
-      setSelectedCat(cat)
-      return;
-    }
-    setSelectedCat(cat._id);
-    filterTask(cat);
-  }
-  
-  const addCat = (cat) => {
-    if(!cat) {
-      setError("Please add one category name")
-      return;
-    }
-    let isFound = categories.find(item => item.name == cat);
-    if(isFound) {
-        setError("Cat exists")
-        return;
-      }
-      setIsAddCat(false);
-      setCatName("")
-      setError("")
-    addCategory(cat);
-  }
-
-  const getRandomColorCode = () => {
-    let str = "1234567890ab";
-    let color = "#"
-    
-    for(let i=0; i<6; i++) {
-      let idx = Math.floor(Math.random() * str.length)
-      color += str[idx];
-    }
-    
-    return color;
-  }
-
-  const categoryColor = useMemo(() => {
-    const colorMap = {};
-
-    categories.map(item => {
-      colorMap[item._id] = getRandomColorCode();
-    })
-
-    return colorMap;
-  }, [categories.length])
-
-
+const Loader = ({message = "Loading"}) => {
   return (
-    <>
-      <div className='min-h-[85vh] relative'>
-        {/* heading */}
-        <div className='flex items-center gap-2 text-xl '>
-          <span className='text-blue-500'>
-            <FaRegFolderOpen />
-          </span>
-          <h2>Category</h2>
-        </div>
-
-        {/* category */}
-        <div className='flex flex-col '>
-          <div
-            className={`flex items-center gap-1 cursor-pointer px-1 m-1 onHoverEffect rounded-full  ${selectedCat === "all" ? "bg-[#ffffff] shadow-[0_0_0_2px_rgba(59,130,246,0.6)]": "bg-transparent"} `}
-            onClick={() => handleCat("all")}>
-            <div className={`rounded-full w-3 h-3 bg-blue-600 ${selectedCat} === "all" ? bg-[#ffffff]`}></div>
-            <h2>All</h2>
-          </div>
-          {
-            categories.length == 0 ?
-              <p>No category to display</p>
-              :
-
-              // }
-              (categories.map((item, index) => {
-                const color = categoryColor[item._id];
-                return (
-                  <div
-                    key={item._id}
-                    className='flex flex-col p-1 '
-                    onClick={() => handleCat(item)}
-                  >
-                    <div className={`flex items-center gap-2 cursor-pointer px-1 onHoverEffect rounded-full ${selectedCat === item._id ? "bg-[#ffffff] shadow-[0_0_0_2px_rgba(59,130,246,0.6)]": "bg-transparent"} `}>
-                      <div className={`rounded-full w-3 h-3 bg-[${color}]`}
-                        style={{backgroundColor: color}}
-                      ></div>
-                      <span>{item.name}</span>
-                    </div>
-                  </div>
-                )
-              }))
-          }
-        </div>
-
-        {isAddCat ?
-
-          <div className='absolute bottom-0 min-w-[90%]'>
-              <div className='flex flex-col gap-2'>
-                <input type="text" 
-                  className='inputBase bg-[#ffffff] px-2 py-1 font-semibold text-gray-600 border-gray-400 rounded-xl shadow-[0px_10px_30px_10px_rgba(0,0,0,0.25)]  focus-within:shadow-[0px_10px_30px_10px_rgba(0,0,0,0.25)] text-sm '
-                  placeholder='Enter Category to add'
-                  value={catName}
-                  onChange={(e) => setCatName(e.target.value)}
-                />
-                {error && <p className='text-red-500'>{error}</p>}
-
-                <div className='flex items-center justify-around '>
-                  <button className='hoverBase btn mx-2 font-semibold rounded-full bg-red-500/20 text-red-600'
-                    onClick={() => {
-                      setIsAddCat(false)
-                      setError("")
-                      setCatName("")
-                    }}
-                  >Cancel</button>
-                  <button className='hoverBase btn mx-2 font-semibold rounded-full bg-green-500/20 text-[#229c09] w-24'
-                    onClick={() => addCat(catName)}
-                  >Add</button>
-                </div>
-              </div>
-          </div>
-
-          :
-
-          <div className='absolute bottom-0 min-w-[90%]'
-            onClick={() => setIsAddCat(true)}
+    <div className="flex flex-col items-center justify-center w-full min-h-[80vh] bg-transparent animate-in fade-in duration-700">
+      
+      {/* Visual Ripple Animation */}
+      <div className="relative w-48 h-48 flex items-center justify-center mb-8">
+        {/* Ripples */}
+        <div className="absolute inset-0 border-2 border-blue-600/30 rounded-full animate-[ping_3s_linear_infinite]"></div>
+        <div className="absolute inset-0 border-2 border-blue-600/20 rounded-full animate-[ping_3s_linear_infinite_1s]"></div>
+        <div className="absolute inset-0 border-2 border-blue-600/10 rounded-full animate-[ping_3s_linear_infinite_2s]"></div>
+        
+        {/* Core Circle with Icon */}
+        <div className="z-10 w-20 h-20 bg-[#0019f7a8] rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(0,25,247,0.4)]">
+          <svg 
+            width="35" 
+            height="35" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="white" 
+            strokeWidth="2.5" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
           >
-            <div className='flex items-center btn hoverBase w-full py-2 text-white font-semibold rounded-full border-gray-600 gap-2 bg-[#0019f7a8] hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>
-              <FaPlus />
-              <button className='' onTouchMove={() => console.log("ggh")}>Add Category</button>
-            </div>
-          </div>
-        }
-
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
       </div>
-    </>
-  )
-}
 
-export default Category
+      {/* Text Content */}
+      <div className="text-center max-w-md px-6">
+        <h2 className="text-2xl md:text-3xl font-extrabold text-gray-800 mb-2">
+          {message}
+        </h2>
+        <p className="text-gray-500 font-medium mb-6 leading-relaxed">
+          {/* We're analyzing your tasks and categories to optimize your workflow. */}
+          Please wait for a moment
+        </p>
+        
+        {/* Progress Bar */}
+        <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+          <div className="h-full bg-[#0019f7a8] rounded-full animate-progress-loading"></div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-
-import React, { useState } from 'react'
-import { MdCancel } from "react-icons/md";
-
-function SignUp({ isSignUp, setIsSignUp }) {
-    const [formData, setFormData] = useState
-        ({
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            mobileNo: null
-        })
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value })
-    }
-
-    const handleSubmit = (e) => {
-
-        e.preventDefault()
-
-        setFormData({
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            mobileNo: ""
-        })
-    }
-
-    const handleCancel = () => {
-        setIsSignUp(!isSignUp);
-
-        setFormData({
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            mobileNo: ""
-        })
-    }
-    return (
-        <>
-            {isSignUp &&
-                <div 
-                // className='min-w-screen min-h-screen flex justify-center items-center bg-black/10 backdrop-blur-sm z-999 fixed top-0 '
-                    onClick={() => {
-                        setIsSignUp(!isSignUp)
-                    }}
-                >
-                    <div
-                        className="flex flex-col gap-1 w-[90%] min-h-full sm:w-1/2 modal bg-[#ffffff] rounded-xl p-4"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        {/* Heading */}
-                        <div className='flex-1 border-b border-gray-300 px-4 py-2 flex justify-between'>
-                            <h2 className='text-2xl text-center'>Sign Up</h2>
-                            <span
-                                className='h-8 w-8 text-2xl rounded-full bg-gray-400/20 flex justify-center items-center cursor-pointer hoverBase'
-                                onClick={(e) => handleCancel(e)}
-                            ><MdCancel /></span>
-                        </div>
-
-                        <form
-                            className='flex flex-col gap-2 justify-center'
-                        >
-                            <div>
-                                <label htmlFor="firstName" className="text-md font-semibold">FirstName: </label>
-                                <input 
-                                    type="text" 
-                                    id='firstName'
-                                    name='firstName'
-                                    value={formData.firstName}
-                                    onChange={(e) => handleChange(e)}
-                                    placeholder='enter your first name'
-                                    className="inputBase px-2 py-1"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="lastName" className="text-md font-semibold">LastName: </label>
-                                <input 
-                                    type="text" 
-                                    id='lastName'
-                                    name='lastName'
-                                    value={formData.lastName}
-                                    onChange={(e) => handleChange(e)}
-                                    placeholder='enter your last name'
-                                    className="inputBase px-2 py-1"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="email" className="text-md font-semibold">Email: </label>
-                                <input 
-                                    type="email" 
-                                    id='email'
-                                    name='email'
-                                    value={formData.email}
-                                    onChange={(e) => handleChange(e)}
-                                    placeholder='enter your email'
-                                    className="inputBase px-2 py-1"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="password" className="text-md font-semibold">Password: </label>
-                                <input 
-                                    type="password" 
-                                    id='password'
-                                    name='password'
-                                    value={formData.password}
-                                    onChange={(e) => handleChange(e)}
-                                    placeholder='create your password'
-                                    className="inputBase px-2 py-1"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="mobileNo" className="text-md font-semibold">Mobile No. : </label>
-                                <input 
-                                    type="string" 
-                                    id='mobileNo'
-                                    name='mobileNo'
-                                    value={formData.mobileNo}
-                                    onChange={(e) => handleChange(e)}
-                                    max={10}
-                                    placeholder='enter your mobile No.'
-                                    className="inputBase px-2 py-1"
-                                />
-                            </div>
-                            <div className="flex gap-3 self-end mt-2 relative bottom-0">
-                                <button
-                                    type="button"
-                                    onClick={(e) => handleCancel(e)}
-                                    className="hoverBase btn mx-2 font-semibold bg-red-300/20 text-red-600"
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="hoverBase btn mx-2 font-semibold bg-green-500/20 text-[#229c09]"
-                                    onClick={(e) => handleSubmit(e)}
-                                >
-                                    Sign UP
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            }
-        </>
-    )
-}
-
-export default SignUp
-
+export default Loader;
 import React, { useEffect, useState } from 'react'
 import { IoMdTime } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
@@ -704,9 +613,9 @@ import { RxUpdate } from "react-icons/rx";
 import useTodoContext from '../context/TodoContext';
 import { MdCancel } from "react-icons/md";
 
-// console.log("TaskDetails rendered")
+// console.log("UpdateTodo rendered")
 
-function TaskDetails({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
+function UpdateTodo({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
   const { selectId, updateTask, categories } = useTodoContext();
   const [error, setError] = useState({})
 
@@ -720,12 +629,10 @@ function TaskDetails({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    console.log("Form submit called")
     let newError = {};
     if (updatedData.title == "") newError.title = "Title is required"
     if (!pattern.test(updatedData.title)) {
       newError.title = "Title is not valid, please use character only"
-      console.log(updatedData.title, 28)
     }
     if (!updatedData.description.trim()) {
       newError.description = "Description is required"
@@ -748,8 +655,7 @@ function TaskDetails({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
   }
 
   useEffect(() => {
-      
-  }, [categories]);
+  }, []);
   
   return (
     <>
@@ -921,120 +827,296 @@ function TaskDetails({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
   )
 }
 
-export default TaskDetails
+export default UpdateTodo
 
-import React, { useEffect, useState } from 'react'
-import { useTodo } from '../hooks/useTodo'
+import React, { useState, useEffect } from 'react'
 import useTodoContext from '../context/TodoContext'
-import TaskDetails from './TaskDetails'
-import { createPortal } from 'react-dom'
-import Confirmation from './Confirmation'
-import { MdDeleteForever } from "react-icons/md";
-import { GrUpdate } from "react-icons/gr";
+import { redirect, useLoaderData } from 'react-router-dom';
+import TaskList from '../components/TaskList';
+import Category from '../components/Category';
+import { GiHamburgerMenu } from "react-icons/gi";
+import { FiCheckSquare } from "react-icons/fi";
+import { toast } from 'react-toastify';
+import { BASE_URL } from '../config';
 
-// console.log("TaskItem rendered")
 
-function TaskItem({ task }) {
-  const { tasks, updateTask, setSelectId } = useTodoContext()
-  const [isUpdate, setIsUpdate] = useState(false);
-  const [isCompleted, setIsCompleted] = useState(task.isCompleted);
-  const [confirmDelete, setConfirmDelete] = useState(false);
-  const [updatedData, setUpdatedData] = useState({})
+function Dashboard() {
+  const { setTasks, setTaskToBeShow, setCategories, loadTodo, loadCat } = useTodoContext()
+  // const { todoData, catArr } = useLoaderData();
 
-  const styleMap = {
-    complete: "bg-orange-300/20 text-orange-600",
-    inProgress: "bg-blue-300/30 text-blue-600",
-    pending: "bg-purple-500/20 text-purple-500"
+  const [showCategory, setShowCategory] = useState(false)
+  async function fetchData() {
+        await loadTodo()
+        await loadCat()
   }
 
-  const handleUpdate = () => {
-    setSelectId(task._id)
-    setIsUpdate(!isUpdate)
-    const taskToBeUpdated = tasks.find((eachTask) => eachTask._id === task._id);
-    setUpdatedData(taskToBeUpdated)
-  }
-
-  const handleDelete = () => {
-    setConfirmDelete(!confirmDelete)
-  }
 
   useEffect(() => {
-
-  }, [isCompleted])
+    fetchData();
+  }, [])
 
   return (
     <>
-      <div tabIndex={0} className={`px-4 border-b bg-[#ffffff] min-h-30 pb-2 text-sm m-1 border border-gray-300 rounded-xl shadow-[0px_5px_10px_2px_rgba(0,0,0,0.25)]  hover:shadow-[0px_5px_10px_rgba(0,0,0,0.25)] hover:border-gray-400 `}
-        onClick={() => setSelectId(task._id)}
-      >
-        {/* task title, description, etc. */}
-        <div className={`flex flex-col rounded-md py-2 ${isCompleted ? "line-through text-gray-400" : ""}`}>
-          <div className='flex gap-2'>
-            <div className=''>
-              <input
-                className='cursor-pointer'
-                type="checkbox" id='checkbox' name='checkbox' checked={isCompleted}
-                onChange={(e) => {
-                  console.log(e.target.checked)
-                  const status = task.status !== "complete" ? "complete" : "inProgress";
-                  updateTask(task._id, { ...task, isCompleted: e.target.checked, status })
-                  setIsCompleted(e.target.checked)
-                }}
-              />
+      <div className='max-w-[1400px] mx-auto h-screen flex flex-col bg-[#c7c7ee71] relative'>
+        <header className='flex justify-between md:justify-start items-center h-auto p-4 border-b border-gray-300 gap-6'>
+          <div className='flex items-center gap-4'>
+            <span 
+              className='text-2xl cursor-pointer md:hidden'
+              onClick={() => setShowCategory(!showCategory)}
+            >
+              <GiHamburgerMenu />
+            </span>
+            <div className="flex items-center gap-3 text-xl md:text-2xl font-bold text-[#0019f7a8]">
+              <FiCheckSquare className="text-2xl md:text-3xl" />
+              <span>TaskFlow</span>
             </div>
-
-            <div className='flex flex-col w-full'>
-              <div className='flex justify-between'>
-                <h2>{task.title}</h2>
-                <div className=''>
-                  <button className='hoverBase btn mx-2 font-semibold bg-red-500/20  text-red-600 hover:text-red-600'
-                    onClick={() => handleDelete()}
-                  >
-                    <MdDeleteForever />
-                  </button>
-                  <button className={`hoverBase btn mx-2 font-semibold bg-green-600/20 text-[#027e23] ${isCompleted ? "line-through  " : ""}`}
-                    onClick={() => handleUpdate()}
-                    disabled={isCompleted}
-                  >
-                    <GrUpdate />
-                  </button>
-                </div>
-              </div>
-              <p className='text-gray-500'>{task.description}</p>
-              <div className='mt-2 flex gap-3 items-center'>
-                {task.category && <p className='bg-gray-300/30 text-gray-900 w-fit rounded px-4'>{task.category.name}</p>}
-                {task.status && <p className={`w-fit rounded px-4 font-semibold ${styleMap[task.status]}`}>{task.status}</p>}
-              </div>
-            </div>
-
-
           </div>
+        </header>
+
+        <div className='flex flex-1 overflow-hidden relative'>
+          {/* category - Sidebar */}
+          <aside className={`
+            absolute md:relative z-20 h-full w-64 md:w-auto md:flex-1 bg-white md:bg-transparent border-r border-[#CBD5E1] px-2 transition-transform duration-300 ease-in-out
+            ${showCategory ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+          `}>
+            <Category />
+          </aside>
+
+          {/* Overlay for mobile sidebar */}
+          {showCategory && (
+            <div 
+              className="absolute inset-0 bg-black/20 z-10 md:hidden"
+              onClick={() => setShowCategory(false)}
+            />
+          )}
+
+          {/* main */}
+          <main className='flex-[6] border-r border-gray-300 h-full overflow-y-auto'>
+            <TaskList />
+          </main>
         </div>
 
-        {/* button delete and update */}
-        <div className='flex justify-between'>
-          <div>{task.dueDate && <small className=' px-2 rounded  text-gray-500'>Due: {task.dueDate}</small>}</div>
-        </div>
-      </div>
-
-      {/* TaskDetails (update) */}
-      <div className=''>
-        {createPortal(
-          isUpdate ? <TaskDetails isUpdate={isUpdate} setIsUpdate={setIsUpdate} updatedData={updatedData} setUpdatedData={setUpdatedData} /> : "", document.body
-        )}
-      </div>
-      {/* confirmation (delete) */}
-      <div>
-        {createPortal(
-          confirmDelete ? <Confirmation task={task} taskId={task._id} setConfirmDelete={setConfirmDelete} /> : "", document.body
-        )}
       </div>
     </>
   )
 }
 
-export default TaskItem
+export default Dashboard
 
+
+// main content here filter + todos + Add Task Button.
+
+import React, { useEffect, useState } from 'react'
+import AddTaskDialogBox from './AddTaskDialogBox'
+import TaskItem from './TaskItem';
+import useTodoContext from '../context/TodoContext';
+import SearchBar from './SearchBar';
+import Loader from './Loader';
+import { useNavigate } from 'react-router-dom';
+
+
+// console.log("TaskList rendered")
+
+function TaskList() {
+  const [showDialogBox, setShowDialogBox] = useState(false);
+  const { addTask, taskToBeShow, updateTask, isData, loadTodo , logout} = useTodoContext();
+  const [active, setActive] = useState("");
+  const [isLoading, setisLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  const pendingTask = taskToBeShow.filter(eachTask => {
+    return eachTask.status === "pending" && !eachTask.isDeleted
+  })
+  const inProgressTask = taskToBeShow.filter(eachTask => {
+    return eachTask.status === "inProgress" && !eachTask.isDeleted
+  })
+  const completedTask = taskToBeShow.filter(eachTask => {
+    return eachTask.status === "complete" && !eachTask.isDeleted
+  })
+
+  useEffect(() => {
+    async function loadData() {
+      await loadTodo();
+    }
+  }, [])
+
+  const handleDragStart = (e, item) => {
+    console.log("onDragStart")
+    console.log(item)
+    e.dataTransfer.setData("todoItem", JSON.stringify(item))
+  }
+
+  const handleDragOver = (e) => {
+    console.log("onDragOver")
+    e.preventDefault();
+  }
+
+  const handleDrop = (e, status) => {
+    e.preventDefault();
+    console.log("onDrop")
+    console.log(status)
+    const data = JSON.parse(e.dataTransfer.getData("todoItem"));
+    console.log(data)
+    if (data.status == status) {
+      return;
+    }
+    if (status == "complete") {
+      data.isCompleted = true;
+    }
+    else {
+      data.isCompleted = false;
+    }
+    data.status = status;
+    updateTask(data._id, data);
+  }
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/")
+  }
+
+  return (
+    <>
+      <div className='relative h-full select-none bg-[#F8FAFC]'>
+        <div className='flex justify-center gap-4 border-gray-400 p-2'>
+          <SearchBar setisLoading={setisLoading} />
+          <button
+            onClick={() => setShowDialogBox(true)}
+            className='btn hoverBase border-none w-auto py-2 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
+          >Add Task</button>
+          <button 
+            onClick={() => handleLogout()}
+            className='btn hoverBase border-none w-auto py-2 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
+          >
+            Log Out
+          </button>
+          <AddTaskDialogBox showDialogBox={showDialogBox} setShowDialogBox={setShowDialogBox} />
+        </div>
+
+        <div className=''>
+          {taskToBeShow.length === 0 ?
+            (isLoading ? 
+              (<Loader />)
+              :
+              (<div className='flex justify-center items-center mt-8'>
+                <p className='text-xl '>No todos to display</p>
+              </div>)
+            )
+            :
+            <div className='max-w-screen md:max-h-[78vh] pt-2 flex flex-col md:flex-row bg-[#f3f1f1] px-2 overflow-y-auto md:overflow-hidden'>
+
+              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[40vh] md:min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
+                onDragEnter={e => console.log('onDragEnter')}
+                onDragLeave={e => console.log('onDragLeave')}
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, "pending")}
+              >
+                <h2 className='text-center text-lg  font-semibold text-[#2a344b] sticky top-0 bg-[#ffffff9d] rounded mb-6'>Pending Task</h2>
+                <div className='rounded flex flex-col gap-2'>
+                  {
+                    pendingTask.map(item => (
+                      <div
+                        key={item._id}
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, item)}
+                        onDragEnd={(e) => console.log("onDragEnd")}
+                      >
+                        <TaskItem task={item}
+                        />
+                      </div>
+                    ))
+                  }
+                </div>
+              </div>
+
+              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[40vh] md:min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
+                onDragEnter={e => console.log('onDragEnter')}
+                onDragLeave={e => console.log('onDragLeave')}
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, "inProgress")}
+              >
+                <h2 className='text-center text-lg font-semibold text-[#2a344b] sticky top-0 bg-[#ffffff] rounded mb-6'>InProgress Task</h2>
+                <div className='rounded flex flex-col gap-2'
+                >
+                  {
+                    inProgressTask.map(item => (
+                      <div
+                        key={item._id}
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, item)}
+                        onDragEnd={(e) => console.log("onDragEnd")}
+                      >
+                        <TaskItem task={item} />
+                      </div>
+                    ))
+                  }
+                </div>
+              </div>
+
+              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[40vh] md:min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
+                onDragEnter={e => console.log('onDragEnter')}
+                onDragLeave={e => console.log('onDragLeave')}
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, "complete")}
+              >
+                <h2 className='text-center text-lg font-semibold text-[#2a344b] sticky top-0 bg-[#ffffff] rounded mb-6'>Completed Task</h2>
+                <div className='rounded flex flex-col gap-2'>
+                  {
+                    completedTask.map(item => (
+                      <div
+                        key={item._id}
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, item)}
+                        onDragEnd={(e) => console.log("onDragEnd")}
+                      >
+                        <TaskItem task={item} />
+                      </div>
+                    ))
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+        
+      </div>
+    </>
+  )
+}
+
+export default TaskList
+
+
+class ErrorBoundary extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: null,
+            errorInfo: null
+        }
+    }
+
+    componentDidCatch(error, info) {
+        this.setState({
+            error: error,
+            errorInfo: info
+        })
+    }
+
+    render() { 
+        if(this.state.errorInfo) {
+            return (
+                <div>
+                    <h2>Something went wrong</h2>
+                </div>
+            )
+        }
+        return this.props.children;
+    }
+}
+ 
+export default ErrorBoundary;
 import React, { useState } from 'react'
 import TaskList from './TaskList';
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -1081,167 +1163,830 @@ function TodoApp() {
 
 export default TodoApp
 
+import React from 'react'
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { FiCheckSquare} from "react-icons/fi";
 
-// main content here filter + todos + Add Task Button.
 
-import React, { useEffect, useState } from 'react'
-import AddTaskDialogBox from './AddTaskDialogBox'
-import TaskItem from './TaskItem';
+function Landing() {
+  const navigate = useNavigate();
+  return (
+    <>
+      <header className='w-full text-center flex flex-col sm:flex-row justify-between items-center p-4 bg-gradient-to-br from-white to-blue-50 z-10 relative gap-4'>
+        <div className="flex items-center justify-center gap-3 text-2xl font-bold text-[#0019f7a8]">
+          <FiCheckSquare className="text-3xl" />
+          <span>TaskFlow</span>
+        </div>
+        
+        <div className='flex items-center gap-4'>
+          <NavLink
+            to="/"
+            className='hidden sm:block btn hoverBase border-none w-auto py-2 px-4 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/login"
+            className='btn hoverBase border-none w-auto py-2 px-4 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
+            onClick={() => navigate("/login")}
+          >Login</NavLink>
+          <NavLink
+            to="/signUp"
+            className='btn hoverBase border-none w-auto py-2 px-4 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
+            onClick={() => navigate("/signUp")}
+          >SignUp</NavLink>
+        </div>
+      </header>
+      <Outlet />
+    </>
+  )
+}
+
+export default Landing
+
+
+import React from 'react';
+import { FiCheckSquare, FiShield, FiZap, FiLayout } from "react-icons/fi";
+import { HiOutlineArrowRight } from "react-icons/hi";
+import { useNavigate } from 'react-router-dom';
+// import Preview from '../components/Preview';
+
+const Home = () => {
+  const navigate = useNavigate();
+  return (
+    <div className="min-h-screen bg-[#F8FAFC] text-[#1E293B] selection:bg-blue-100 bg-gradient-to-br from-white to-blue-500/30">
+
+      {/* Hero Section */}
+      <section className="max-w-[1200px] mx-auto px-6 pt-20 pb-32 flex flex-col items-center text-center">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-blue-600 text-sm font-medium mb-8 animate-fade-in">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+          </span>
+          V2.0 is now live with Drag & Drop
+        </div>
+        
+        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-slate-900 to-blue-800 bg-clip-text text-transparent">
+          Simplify your workflow. <br />
+          <span className="text-[#0019f7a8]">Focus on what matters.</span>
+        </h1>
+        
+        <p className="text-lg text-slate-600 max-w-2xl mb-10 leading-relaxed">
+          The professional task management tool designed for developers and high-achievers. 
+          Organize projects, track progress with Kanban-style boards, and stay ahead of deadlines.
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-4">
+          <button 
+            onClick={() => navigate("/signUp")}
+            className="flex items-center gap-2 px-8 py-4 bg-[#0019f7a8] text-white font-bold rounded-full shadow-[0px_10px_20px_rgba(0,25,247,0.3)] hover:shadow-[0px_15px_25px_rgba(0,25,247,0.4)] hover:-translate-y-1 transition-all duration-300"
+          >
+            Get Started for Free <HiOutlineArrowRight />
+          </button>
+          <button className="px-8 py-4 bg-white text-slate-700 font-bold rounded-full border border-slate-200 hover:bg-slate-50 transition-all">
+            View Demo
+          </button>
+        </div>
+
+        {/* Abstract UI Preview */}
+        <div className="mt-20 w-full max-w-5xl rounded-2xl border border-slate-200 bg-white shadow-2xl overflow-hidden p-2 transform rotate-1 hover:rotate-0 transition-transform duration-700">
+           <div className="bg-slate-50 rounded-xl p-4 h-72 md:h-102 flex gap-4">
+              {/* <Preview /> */}
+           </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="bg-white py-24 border-t border-slate-100">
+        <div className="max-w-[1200px] mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <FeatureCard 
+              icon={<FiLayout className="text-blue-500" />}
+              title="Kanban Architecture"
+              desc="Visualize your work from 'Pending' to 'Complete' with our intuitive drag-and-drop interface."
+            />
+            <FeatureCard 
+              icon={<FiZap className="text-amber-500" />}
+              title="Lightning Performance"
+              desc="Built with React 19 and Tailwind CSS v4 for a smooth, lag-free management experience."
+            />
+            <FeatureCard 
+              icon={<FiShield className="text-emerald-500" />}
+              title="Premium UI/UX"
+              desc="Eye-friendly dark/light modes designed specifically for long-duration productivity sessions."
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 border-t border-slate-100 text-center text-slate-500 text-sm">
+        <p>&copy; 2026 TaskFlow. All rights reserved. Professional Productivity Suite.</p>
+      </footer>
+    </div>
+  );
+};
+
+const FeatureCard = ({ icon, title, desc }) => (
+  <div className="flex flex-col items-start p-6 rounded-2xl hover:bg-slate-50 transition-colors group">
+    <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+      {icon}
+    </div>
+    <h3 className="text-xl font-bold mb-2">{title}</h3>
+    <p className="text-slate-600 leading-relaxed">{desc}</p>
+  </div>
+);
+
+export default Home;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState } from 'react'
+// import SignUp from './SignUp';
+// import { useNavigate } from 'react-router-dom';
+
+// function Home() {
+//     const [isSignUp, setIsSignUp] = useState(false);
+//     const [isLogIn, setIsLogIn] = useState(false);
+//   return (
+//     <>
+//       <div className='max-w-[1400px] mx-auto h-screen  bg-[#ceceec48]'>
+//         <h1>Dashboard</h1>
+//         <p>A simple way to manage your todo and all of the things, You don't need to remember all the think. Now it's our priority to recall you when do to do what, Just one time tell to me and I will tell you on the time</p>
+//         {/* <button
+//           className='btn hoverBase border-none w-auto py-2 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
+//           onClick={}
+//         >
+//           Sign Up
+//         </button>
+//         <button
+//           className='btn hoverBase border-none w-auto py-2 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
+//           onClick={() => setIsLogIn(!isLogIn)}
+//         >
+//           Login
+//         </button> */}
+//       </div>
+
+//       {/* <div>
+//         <SignUp isSignUp={isSignUp} setIsSignUp={setIsSignUp} />
+//       </div> */}
+//     </>
+//   )
+// }
+
+// export default Home
+
+import React, { useState } from 'react'
+import useTodoContext from '../context/TodoContext'
+import { redirect, useNavigate } from 'react-router-dom';
+
+function Login() {
+    const { loginUser } = useTodoContext()
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+    })
+    const [errors, setErrors] = useState({});
+    const navigate = useNavigate()
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,20}$/;
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+        
+        // Clear errors as user types
+        if (errors[name] || errors.loginError) {
+            setErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors[name];
+                delete newErrors.loginError;
+                return newErrors;
+            });
+        }
+    }
+
+    const handleBlur = (e) => {
+        const { name, value } = e.target;
+        let errorMessage = null;
+        
+        if (name === 'email') {
+            if (!value) {
+                errorMessage = "Please Provide some value";
+            } else if (!emailPattern.test(value)) {
+                errorMessage = "Please give us valid email";
+            }
+        }
+        if (name === 'password') {
+            if (!value) {
+                errorMessage = "Please Provide some value";
+            } else if (!passwordPattern.test(value)) {
+                errorMessage = "Please use strong password, Password should have atleast 1 uppercase, 1 special character, 1 numeric val";
+            }
+        }
+
+        if (errorMessage) {
+            setErrors(prev => ({ ...prev, [name]: errorMessage }));
+        }
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        // Validate all fields before submission
+        const newErrors = {};
+        if (!formData.email) newErrors.email = "Please Provide some value";
+        else if (!emailPattern.test(formData.email)) newErrors.email = "Please give us valid email";
+        
+        if (!formData.password) newErrors.password = "Please Provide some value";
+        else if (!passwordPattern.test(formData.password)) newErrors.password = "Please use strong password, Password should have atleast 1 uppercase, 1 special character, 1 numeric val";
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
+        const loginResponse = await loginUser(formData);
+        
+        if (!loginResponse) {
+            setErrors({loginError: "Network Error: Could not connect to the backend server. Please try again."});
+            return;
+        }
+
+        if(loginResponse?.success) {
+            navigate("/dashboard")
+        }
+        else {
+            let loginError = null;
+            if(loginResponse?.message == "User don't exists") {
+                loginError = "User doesn't exists with this email please signUp first";
+                setErrors({loginError});
+            }
+            else if(loginResponse?.message == "Password doesn't match") {
+                loginError = loginResponse.message;
+                setErrors({loginError});
+            } else {
+                setErrors({loginError: "An error occurred during login. Please try again."});
+            }
+        }
+    }
+
+    return (
+        <>
+            <div className="w-full min-h-screen fixed top-0 z-0 flex justify-center items-center bg-gradient-to-br from-white to-blue-500/30 p-4">
+                <div className="flex flex-col gap-1 w-full max-w-[450px] md:w-[40vw] bg-[#ffffff] rounded-xl border border-gray-400 px-4 py-4 ">
+                    <form
+                        className="flex flex-col gap-2 max-h-[70vh] relative "
+                        onSubmit={handleSubmit}
+                    >
+                        <div className="flex flex-col gap-1">
+                            <label htmlFor="email"
+                                className="text-md font-semibold"
+                            >Email: </label>
+                            <input
+                                type="email"
+                                placeholder="Enter Email"
+                                name="email"
+                                value={formData.email}
+                                className="inputBase2 px-2 py-1"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            />
+                            {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
+                        </div>
+
+                        <div className="flex flex-col gap-1">
+                            <label htmlFor="password"
+                                className="text-md font-semibold"
+                            >Password: </label>
+                            <input
+                                type="password"
+                                placeholder="Enter Password"
+                                name="password"
+                                value={formData.password}
+                                minLength={8}
+                                maxLength={20}
+                                className="inputBase2 px-2 py-1"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            />
+                            {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
+                        </div>
+                        {errors.loginError && <p className="text-sm text-red-600">{errors.loginError}</p>}
+
+                        <button type='submit' className='btn hoverBase border-none w-fit py-2 px-4 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>Login</button>
+                    </form>
+                </div>
+            </div>
+        </>
+    )
+}
+
+export default Login
+
+import React, { useState, useRef, useEffect } from 'react'
 import useTodoContext from '../context/TodoContext';
-import SearchBar from './SearchBar';
+import { useNavigate } from 'react-router-dom';
 
-// console.log("TaskList rendered")
+function VarifyOtp() {
+  const [otp, setOtp] = useState(new Array(6).fill(""));
+  const [isError, setIsError] = useState(false);
+  const inputRefs = useRef([]);
+  const token = localStorage.getItem("token")
 
-function TaskList() {
-  const [showDialogBox, setShowDialogBox] = useState(false);
-  const { addTask, taskToBeShow, updateTask, loading, isData, loadTodo } = useTodoContext();
-  const [active, setActive] = useState("");
-  // const columns = ["pending", "inProgress", "complete"];
+  const {varifyOtp} = useTodoContext();
+  const navigate = useNavigate()
 
-  const pendingTask = taskToBeShow.filter(eachTask => {
-    return eachTask.status === "pending" && !eachTask.isDeleted
-  })
-  const inProgressTask = taskToBeShow.filter(eachTask => {
-    return eachTask.status === "inProgress" && !eachTask.isDeleted
-  })
-  const completedTask = taskToBeShow.filter(eachTask => {
-    return eachTask.status === "complete" && !eachTask.isDeleted
-  })
+  const handleChange = (element, index) => {
+    if (isNaN(element.value)) return false;
 
-  useEffect(() => {
-    async function loadData() {
-      await loadTodo();
+    const newOtp = [...otp];
+    newOtp[index] = element.value;
+    setOtp(newOtp);
+
+    // Reset error state when user starts typing again
+    if (isError) setIsError(false);
+
+    // Move to next input if value is entered
+    if (element.nextSibling && element.value !== "") {
+      element.nextSibling.focus();
     }
-  })
+  };
 
-  const handleDragStart = (e, item) => {
-    console.log("onDragStart")
-    console.log(item)
-    e.dataTransfer.setData("todoItem", JSON.stringify(item))
-  }
-
-  const handleDragOver = (e) => {
-    console.log("onDragOver")
-    e.preventDefault();
-  }
-
-  const handleDrop = (e, status) => {
-    e.preventDefault();
-    console.log("onDrop")
-    console.log(status)
-    const data = JSON.parse(e.dataTransfer.getData("todoItem"));
-    console.log(data)
-    if (data.status == status) {
-      return;
+  const handleKeyDown = (e, index) => {
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
+      inputRefs.current[index - 1].focus();
     }
-    if(status == "complete") {
-      data.isCompleted = true;
+  };
+
+  const handleAction = async () => {
+    const fullOtp = otp.join("");
+
+    const isVarified = await varifyOtp(fullOtp);
+    
+    if(!isVarified.success) {
+
     }
     else {
-      data.isCompleted = false;
+      navigate("/dashboard")
     }
-    data.status = status;
-    updateTask(data._id, data);
+    // if (isError) {
+    //   // Resend Logic
+    //   setOtp(new Array(6).fill(""));
+    //   setIsError(false);
+    //   inputRefs.current[0].focus();
+    //   console.log("OTP Resent");
+    // } else {
+    //   // Verification Logic (Simulated)
+    //   if (fullOtp !== "123456") {
+    //     setIsError(true);
+    //   } else {
+    //     alert("Verified Successfully!");
+    //   }
+    // }
+  };
+
+  return (
+   <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white to-blue-500/30 text-slate-900">
+      <div className="bg-white border border-slate-200 p-8 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] max-w-md w-full text-center">
+        
+        {/* Header */}
+        <h2 className="text-2xl font-bold mb-2 text-slate-800">Verification Code</h2>
+        <p className="text-slate-500 mb-8 text-sm font-medium">
+          We sent a 6-digit code to your email.
+        </p>
+
+        {/* OTP Inputs */}
+        <div className="flex justify-between gap-2 mb-8">
+          {otp.map((data, index) => (
+            <input
+              key={index}
+              type="text"
+              maxLength="1"
+              ref={(el) => (inputRefs.current[index] = el)}
+              value={data}
+              onChange={(e) => handleChange(e.target, index)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
+              className={`w-9 h-11 sm:w-12 sm:h-14 text-center text-xl font-semibold rounded-xl border transition-all outline-none
+                ${isError 
+                  ? 'border-red-400 bg-red-50 text-red-600' 
+                  : 'border-slate-200 bg-slate-50 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-100'}`}
+            />
+          ))}
+        </div>
+
+        {/* Dynamic Action Button */}
+        <button
+          onClick={handleAction}
+          className={`w-full py-3.5 rounded-2xl font-semibold transition-all duration-300 active:scale-[0.98]
+            ${isError 
+              ? 'bg-slate-100 text-indigo-600 hover:bg-slate-200 border border-slate-200' 
+              : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200'}`}
+        >
+          {isError ? 'Resend Code' : 'Verify Identity'}
+        </button>
+
+        {/* Footer Link */}
+        <p className="mt-6 text-sm text-slate-400">
+          Didn't receive the code? <span className="text-indigo-600 cursor-pointer hover:underline">Contact Support</span>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default VarifyOtp
+
+import React, { useState } from "react";
+import { MdCancel } from "react-icons/md";
+import useTodoContext from "../context/TodoContext";
+import { redirect, useNavigate } from 'react-router-dom';
+import Loader from "../components/Loader";
+import { FaEye } from "react-icons/fa6";
+import { FaEyeSlash } from "react-icons/fa6";
+
+function SignUp() {
+  const { registerUser, getProfile, loadTodo, loadCat } = useTodoContext();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    mobileNo: ""
+  })
+
+  const [errors, setErrors] = useState({})
+  const pattern = /^[A-Za-z ]+$/;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,20}$/;
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+
+    // Clear errors as user types
+    if (errors[name]) {
+        setErrors(prev => {
+            const newErrors = { ...prev };
+            delete newErrors[name];
+            return newErrors;
+        });
+    }
+  }
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    let errorMessage = null;
+
+    if(name === 'firstName') {
+      if(!value) errorMessage = "Please Provide some value";
+      else if(!pattern.test(value)) errorMessage = "Don't use number of special character in name";
+    }
+    if(name === 'lastName') {
+      if(!value) errorMessage = "Please Provide some value";
+      else if(!pattern.test(value)) errorMessage = "Don't use number of special character in name";
+    }
+    if(name === 'email') {
+      if(!value) errorMessage = "Please Provide some value";
+      else if(!emailPattern.test(value)) errorMessage = "Please give us valid email";
+    }
+    if(name === 'password') {
+      if(!value) errorMessage = "Please Provide some value";
+      else if(!passwordPattern.test(value)) errorMessage = "Please use strong password, Password should have atleast 1 uppercase, 1 special character, 1 numeric val";
+    }
+    if(name === 'mobileNo') {
+      if(!value) errorMessage = "Please Provide some value";
+      else if(value.length !== 10) errorMessage = "Mobile number must be 10 digits";
+    }
+
+    if (errorMessage) {
+        setErrors(prev => ({ ...prev, [name]: errorMessage }));
+    }
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    // Full validation before submit
+    const newErrors = {};
+    if(!formData.firstName) newErrors.firstName = "Please Provide some value";
+    else if(!pattern.test(formData.firstName)) newErrors.firstName = "Don't use number of special character in name";
+    
+    if(!formData.lastName) newErrors.lastName = "Please Provide some value";
+    else if(!pattern.test(formData.lastName)) newErrors.lastName = "Don't use number of special character in name";
+    
+    if(!formData.email) newErrors.email = "Please Provide some value";
+    else if(!emailPattern.test(formData.email)) newErrors.email = "Please give us valid email";
+    
+    if(!formData.password) newErrors.password = "Please Provide some value";
+    else if(!passwordPattern.test(formData.password)) newErrors.password = "Please use strong password, Password should have atleast 1 uppercase, 1 special character, 1 numeric val";
+    
+    if(!formData.mobileNo) newErrors.mobileNo = "Please Provide some value";
+    else if(formData.mobileNo.length !== 10) newErrors.mobileNo = "Mobile number must be 10 digits";
+
+    if(Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    
+    setIsLoading(true);
+    const response = await registerUser(formData);
+    setIsLoading(false);
+    
+    if (!response) {
+      setErrors({ email: "Network Error: Could not connect to the backend server. Please try again." });
+    }
+    else if(!response.success) {
+      if (response.message === "User already exists, Please login first") {
+        setIsRegistered(true);
+      } else {
+        setErrors({ email: response.message || "An error occurred during signup" });
+      }
+    }
+    else {
+      navigate("/signUp/varifyOtp")
+    }
   }
 
   return (
     <>
-      <div className='relative h-full select-none bg-[#F8FAFC]'>
-        <div className='flex justify-center gap-4 border-gray-400 p-2'>
-          <SearchBar />
-          <button
-            onClick={() => setShowDialogBox(true)}
-            className='btn hoverBase border-none w-auto py-2 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
-          >Add Task</button>
-          <AddTaskDialogBox showDialogBox={showDialogBox} setShowDialogBox={setShowDialogBox} />
-        </div>
-
-        <div className='  '>
-          {/* {loading && <div className='text-5xl w-full min-h-full text-black'>Loading....</div>} */}
-          {/* {!isData && <div className='text-3xl w-full min-h-full text-black'>Oops! Data is not available</div>} */}
-          {!taskToBeShow ?
-            <div className='flex justify-center items-center mt-8'>
-              <p className='text-xl '>No todos to display</p>
+      <div className="w-full min-h-screen fixed mt-0 top-0 z-0  flex justify-center items-center bg-gradient-to-br from-white to-blue-500/30 p-4">
+      {isLoading ? 
+        <Loader message={"Sending Otp"}/>
+      :
+        <div className="flex flex-col gap-1 w-full max-w-[500px] md:w-[40vw] bg-[#ffffff] rounded-xl border border-gray-400 px-4 py-4 ">
+          <h2 className="text-2xl text-center font-bold">Sign Up</h2>
+          <form
+            className="flex flex-col gap-2 h-[65vh] overflow-y-auto relative pr-2"
+            onSubmit={handleSubmit}
+          >
+            <div className="flex flex-col gap-1"> 
+              <label htmlFor="firstName"
+                className="text-md font-semibold"
+              >FirstName:</label>
+              <input
+                type="text"
+                placeholder="Enter FirstName"
+                className="inputBase2 px-2 py-1"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {errors.firstName && <p className="text-sm text-red-600">{errors.firstName}</p>}
+                
             </div>
 
-            :
+            <div className="flex flex-col gap-1">
+              <label htmlFor="lastName"
+                className="text-md font-semibold"
+              >LastName: </label>
+              <input 
+                type="text" 
+                placeholder="Enter LastName" 
+                name="lastName" 
+                value={formData.lastName}
+                className="inputBase2 px-2 py-1"
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {errors.lastName && <p className="text-sm text-red-600">{errors.lastName}</p>}
+            </div>
 
-            <div className='max-w-screen max-h-[78vh] pt-2 flex bg-[#f3f1f1] px-2'>
+            <div className="flex flex-col gap-1">
+              <label htmlFor="email"
+                className="text-md font-semibold"
+              >Email: </label>
+              <input 
+                type="email" 
+                placeholder="Enter Email" 
+                name="email" 
+                value={formData.email}
+                className="inputBase2 px-2 py-1"
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
+            </div>
 
-              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
-                onDragEnter={e => console.log('onDragEnter')}
-                onDragLeave={e => console.log('onDragLeave')}
-                onDragOver={handleDragOver}
-                onDrop={(e) => handleDrop(e, "pending")}
-              >
-                <h2 className='text-center text-lg  font-semibold text-[#2a344b] sticky top-0 bg-[#ffffff9d] rounded mb-6'>Pending Task</h2>
-                <div className='rounded flex flex-col gap-2'>
-                  {
-                    pendingTask.map(item => (
-                      <div
-                        draggable
-                        onDragStart={(e) => handleDragStart(e, item)}
-                        onDragEnd={(e) => console.log("onDragEnd")}
-                      >
-                        <TaskItem task={item}
-                        />
-                      </div>
-                    ))
-                  }
+            <div className="flex flex-col gap-1">
+              <label htmlFor="password"
+                className="text-md font-semibold"
+              >Password: </label>
+              <div className="flex gap-1 pr-1">
+                <input
+                  type={isVisible ? "text" : "password"}
+                  placeholder="Enter Password"
+                  name="password"
+                  value={formData.password}
+                  minLength={8}
+                  maxLength={20}
+                  className="inputBase2 px-2 py-1 flex-1"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <button onClick={() => setIsVisible(!isVisible)}>{isVisible ? <FaEyeSlash /> : <FaEye />}</button>
+              </div>
+              {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <label htmlFor="mobileNo"
+                className="text-md font-semibold"
+              >Mobile No: </label>
+              <input
+                type="text"
+                placeholder="Enter Mobile No"
+                name="mobileNo"
+                value={formData.mobileNo}
+                minLength={10}
+                maxLength={10}
+                className="inputBase2 px-2 py-1"
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {errors.mobileNo && <p className="text-sm text-red-600">{errors.mobileNo}</p>}
+            </div>
+            {isRegistered && <p className="text-sm text-red-600">Account already exists with this email. Please login</p>}
+            <button type='submit' className='btn hoverBase border-none w-fit py-2 px-4 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>Send OTP</button>
+          </form>
+        </div>
+      }
+      </div>
+    </>
+  );
+}
+
+export default SignUp;
+
+import React, { useEffect, useState } from 'react'
+import { useTodo } from '../hooks/useTodo'
+import useTodoContext from '../context/TodoContext'
+import UpdateTodo from './UpdateTodo'
+import { createPortal } from 'react-dom'
+import Confirmation from './Confirmation'
+import { MdDeleteForever } from "react-icons/md";
+import { GrUpdate } from "react-icons/gr";
+
+// console.log("TaskItem rendered")
+
+function TaskItem({ task }) {
+  const { tasks, updateTask, setSelectId } = useTodoContext()
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(task.isCompleted);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [updatedData, setUpdatedData] = useState({})
+
+  const styleMap = {
+    complete: "bg-orange-300/20 text-orange-600",
+    inProgress: "bg-blue-300/30 text-blue-600",
+    pending: "bg-purple-500/20 text-purple-500"
+  }
+
+  const handleUpdate = () => {
+    setSelectId(task._id)
+    setIsUpdate(!isUpdate)
+    const taskToBeUpdated = tasks.find((eachTask) => eachTask._id === task._id);
+    setUpdatedData(taskToBeUpdated)
+  }
+
+  const handleDelete = () => {
+    setConfirmDelete(!confirmDelete)
+  }
+
+  useEffect(() => {
+  }, [isCompleted])
+
+  return (
+    <>
+      <div tabIndex={0} className={`px-4 border-b bg-[#ffffff] min-h-30 pb-2 text-sm m-1 border border-gray-300 rounded-xl shadow-[0px_5px_10px_2px_rgba(0,0,0,0.25)]  hover:shadow-[0px_5px_10px_rgba(0,0,0,0.25)] hover:border-gray-400 `}
+        onClick={() => setSelectId(task._id)}
+      >
+        {/* task title, description, etc. */}
+        <div className={`flex flex-col rounded-md py-2 ${isCompleted ? "line-through text-gray-400" : ""}`}>
+          <div className='flex gap-2'>
+            <div className=''>
+              <input
+                className='cursor-pointer'
+                type="checkbox" id='checkbox' name='checkbox' checked={isCompleted}
+                onChange={(e) => {
+                  const status = task.status !== "complete" ? "complete" : "inProgress";
+                  updateTask(task._id, { ...task, isCompleted: e.target.checked, status })
+                  setIsCompleted(e.target.checked)
+                }}
+              />
+            </div>
+
+            <div className='flex flex-col w-full'>
+              <div className='flex justify-between'>
+                <h2>{task.title}</h2>
+                <div className=''>
+                  <button className='hoverBase btn mx-2 font-semibold bg-red-500/20  text-red-600 hover:text-red-600'
+                    onClick={() => handleDelete()}
+                  >
+                    <MdDeleteForever />
+                  </button>
+                  <button className={`hoverBase btn mx-2 font-semibold bg-green-600/20 text-[#027e23] ${isCompleted ? "line-through  " : ""}`}
+                    onClick={() => handleUpdate()}
+                    disabled={isCompleted}
+                  >
+                    <GrUpdate />
+                  </button>
                 </div>
               </div>
-
-              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
-                onDragEnter={e => console.log('onDragEnter')}
-                onDragLeave={e => console.log('onDragLeave')}
-                onDragOver={handleDragOver}
-                onDrop={(e) => handleDrop(e, "inProgress")}
-              >
-                <h2 className='text-center text-lg font-semibold text-[#2a344b] sticky top-0 bg-[#ffffff] rounded mb-6'>InProgress Task</h2>
-                <div className='rounded flex flex-col gap-2'
-                >
-                  {
-                    inProgressTask.map(item => (
-                      <div
-                        draggable
-                        onDragStart={(e) => handleDragStart(e, item)}
-                        onDragEnd={(e) => console.log("onDragEnd")}
-                      >
-                        <TaskItem task={item} />
-                      </div>
-                    ))
-                  }
-                </div>
-              </div>
-
-              <div className='flex-1 m-1 border border-gray-300 bg-[#ceceec48] min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
-                onDragEnter={e => console.log('onDragEnter')}
-                onDragLeave={e => console.log('onDragLeave')}
-                onDragOver={handleDragOver}
-                onDrop={(e) => handleDrop(e, "complete")}
-              >
-                <h2 className='text-center text-lg font-semibold text-[#2a344b] sticky top-0 bg-[#ffffff] rounded mb-6'>Complete Task</h2>
-                <div className='rounded flex flex-col gap-2'>
-                  {
-                    completedTask.map(item => (
-                      <div
-                        draggable
-                        onDragStart={(e) => handleDragStart(e, item)}
-                        onDragEnd={(e) => console.log("onDragEnd")}
-                      >
-                        <TaskItem task={item} />
-                      </div>
-                    ))
-                  }
-                </div>
+              <p className='text-gray-500'>{task.description}</p>
+              <div className='mt-2 flex gap-3 items-center'>
+                {task.category && <p className='bg-gray-300/30 text-gray-900 w-fit rounded px-4'>{task.category.name}</p>}
+                {task.status && <p className={`w-fit rounded px-4 font-semibold ${styleMap[task.status]}`}>{task.status}</p>}
               </div>
             </div>
-          }
+
+
+          </div>
         </div>
+
+        {/* button delete and update */}
+        <div className='flex justify-between'>
+          <div>{task.dueDate && <small className=' px-2 rounded  text-gray-500'>Due: {task.dueDate}</small>}</div>
+        </div>
+      </div>
+
+      {/* UpdateTodo (update) */}
+      <div className=''>
+        {createPortal(
+          isUpdate ? <UpdateTodo isUpdate={isUpdate} setIsUpdate={setIsUpdate} updatedData={updatedData} setUpdatedData={setUpdatedData} /> : "", document.body
+        )}
+      </div>
+      {/* confirmation (delete) */}
+      <div>
+        {createPortal(
+          confirmDelete ? <Confirmation task={task} taskId={task._id} setConfirmDelete={setConfirmDelete} /> : "", document.body
+        )}
       </div>
     </>
   )
 }
 
-export default TaskList
+export default TaskItem
 

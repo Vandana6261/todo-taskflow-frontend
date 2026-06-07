@@ -1,5 +1,5 @@
 import React from 'react'
-import preview from '../data/preview'
+// import preview from '../data/preview'
 
 function Preview() {
   return (
