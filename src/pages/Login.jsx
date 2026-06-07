@@ -10,7 +10,7 @@ function Login() {
         password: "",
     })
     const [errors, setErrors] = useState({});
-    const [loading, setLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate()
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -71,9 +71,9 @@ function Login() {
             return;
         }
 
-        setLoading(true);
+        setIsLoading(true);
         const loginResponse = await loginUser(formData);
-        setLoading(false)
+        setIsLoading(false)
         if (!loginResponse) {
             setErrors({loginError: "Network Error: Could not connect to the backend server. Please try again."});
             return;
@@ -100,7 +100,7 @@ function Login() {
     return (
         <>
             <div className="w-full min-h-screen bg-[#dbdae9e5] fixed top-0 z-0 flex justify-center items-center p-4">
-                {loading ? 
+                {isLoading ? 
                     <Loader />   
                     : 
                     <div className="flex flex-col gap-1 w-full max-w-[450px] md:w-[40vw] bg-[#ffffff] rounded-xl border border-gray-400 px-4 py-4 ">
