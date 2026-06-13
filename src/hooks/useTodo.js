@@ -9,13 +9,11 @@ export function useTodo() {
   const [taskToBeShow, setTaskToBeShow] = useState([]);
   const [selectId, setSelectId] = useState(null);
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [isData, setIsData] = useState(true);
   const [userData, setUserData] = useState({});
 
   async function loadTodo() {
     console.log("loadTodo called")
-    setLoading(true);
     try {
       const response = await customFetch(`${BASE_URL}/api/todo/getTodo`, {
         method: "GET"
@@ -27,7 +25,6 @@ export function useTodo() {
         if(data) {
           setTasks(data);
           setTaskToBeShow(data);
-          setLoading(false);
           setIsData(true);
         }
       }
@@ -122,7 +119,6 @@ export function useTodo() {
 
   async function searchTask(keyword) {
     console.log("searchTaskCalled");
-    setLoading(true);
     setTaskToBeShow([]);
     try {
       const response = await customFetch(`${BASE_URL}/api/todo/${keyword}`, {
@@ -277,7 +273,6 @@ export function useTodo() {
 
     tasks,
     setTasks,
-    loading,
     isData,
     taskToBeShow,
     setTaskToBeShow,
