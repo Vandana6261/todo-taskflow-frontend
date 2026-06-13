@@ -29,7 +29,7 @@ function Dashboard() {
   return (
     <>
       <div className='max-w-[1400px] mx-auto h-screen flex flex-col bg-[#aaaab094] relative'>
-        <header className='flex justify-between md:justify-start items-center h-auto p-4 border-b border-gray-300 gap-6'>
+        {/* <header className='flex justify-between md:justify-start items-center h-auto p-4 border-b border-gray-300 gap-6'>
           <div className='flex items-center gap-4'>
             <span 
               className='text-2xl cursor-pointer md:hidden'
@@ -42,7 +42,7 @@ function Dashboard() {
               <span className='cursor-pointer' onClick={() => navigate('/')}>TaskFlow</span>
             </div>
           </div>
-        </header>
+        </header> */}
 
         <div className='flex flex-1 overflow-hidden relative'>
           {/* category - Sidebar */}
