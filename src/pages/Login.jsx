@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import useTodoContext from '../context/TodoContext'
 import { redirect, useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader'
+import { useAuthContext } from '../context/AuthContext';
 
 function Login() {
     const { loginUser } = useTodoContext()
+    // const {user, setUser} = useAuthContext()
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -73,6 +75,7 @@ function Login() {
 
         setIsLoading(true);
         const loginResponse = await loginUser(formData);
+        console.log(loginResponse, "loginResponse")
         setIsLoading(false)
         if (!loginResponse) {
             setErrors({loginError: "Network Error: Could not connect to the backend server. Please try again."});
@@ -80,6 +83,7 @@ function Login() {
         }
 
         if(loginResponse?.success) {
+            // setUser(loginResponse.user)
             navigate("/dashboard")
         }
         else {
