@@ -38,7 +38,7 @@ function TaskItem({ task }) {
 
   return (
     <>
-      <div tabIndex={0} className={`px-4 border-b bg-[#ffffff] min-h-30 pb-2 text-sm m-1 border border-gray-300 rounded-xl shadow-[0px_5px_10px_2px_rgba(0,0,0,0.25)]  hover:shadow-[0px_5px_10px_rgba(0,0,0,0.25)] hover:border-gray-400 `}
+      <div tabIndex={0} className={`px-4 border-b bg-white min-h-30 pb-2 text-sm m-1 border border-gray-300 rounded-xl shadow-[0px_5px_10px_2px_rgba(0,0,0,0.25)]  hover:shadow-[0px_5px_10px_rgba(0,0,0,0.25)] hover:border-gray-400 `}
         onClick={() => setSelectId(task._id)}
       >
         {/* task title, description, etc. */}
@@ -66,7 +66,7 @@ function TaskItem({ task }) {
                   >
                     <MdDeleteForever />
                   </button>
-                  <button className={`hoverBase btn mx-2 font-semibold bg-green-600/20 text-[#027e23] ${isCompleted ? "line-through  " : ""}`}
+                  <button className={`hoverBase btn mx-2 font-semibold bg-green-600/20 text-success ${isCompleted ? "line-through  " : ""}`}
                     onClick={() => handleUpdate()}
                     disabled={isCompleted}
                   >

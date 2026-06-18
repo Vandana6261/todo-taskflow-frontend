@@ -100,7 +100,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
         }}
       >
         <div
-          className="flex flex-col gap-1 w-[90%] max-w-[500px] h-auto modal bg-[#ffffff] rounded-xl p-4"
+          className="flex flex-col gap-1 w-[90%] max-w-[500px] h-auto modal bg-white rounded-xl p-4"
           onClick={(e) => {
             e.stopPropagation();
           }}
@@ -263,7 +263,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
               </button>
               <button
                 type="submit"
-                className="hoverBase btn mx-2 font-semibold bg-green-500/20 text-[#229c09]"
+                className="hoverBase btn mx-2 font-semibold bg-green-500/20 text-success"
                 onClick={(e) => handleSubmit(e)}
               >
                 Create Task

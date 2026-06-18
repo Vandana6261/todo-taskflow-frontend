@@ -127,7 +127,7 @@ function Category() {
           {/* Dynamic Action Section (Bottom Anchor) */}
           <div className="w-full mt-4">
             {isAddCat ? (
-              <div className='bg-[#a4acbdd5] border border-gray-100 rounded-2xl p-3 shadow-xl shadow-gray-200/50 animate-in fade-in slide-in-from-bottom-4 duration-300 flex flex-col gap-3'>
+              <div className='bg-white border border-gray-100 rounded-2xl p-3 shadow-xl shadow-gray-200/50 animate-in fade-in slide-in-from-bottom-4 duration-300 flex flex-col gap-3'>
                 <input
                   type="text"
                   className='w-full bg-gray-50 border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100 outline-none px-3 py-2 text-sm text-gray-700 rounded-xl transition-all duration-200'

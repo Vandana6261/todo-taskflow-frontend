@@ -12,7 +12,7 @@ const Loader = ({message = "Loading"}) => {
         <div className="absolute inset-0 border-2 border-blue-600/10 rounded-full animate-[ping_3s_linear_infinite_2s]"></div>
         
         {/* Core Circle with Icon */}
-        <div className="z-10 w-20 h-20 bg-[#0019f7a8] rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(0,25,247,0.4)]">
+        <div className="z-10 w-20 h-20 bg-accent rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(0,25,247,0.4)]">
           <svg 
             width="35" 
             height="35" 
@@ -41,7 +41,7 @@ const Loader = ({message = "Loading"}) => {
         
         {/* Progress Bar */}
         <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
-          <div className="h-full bg-[#0019f7a8] rounded-full animate-progress-loading"></div>
+          <div className="h-full bg-accent rounded-full animate-progress-loading"></div>
         </div>
       </div>
     </div>

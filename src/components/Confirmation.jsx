@@ -20,7 +20,7 @@ function Confirmation({ setIsOpen, handleConfirmation, text="perform this action
       <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm'
         onClick={() => handleCancel()}
       >
-        <div className='bg-[#ffffff] p-2 rounded-xl min-h-40 flex flex-col justify-center items-center gap-2 font-semibold'
+        <div className='bg-white p-2 rounded-xl min-h-40 flex flex-col justify-center items-center gap-2 font-semibold'
           onClick={(e) => e.stopPropagation()}
         >
           <p className='text-gray-800 font-semibold'>Are you sure you want to {text}?</p>

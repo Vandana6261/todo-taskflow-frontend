@@ -61,7 +61,7 @@ function UpdateTodo({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
         onClick={() => setIsUpdate(!isUpdate)}
       >
 
-        <div className='flex flex-col gap-1 bg-[#ffffff] w-[90%] sm:w-[70vw] md:w-[40vw] rounded-xl p-4'
+        <div className='flex flex-col gap-1 bg-white w-[90%] sm:w-[70vw] md:w-[40vw] rounded-xl p-4'
           onClick={(e) => e.stopPropagation()}
         >
           {/* 1st part */}
@@ -211,7 +211,7 @@ function UpdateTodo({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
                   Cancel
                 </span>
               </button>
-              <button className='hoverBase btn mx-2 font-semibold bg-green-500/20 text-[#229c09] hoverBase flex items-center gap-2'
+              <button className='hoverBase btn mx-2 font-semibold bg-green-500/20 text-success-bg hoverBase flex items-center gap-2'
               >
                 <span>
                   <RxUpdate />

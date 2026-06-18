@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Home = () => {
   const navigate = useNavigate();
   return (
-    <div className="min-h-screen bg-[#dbdae9e5] text-[#1E293B] selection:bg-blue-100 ">
+    <div className="min-h-screen page-bg selection:bg-blue-100 ">
       {/* Hero Section */}
       <section className="max-w-[1200px] mx-auto px-6 pt-20 pb-32 flex flex-col items-center text-center">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-blue-600 text-sm font-medium mb-8 animate-fade-in">
@@ -21,7 +21,7 @@ const Home = () => {
         
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-slate-900 to-blue-800 bg-clip-text text-transparent">
           Simplify your workflow. <br />
-          <span className="text-[#0019f7a8]">Focus on what matters.</span>
+          <span className="text-accent">Focus on what matters.</span>
         </h1>
         
         <p className="text-lg text-slate-600 max-w-2xl mb-10 leading-relaxed">
@@ -32,7 +32,7 @@ const Home = () => {
         <div className="flex flex-col sm:flex-row gap-4">
           <button 
             onClick={() => navigate("/signUp")}
-            className="flex items-center gap-2 px-8 py-4 bg-[#0019f7a8] text-white font-bold rounded-full shadow-[0px_10px_20px_rgba(0,25,247,0.3)] hover:shadow-[0px_15px_25px_rgba(0,25,247,0.4)] hover:-translate-y-1 transition-all duration-300"
+            className="flex items-center gap-2 px-8 py-4 bg-accent text-white font-bold rounded-full shadow-[0px_10px_20px_rgba(0,25,247,0.3)] hover:shadow-[0px_15px_25px_rgba(0,25,247,0.4)] hover:-translate-y-1 transition-all duration-300"
           >
             Get Started for Free <HiOutlineArrowRight />
           </button>
