@@ -103,35 +103,33 @@ function Login() {
 
     return (
         <>
-            <div className="w-full min-h-screen bg-page2 fixed z-0 flex justify-center items-center p-4">
-                {isLoading ? 
-                    <Loader />   
-                    : 
-                    <div className="flex flex-col gap-1 w-full max-w-[450px] md:w-[40vw] bg-page rounded-xl border border-gray-400 px-4 py-4 ">
+            {/* Outer container with a gentle light gradient background */}
+            <div className="w-full min-h-screen  fixed z-0 flex bg-page justify-center items-center p-4">
+                {isLoading ? (
+                    <Loader />
+                ) : (
+                    <div className="flex flex-col gap-4 w-full max-w-md md:max-w-[40vw] bg-header/40 bg-opacity-80 backdrop-blur-sm rounded-xl border border-gray-200 shadow-lg p-6">
+                        <h2 className="text-2xl font-bold text-muted text-center mb-4">Welcome Back</h2>
                         <form
-                            className="flex flex-col gap-2 max-h-[70vh] relative "
+                            className="flex flex-col gap-4 text-muted"
                             onSubmit={handleSubmit}
                         >
-                            <div className="flex flex-col gap-1">
-                                <label htmlFor="email"
-                                    className="text-md font-semibold"
-                                >Email: </label>
+                            {/* Email Field */}
+                            <div className="flex flex-col">
+                                <label htmlFor="email" className="text-sm font-medium  mb-1">Email</label>
                                 <input
                                     type="email"
                                     placeholder="Enter Email"
                                     name="email"
                                     value={formData.email}
-                                    className="inputBase2 px-2 py-1"
                                     onChange={handleChange}
-                                    // onBlur={handleBlur}
+                                    className="inputBase2 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                                 />
-                                {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
+                                {errors.email && <p className="mt-1 text-xs text-danger/30">{errors.email}</p>}
                             </div>
-
-                            <div className="flex flex-col gap-1">
-                                <label htmlFor="password"
-                                    className="text-md font-semibold"
-                                >Password: </label>
+                            {/* Password Field */}
+                            <div className="flex flex-col">
+                                <label htmlFor="password" className="text-sm font-medium text-muted mb-1">Password</label>
                                 <input
                                     type="password"
                                     placeholder="Enter Password"
@@ -139,21 +137,26 @@ function Login() {
                                     value={formData.password}
                                     minLength={8}
                                     maxLength={20}
-                                    className="inputBase2 px-2 py-1"
                                     onChange={handleChange}
-                                    // onBlur={handleBlur}
+                                    className="inputBase2 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                                 />
-                                {errors.password && <p className="text-sm text-danger">{errors.password}</p>}
+                                {errors.password && <p className="mt-1 text-xs text-danger">{errors.password}</p>}
                             </div>
-                            {errors.loginError && <p className="text-sm text-danger">{errors.loginError}</p>}
-
-                            <button type='submit' className='btn hoverBase border-none w-fit py-2 px-4 text-white font-semibold bg-button rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>Login</button>
+                            {/* General error */}
+                            {errors.loginError && <p className="text-center text-sm text-danger mb-2">{errors.loginError}</p>}
+                            {/* Submit Button */}
+                            <button
+                                type="submit"
+                                className="w-full py-2 px-4 bg-button hover:bg-button/80 text-white font-semibold rounded-full shadow-md hover:shadow-lg transition"
+                            >
+                                Login
+                            </button>
                         </form>
                     </div>
-                }
+                )}
             </div>
         </>
-    )
+    );
 }
 
 export default Login

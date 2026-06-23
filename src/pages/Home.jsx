@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Home = () => {
   const navigate = useNavigate();
   return (
-    <div className="min-h-screen bg-page selection:bg-blue-100 z-10">
+    <div className="min-h-screen max-h-auto bg-page selection:bg-blue-100 z-10">
       {/* Hero Section */}
       <section className="max-w-[1200px] mx-auto px-6 pt-20 pb-32 flex flex-col items-center text-center">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-blue-600 text-sm font-medium mb-8 animate-fade-in">
@@ -50,24 +50,26 @@ const Home = () => {
       </section>
 
       {/* Features */}
-      <section className="bg-header text-text py-24 border-t border-slate-100">
-        <div className="max-w-[1200px] mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <FeatureCard 
-              icon={<FiLayout className="text-blue-500" />}
-              title="Kanban Architecture"
-              desc="Visualize your work from 'Pending' to 'Complete' with our intuitive drag-and-drop interface."
-            />
-            <FeatureCard 
-              icon={<FiZap className="text-amber-500" />}
-              title="Lightning Performance"
-              desc="Built with React 19 and Tailwind CSS v4 for a smooth, lag-free management experience."
-            />
-            <FeatureCard 
-              icon={<FiShield className="text-emerald-500" />}
-              title="Premium UI/UX"
-              desc="Eye-friendly dark/light modes designed specifically for long-duration productivity sessions."
-            />
+      <section className="bg-white text-textborder border-slate-100">
+        <div className='bg-feature py-24 '>
+          <div className="max-w-[1200px] mx-auto px-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+              <FeatureCard
+                icon={<FiLayout className="text-blue-500" />}
+                title="Kanban Architecture"
+                desc="Visualize your work from 'Pending' to 'Complete' with our intuitive drag-and-drop interface."
+              />
+              <FeatureCard
+                icon={<FiZap className="text-amber-500" />}
+                title="Lightning Performance"
+                desc="Built with React 19 and Tailwind CSS v4 for a smooth, lag-free management experience."
+              />
+              <FeatureCard
+                icon={<FiShield className="text-emerald-500" />}
+                title="Premium UI/UX"
+                desc="Eye-friendly dark/light modes designed specifically for long-duration productivity sessions."
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -81,7 +83,7 @@ const Home = () => {
 };
 
 const FeatureCard = ({ icon, title, desc }) => (
-  <div className="flex flex-col items-start p-6 rounded-2xl hover:bg-gray-300 transition-colors group">
+  <div className="bg-header/20 flex flex-col items-start p-6 rounded-2xl hover:bg-header/60 hover:scale-95 transition-all duration-200 ease-in group">
     <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform text-text">
       {icon}
     </div>
@@ -92,94 +94,3 @@ const FeatureCard = ({ icon, title, desc }) => (
 
 export default Home;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from 'react'
-// import SignUp from './SignUp';
-// import { useNavigate } from 'react-router-dom';
-
-// function Home() {
-//     const [isSignUp, setIsSignUp] = useState(false);
-//     const [isLogIn, setIsLogIn] = useState(false);
-//   return (
-//     <>
-//       <div className='max-w-[1400px] mx-auto h-screen  bg-[#ceceec48]'>
-//         <h1>Dashboard</h1>
-//         <p>A simple way to manage your todo and all of the things, You don't need to remember all the think. Now it's our priority to recall you when do to do what, Just one time tell to me and I will tell you on the time</p>
-//         {/* <button
-//           className='btn hoverBase border-none w-auto py-2 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
-//           onClick={}
-//         >
-//           Sign Up
-//         </button>
-//         <button
-//           className='btn hoverBase border-none w-auto py-2 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
-//           onClick={() => setIsLogIn(!isLogIn)}
-//         >
-//           Login
-//         </button> */}
-//       </div>
-
-//       {/* <div>
-//         <SignUp isSignUp={isSignUp} setIsSignUp={setIsSignUp} />
-//       </div> */}
-//     </>
-//   )
-// }
-
-// export default Home

@@ -116,108 +116,99 @@ function SignUp() {
 
   return (
     <>
-      <div className="w-full min-h-screen bg-page2 fixed mt-0 top-0 z-0  flex justify-center items-center p-4">
-      {isLoading ? 
-        <Loader message={"Sending Otp"}/>
-      :
-        <div className="flex flex-col gap-1 w-full max-w-[500px] md:w-[40vw] bg-[#ffffff] rounded-xl border border-gray-400 px-4 py-4 ">
-          <h2 className="text-2xl text-center font-bold">Sign Up</h2>
-          <form
-            className="flex flex-col gap-2 h-[65vh] overflow-y-auto relative pr-2"
-            onSubmit={handleSubmit}
-          >
-            <div className="flex flex-col gap-1"> 
-              <label htmlFor="firstName"
-                className="text-md font-semibold"
-              >FirstName:</label>
-              <input
-                type="text"
-                placeholder="Enter FirstName"
-                className="inputBase2 px-2 py-1"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {errors.firstName && <p className="text-sm text-danger">{errors.firstName}</p>}
-                
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <label htmlFor="lastName"
-                className="text-md font-semibold"
-              >LastName: </label>
-              <input 
-                type="text" 
-                placeholder="Enter LastName" 
-                name="lastName" 
-                value={formData.lastName}
-                className="inputBase2 px-2 py-1"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {errors.lastName && <p className="text-sm text-delete">{errors.lastName}</p>}
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <label htmlFor="email"
-                className="text-md font-semibold"
-              >Email: </label>
-              <input 
-                type="email" 
-                placeholder="Enter Email" 
-                name="email" 
-                value={formData.email}
-                className="inputBase2 px-2 py-1"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <label htmlFor="password"
-                className="text-md font-semibold"
-              >Password: </label>
-              <div className="flex gap-1 pr-1">
+      <div className="w-full min-h-screen max-h-auto fixed z-0 flex bg-page justify-center items-center p-4">
+        {isLoading ? (
+          <Loader message={"Sending Otp"} />
+        ) : (
+          <div className="flex flex-col gap-4 w-full max-w-md md:max-w-[40vw] bg-white bg-opacity-80 backdrop-blur-sm rounded-xl border border-gray-200 shadow-lg p-6">
+            <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">Create Account</h2>
+            <form className="flex flex-col gap-4 h-[60vh]  overflow-y-auto" onSubmit={handleSubmit}>
+              {/* First Name */}
+              <div className="flex flex-col">
+                <label htmlFor="firstName" className="text-sm font-medium text-gray-700 mb-1">First Name</label>
                 <input
-                  type={isVisible ? "text" : "password"}
-                  placeholder="Enter Password"
-                  name="password"
-                  value={formData.password}
-                  minLength={8}
-                  maxLength={20}
-                  className="inputBase2 px-2 py-1 flex-1"
+                  type="text"
+                  placeholder="Enter First Name"
+                  name="firstName"
+                  value={formData.firstName}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  className="inputBase2 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                 />
-                <button onClick={() => setIsVisible(!isVisible)}>{isVisible ? <FaEyeSlash /> : <FaEye />}</button>
+                {errors.firstName && <p className="mt-1 text-xs text-red-600">{errors.firstName}</p>}
               </div>
-              {errors.password && <p className="text-sm text-danger">{errors.password}</p>}
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <label htmlFor="mobileNo"
-                className="text-md font-semibold"
-              >Mobile No: </label>
-              <input
-                type="text"
-                placeholder="Enter Mobile No"
-                name="mobileNo"
-                value={formData.mobileNo}
-                minLength={10}
-                maxLength={10}
-                className="inputBase2 px-2 py-1"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {errors.mobileNo && <p className="text-sm text-danger">{errors.mobileNo}</p>}
-            </div>
-            {isRegistered && <p className="text-sm text-danger">Account already exists with this email. Please login</p>}
-            <button type='submit' className='btn hoverBase border-none w-fit py-2 px-4 text-white font-semibold bg-update rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>Send OTP</button>
-          </form>
-        </div>
-      }
+              {/* Last Name */}
+              <div className="flex flex-col">
+                <label htmlFor="lastName" className="text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                <input
+                  type="text"
+                  placeholder="Enter Last Name"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className="inputBase2 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                />
+                {errors.lastName && <p className="mt-1 text-xs text-red-600">{errors.lastName}</p>}
+              </div>
+              {/* Email */}
+              <div className="flex flex-col">
+                <label htmlFor="email" className="text-sm font-medium text-gray-700 mb-1">Email</label>
+                <input
+                  type="email"
+                  placeholder="Enter Email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className="inputBase2 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                />
+                {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
+              </div>
+              {/* Password */}
+              <div className="flex flex-col">
+                <label htmlFor="password" className="text-sm font-medium text-gray-700 mb-1">Password</label>
+                <div className="flex gap-1 pr-1">
+                  <input
+                    type={isVisible ? "text" : "password"}
+                    placeholder="Enter Password"
+                    name="password"
+                    value={formData.password}
+                    minLength={8}
+                    maxLength={20}
+                    className="inputBase2 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition flex-1"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  <button type="button" onClick={() => setIsVisible(!isVisible)} className="text-gray-600">
+                    {isVisible ? <FaEyeSlash /> : <FaEye />}
+                  </button>
+                </div>
+                {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password}</p>}
+              </div>
+              {/* Mobile Number */}
+              <div className="flex flex-col">
+                <label htmlFor="mobileNo" className="text-sm font-medium text-gray-700 mb-1">Mobile No</label>
+                <input
+                  type="text"
+                  placeholder="Enter Mobile No"
+                  name="mobileNo"
+                  value={formData.mobileNo}
+                  minLength={10}
+                  maxLength={10}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className="inputBase2 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                />
+                {errors.mobileNo && <p className="mt-1 text-xs text-red-600">{errors.mobileNo}</p>}
+              </div>
+              {isRegistered && <p className="text-center text-sm text-red-600 mb-2">Account already exists with this email. Please login</p>}
+              <button type="submit" className="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full shadow-md hover:shadow-lg transition">
+                Send OTP
+              </button>
+            </form>
+          </div>
+        )}
       </div>
     </>
   );
