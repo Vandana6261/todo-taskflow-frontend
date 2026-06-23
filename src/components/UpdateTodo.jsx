@@ -57,18 +57,18 @@ function UpdateTodo({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
   return (
     <>
       <div
-        className='fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center'
+        className='blurEffect fixed inset-0 z-50 flex items-center justify-center'
         onClick={() => setIsUpdate(!isUpdate)}
       >
 
-        <div className='flex flex-col gap-1 bg-white w-[90%] sm:w-[70vw] md:w-[40vw] rounded-xl p-4'
+        <div className='flex flex-col gap-1 bg-page w-[90%] sm:w-[70vw] md:w-[40vw] rounded-xl p-4'
           onClick={(e) => e.stopPropagation()}
         >
           {/* 1st part */}
           <div className='flex-1 border-b border-gray-300 rounded px-4 py-2 flex justify-between'>
-            <h2 className='text-2xl text-center'>Task Details</h2>
+            <h2 className='text-2xl text-center text-text'>Task Details</h2>
             <span 
-              className='p-1 h-6 w-6 text-2xl rounded-full bg-gray-400/30 flex justify-center items-center cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 hover:bg-gray-400/50'
+              className='p-1 h-6 w-6 text-2xl rounded-full bg-gray/40 flex justify-center items-center cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 hover:bg-gray-400/50'
               onClick={(e) => handleCancel(e)}
             >
               <RxCross1 />
@@ -83,7 +83,7 @@ function UpdateTodo({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
             <div className='overflow-y-auto'>
                 <div className='flex flex-col gap-1'>
                   <label
-                    className='text-md font-semibold '
+                    className='text-md font-semibold text-text'
                     htmlFor='title'>
                     Title:
                   </label>
@@ -94,7 +94,7 @@ function UpdateTodo({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
                     onChange={(e) => handleChange(e)}
                   />
                   {error && error.title && (
-                    <p className="text-red-500">{error.title}</p>
+                    <p className="text-danger">{error.title}</p>
                   )}
                 </div>
                 
@@ -109,17 +109,17 @@ function UpdateTodo({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
                     name='description'
                     maxLength={300}
                     value={updatedData.description}
-                    className='inputBase px-2 py-1 h-12 overflow-y-auto'
+                    className='inputBase px-2 py-1 h-12 overflow-y-auto text-gray'
                     onChange={(e) => handleChange(e)}
                   />
                   {error && error.description && (
-                    <p className="text-red-500">{error.description}</p>
+                    <p className="text-danger">{error.description}</p>
                   )}
                 </div>
 
                 <div className='flex flex-col gap-1'>
                   <label
-                    className='text-md font-semibold '
+                    className='text-md font-semibold text-text'
                     htmlFor='priority'
                   >
                     Priority:
@@ -127,7 +127,7 @@ function UpdateTodo({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
                   <p>
                     <select name="priority" id="priority"
                       value={updatedData?.priority}
-                      className='inputBase text-gray-600'
+                      className='inputBase text-gray'
                       onChange={(e) => handleChange(e)}
                     >
                       <option value="medium">Medium</option>
@@ -147,7 +147,7 @@ function UpdateTodo({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
                   <p>
                     <select name="status" id="status"
                       value={updatedData?.status}
-                      className='inputBase px-2 text-gray-600'
+                      className='inputBase px-2 text-gray'
                       onChange={(e) => handleChange(e)}
                     >
                       <option value="pending">Pending</option>
@@ -167,7 +167,7 @@ function UpdateTodo({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
                   <p>
                     <select name="category" id="category"
                       value={updatedData?.category}
-                      className='inputBase px-2 text-gray-600'
+                      className='inputBase px-2 text-gray'
                       onChange={(e) => handleChange(e)}
                     >
                       {categories.map((item, index) => {
@@ -193,25 +193,25 @@ function UpdateTodo({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
                       type="date" id='date' name='dueDate'
                       value={updatedData?.dueDate}
                       onChange={(e) => handleChange(e)}
-                      className='inputBase px-2 text-gray-600'
+                      className='inputBase px-2 text-gray'
                     />
                   </p>
                   {error && error.dueDate && (
-                    <p className="text-red-500">{error.dueDate}</p>
+                    <p className="text-danger">{error.dueDate}</p>
                   )}
                 </div>
             </div>
 
             {/* 3rd part  */}
             <div className='flex gap-3 self-end mt-2 relative bottom-0'>
-              <button className='hoverBase btn mx-2  font-semibold bg-red-300/20 text-red-600 '
+              <button className='hoverBase btn mx-2  font-semibold bg-danger/20 text-danger'
                 onClick={() => setIsUpdate(!isUpdate)}
               >
                 <span>
                   Cancel
                 </span>
               </button>
-              <button className='hoverBase btn mx-2 font-semibold bg-green-500/20 text-success-bg hoverBase flex items-center gap-2'
+              <button className='hoverBase btn mx-2 font-semibold bg-success/20 text-success hoverBase flex items-center gap-2'
               >
                 <span>
                   <RxUpdate />

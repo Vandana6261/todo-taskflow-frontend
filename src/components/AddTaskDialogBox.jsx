@@ -94,13 +94,13 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
   return (
     <>
       <div
-        className={`min-w-screen min-h-screen fixed top-0 left-0 flex justify-center items-center bg-black/40 backdrop-blur-sm z-999 ${showDialogBox ? "flex" : "hidden"} text-left`}
+        className={`blurEffect min-w-screen min-h-screen fixed top-0 left-0 flex justify-center items-center z-999 ${showDialogBox ? "flex" : "hidden"} text-left`}
         onClick={(e) => {
           handleCancel()
         }}
       >
         <div
-          className="flex flex-col gap-1 w-[90%] max-w-[500px] h-auto modal bg-white rounded-xl p-4"
+          className="flex flex-col gap-1 w-[90%] max-w-[500px] h-auto modal bg-page text-text rounded-xl p-4"
           onClick={(e) => {
             e.stopPropagation();
           }}
@@ -142,7 +142,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
                   }}
                 />
                 {error && error.title && (
-                  <p className="text-red-500">{error.title}</p>
+                  <p className="text-danger">{error.title}</p>
                 )}
               </div>
 
@@ -163,7 +163,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
                   className="inputBase px-2 py-1 h-12 overflow-y-auto"
                 />
                 {error && error.description && (
-                  <p className="text-red-500">{error.description}</p>
+                  <p className="text-danger">{error.description}</p>
                 )}
               </div>
 
@@ -226,7 +226,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
                     })}
                   </select>
                   {error && error.category && (
-                    <p className="text-red-500">{error.category}</p>
+                    <p className="text-danger">{error.category}</p>
                   )}
                 </div>
 
@@ -246,7 +246,7 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
                     className="inputBase"
                   />
                   {error && error.dueDate && (
-                    <p className="text-red-500">{error.dueDate}</p>
+                    <p className="text-danger">{error.dueDate}</p>
                   )}
                 </div>
               </div>
@@ -257,13 +257,13 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
               <button
                 type="button"
                 onClick={(e) => handleCancel(e)}
-                className="hoverBase btn mx-2 font-semibold bg-red-300/20 text-red-600"
+                className="hoverBase btn mx-2 font-bold  text-danger"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="hoverBase btn mx-2 font-semibold bg-green-500/20 text-success"
+                className="hoverBase btn mx-2 font-bold text-success"
                 onClick={(e) => handleSubmit(e)}
               >
                 Create Task

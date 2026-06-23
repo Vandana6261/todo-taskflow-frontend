@@ -67,31 +67,28 @@ function Category() {
   }, [categories])
 
   return (
-        <div className='min-h-[85vh] relative flex flex-col justify-between p-2 select-none'>
+        <div className='min-h-[89vh] relative flex flex-col justify-between p-2 select-none'>
           <div>
             {/* Heading */}
-            <div className='flex items-center gap-2 text-xl font-semibold text-gray-700 px-2 py-3 mb-2'>
-              <span className='text-blue-600 transition-transform duration-300 hover:rotate-12'>
+            <div className='flex items-center gap-2 text-xl font-semibold px-2 py-3 mb-2'>
+              <span className='text-button transition-transform duration-300 hover:rotate-12'>
                 <FaRegFolderOpen />
               </span>
-              <h2>Category</h2>
+              <h2 className='text-text'>Category</h2>
             </div>
 
             {/* Categories List */}
-            {
-              isLoading ? 
-              <h2>Loading....</h2>
-              :
+            
             <div className='flex flex-col gap-1.5'>
               <div
                 className={`flex items-center gap-3 cursor-pointer px-4 py-2.5 rounded-xl transition-all duration-300 transform active:scale-95 ${
                   selectedCat === "all"
-                    ? "bg-white text-blue-600 shadow-sm border border-blue-100"
+                    ? "text-blue-600 shadow-sm border border-blue-100"
                     : "text-gray-600 hover:bg-gray-100/80"
                 }`}
                 onClick={() => handleCat("all")}
               >
-                <div className={`rounded-full w-2.5 h-2.5 transition-all duration-300 ${selectedCat === "all" ? "bg-blue-600 scale-125" : "bg-gray-400"}`}></div>
+                <div className={`rounded-full w-2.5 h-2.5 transition-all duration-300 ${selectedCat === "all" ? "bg-button scale-125" : "bg-gray-400"}`}></div>
                 <h2 className="text-sm font-medium">All Tasks</h2>
               </div>
 
@@ -106,7 +103,7 @@ function Category() {
                       key={item._id}
                       className={`flex items-center gap-3 cursor-pointer px-4 py-2.5 rounded-xl transition-all duration-300 transform active:scale-95 ${
                         isSelected
-                          ? "bg-white text-blue-600 shadow-sm border border-blue-100"
+                          ? "bg-page text-button shadow-sm border border-blue-100"
                           : "text-gray-600 hover:bg-gray-100/80"
                       }`}
                       onClick={() => handleCat(item)}
@@ -115,13 +112,13 @@ function Category() {
                         className="rounded-full w-2.5 h-2.5 transition-transform duration-300"
                         style={{ backgroundColor: color, transform: isSelected ? 'scale(1.25)' : 'scale(1)' }}
                       ></div>
-                      <span className='text-sm font-medium line-clamp-1'>{item.name}</span>
+                      <span className='text-sm font-medium line-clamp-1 text-text'>{item.name}</span>
                     </div>
                   )
                 })
               )}
             </div>
-            }
+
           </div>
 
           {/* Dynamic Action Section (Bottom Anchor) */}

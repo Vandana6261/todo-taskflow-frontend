@@ -17,22 +17,22 @@ function Confirmation({ setIsOpen, handleConfirmation, text="perform this action
   }
   return (
     <>
-      <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm'
+      <div className='fixed inset-0 z-50 flex items-center justify-center blurEffect'
         onClick={() => handleCancel()}
       >
-        <div className='bg-white p-2 rounded-xl min-h-40 flex flex-col justify-center items-center gap-2 font-semibold'
+        <div className='bg-page p-2 rounded-xl min-h-40 flex flex-col justify-center items-center gap-2 font-semibold'
           onClick={(e) => e.stopPropagation()}
         >
           <p className='text-gray-800 font-semibold'>Are you sure you want to {text}?</p>
           <div className='flex bg-amber-00'>
             <button
-              className='hoverBase btn mx-2 bg-blue-300/20 text-blue-600'
+              className='hoverBase btn mx-2 text-danger font-bold'
               onClick={() => handleCancel()}
             >
               Cancel
             </button>
             <button
-              className='hoverBase btn mx-2 font-semibold bg-red-300/20 text-red-600'
+              className='hoverBase btn mx-2 font-semibold text-success'
               onClick={() => handleConfirm()}
             >
               <span>

@@ -116,7 +116,7 @@ function SignUp() {
 
   return (
     <>
-      <div className="w-full min-h-screen bg-[#dbdae9e5] fixed mt-0 top-0 z-0  flex justify-center items-center p-4">
+      <div className="w-full min-h-screen bg-page2 fixed mt-0 top-0 z-0  flex justify-center items-center p-4">
       {isLoading ? 
         <Loader message={"Sending Otp"}/>
       :
@@ -139,7 +139,7 @@ function SignUp() {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {errors.firstName && <p className="text-sm text-red-600">{errors.firstName}</p>}
+              {errors.firstName && <p className="text-sm text-danger">{errors.firstName}</p>}
                 
             </div>
 
@@ -156,7 +156,7 @@ function SignUp() {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {errors.lastName && <p className="text-sm text-red-600">{errors.lastName}</p>}
+              {errors.lastName && <p className="text-sm text-delete">{errors.lastName}</p>}
             </div>
 
             <div className="flex flex-col gap-1">
@@ -193,7 +193,7 @@ function SignUp() {
                 />
                 <button onClick={() => setIsVisible(!isVisible)}>{isVisible ? <FaEyeSlash /> : <FaEye />}</button>
               </div>
-              {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
+              {errors.password && <p className="text-sm text-danger">{errors.password}</p>}
             </div>
 
             <div className="flex flex-col gap-1">
@@ -211,10 +211,10 @@ function SignUp() {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {errors.mobileNo && <p className="text-sm text-red-600">{errors.mobileNo}</p>}
+              {errors.mobileNo && <p className="text-sm text-danger">{errors.mobileNo}</p>}
             </div>
-            {isRegistered && <p className="text-sm text-red-600">Account already exists with this email. Please login</p>}
-            <button type='submit' className='btn hoverBase border-none w-fit py-2 px-4 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>Send OTP</button>
+            {isRegistered && <p className="text-sm text-danger">Account already exists with this email. Please login</p>}
+            <button type='submit' className='btn hoverBase border-none w-fit py-2 px-4 text-white font-semibold bg-update rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'>Send OTP</button>
           </form>
         </div>
       }

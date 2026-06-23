@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Home = () => {
   const navigate = useNavigate();
   return (
-    <div className="min-h-screen page-bg selection:bg-blue-100 ">
+    <div className="min-h-screen bg-page selection:bg-blue-100 z-10">
       {/* Hero Section */}
       <section className="max-w-[1200px] mx-auto px-6 pt-20 pb-32 flex flex-col items-center text-center">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-blue-600 text-sm font-medium mb-8 animate-fade-in">
@@ -19,7 +19,7 @@ const Home = () => {
           V2.0 is now live with Drag & Drop
         </div>
         
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-slate-900 to-blue-800 bg-clip-text text-transparent">
+        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-slate-400 to-blue-800 bg-clip-text text-transparent">
           Simplify your workflow. <br />
           <span className="text-accent">Focus on what matters.</span>
         </h1>
@@ -50,7 +50,7 @@ const Home = () => {
       </section>
 
       {/* Features */}
-      <section className="bg-white py-24 border-t border-slate-100">
+      <section className="bg-header text-text py-24 border-t border-slate-100">
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             <FeatureCard 
@@ -81,12 +81,12 @@ const Home = () => {
 };
 
 const FeatureCard = ({ icon, title, desc }) => (
-  <div className="flex flex-col items-start p-6 rounded-2xl hover:bg-slate-50 transition-colors group">
-    <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+  <div className="flex flex-col items-start p-6 rounded-2xl hover:bg-gray-300 transition-colors group">
+    <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform text-text">
       {icon}
     </div>
     <h3 className="text-xl font-bold mb-2">{title}</h3>
-    <p className="text-slate-600 leading-relaxed">{desc}</p>
+    <p className="text-button leading-relaxed">{desc}</p>
   </div>
 );
 

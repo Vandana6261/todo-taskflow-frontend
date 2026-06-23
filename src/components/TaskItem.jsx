@@ -38,15 +38,15 @@ function TaskItem({ task }) {
 
   return (
     <>
-      <div tabIndex={0} className={`px-4 border-b bg-white min-h-30 pb-2 text-sm m-1 border border-gray-300 rounded-xl shadow-[0px_5px_10px_2px_rgba(0,0,0,0.25)]  hover:shadow-[0px_5px_10px_rgba(0,0,0,0.25)] hover:border-gray-400 `}
+      <div tabIndex={0} className={`px-4 border-b bg-page min-h-30 pb-2 text-sm m-1 border border-gray-300 rounded-xl shadow-[0px_5px_10px_2px_rgba(0,0,0,0.25)]  hover:shadow-[0px_5px_10px_rgba(0,0,0,0.25)] hover:border-gray-400 `}
         onClick={() => setSelectId(task._id)}
       >
         {/* task title, description, etc. */}
-        <div className={`flex flex-col rounded-md py-2 ${isCompleted ? "line-through text-gray-400" : ""}`}>
+        <div className={`flex flex-col rounded-md py-2 ${isCompleted ? "line-through text-gray" : ""}`}>
           <div className=''>
             <div className=''>
               <input
-                className='cursor-pointer'
+                className='cursor-pointer' 
                 type="checkbox" id='checkbox' name='checkbox' checked={isCompleted}
                 onChange={(e) => {
                   const status = task.status !== "complete" ? "complete" : "inProgress";
@@ -58,15 +58,15 @@ function TaskItem({ task }) {
 
             <div className='flex flex-col w-full'>
               <div className='flex justify-between'>
-                <h2 className=''>{task.title}</h2>
+                <h2 className='text-text'>{task.title}</h2>
                 <div className='flex-1'>
-                  <button className='hoverBase btn mx-2 font-semibold bg-red-500/20  text-red-600 hover:text-red-600'
+                  <button className='hoverBase btn mx-2 font-semibold bg-danger/20  text-danger'
                     onClick={() => setIsOpen(!isOpen)
                     }
                   >
                     <MdDeleteForever />
                   </button>
-                  <button className={`hoverBase btn mx-2 font-semibold bg-green-600/20 text-success ${isCompleted ? "line-through  " : ""}`}
+                  <button className={`hoverBase btn mx-2 font-semibold bg-success/20 text-success ${isCompleted ? "line-through  " : ""}`}
                     onClick={() => handleUpdate()}
                     disabled={isCompleted}
                   >
@@ -74,9 +74,9 @@ function TaskItem({ task }) {
                   </button>
                 </div>
               </div>
-              <p className='text-gray-500'>{task.description}</p>
+              <p className='text-gray'>{task.description}</p>
               <div className='mt-2 flex items-center justify-between '>
-                {task.category && <p className='bg-gray-300/30 text-gray-900 w-fit rounded'>{task.category.name}</p>}
+                {task.category && <p className='bg-gray/30 text-gray w-fit rounded'>{task.category.name}</p>}
                 {task.status && <p className={`w-fit rounded px-4 font-semibold ${styleMap[task.status]}`}>{task.status}</p>}
               </div>
             </div>
@@ -87,7 +87,7 @@ function TaskItem({ task }) {
 
         {/* button delete and update */}
         <div className='flex justify-between'>
-          <div>{task.dueDate && <small className=' px-2 rounded  text-gray-500'>Due: {task.dueDate}</small>}</div>
+          <div>{task.dueDate && <small className=' px-2 rounded  text-gray'>Due: {task.dueDate}</small>}</div>
         </div>
       </div>
 
