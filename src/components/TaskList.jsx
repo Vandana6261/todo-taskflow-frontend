@@ -15,6 +15,13 @@ import Confirmation from './Confirmation';
 // console.log("TaskList rendered")
 
 function TaskList() {
+
+  const heading = `text-center text-sm font-bold uppercase tracking-wider text-muted sticky top-0 bg-card py-2 border-b border-header mb-4 z-10`;
+  const buttonStyle = `
+    btn hoverBase border border-button text-button w-auto px-2 font-semibold rounded-full hover:shadow-[0px_0px_20px_var(--color-btnShadow)]
+  `;
+
+
   const [showDialogBox, setShowDialogBox] = useState(false);
   const { addTask, taskToBeShow, updateTask, isData, loadTodo , logout} = useTodoContext();
   const [active, setActive] = useState("");
@@ -77,12 +84,12 @@ function TaskList() {
 
   return (
     <>
-      <div className='relative h-full select-none bg-white'>
+      <div className='relative h-full select-none bg-page'>
         <div className='flex justify-center gap-4 border-gray-400 p-2'>
           <SearchBar setisLoading={setisLoading} />
           <button
             onClick={() => setShowDialogBox(true)}
-            className='btn hoverBase border-none w-auto py-2 text-white font-semibold bg-accent rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
+            className={buttonStyle}
           >Add Task</button>
           <button 
             onClick={() => setIsOpen(!isOpen)}
@@ -94,7 +101,7 @@ function TaskList() {
         </div>
 
         <div className=''>
-          {taskToBeShow.length === 0 ?
+          {/* {taskToBeShow.length === 0 ?
             (isLoading ? 
               (<Loader />)
               :
@@ -103,17 +110,22 @@ function TaskList() {
               </div>)
             )
             :
-            <div className='max-w-screen md:max-h-[78vh] pt-2 flex flex-col md:flex-row bg-light px-2 overflow-y-auto md:overflow-hidden'>
+            // content box
+          } */}
 
-              <div className='flex-1 m-1 border border-gray-300 bg-card min-h-[40vh] md:min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
+          {/* (isLoading && <Loader />) */}
+
+          <div className='max-w-screen md:max-h-[78vh] pt-2 flex flex-col md:flex-row px-2 overflow-y-auto md:overflow-hidden'>
+
+              <div className='flex-1 m-1 bg-card min-h-[40vh] md:min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
                 onDragEnter={e => console.log('onDragEnter')}
                 onDragLeave={e => console.log('onDragLeave')}
                 onDragOver={handleDragOver}
                 onDrop={(e) => handleDrop(e, "pending")}
               >
-                <h2 className='text-center text-lg  font-semibold text-muted sticky top-0 bg-white rounded mb-6'>Pending Task</h2>
+                <h2 className={heading}>Pending Task</h2>
                 <div className='rounded flex flex-col gap-2'>
-                  {
+                  { 
                     pendingTask.map(item => (
                       <div
                         key={item._id}
@@ -130,13 +142,13 @@ function TaskList() {
                 </div>
               </div>
 
-              <div className='flex-1 m-1 border border-gray-300 bg-card min-h-[40vh] md:min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
+              <div className='flex-1 m-1 bg-card min-h-[40vh] md:min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
                 onDragEnter={e => console.log('onDragEnter')}
                 onDragLeave={e => console.log('onDragLeave')}
                 onDragOver={handleDragOver}
                 onDrop={(e) => handleDrop(e, "inProgress")}
               >
-                <h2 className='text-center text-lg font-semibold text-muted sticky top-0 bg-white rounded mb-6'>InProgress Task</h2>
+                <h2 className={heading}>InProgress Task</h2>
                 <div className='rounded flex flex-col gap-2'
                 >
                   {
@@ -155,13 +167,13 @@ function TaskList() {
                 </div>
               </div>
 
-              <div className='flex-1 m-1 border border-gray-300 bg-card min-h-[40vh] md:min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
+              <div className='flex-1 m-1 bg-card min-h-[40vh] md:min-h-[76vh] rounded-2xl overflow-y-auto scrollbar-hide relative p-2'
                 onDragEnter={e => console.log('onDragEnter')}
                 onDragLeave={e => console.log('onDragLeave')}
                 onDragOver={handleDragOver}
                 onDrop={(e) => handleDrop(e, "complete")}
               >
-                <h2 className='text-center text-lg font-semibold text-muted sticky top-0 bg-white rounded mb-6'>Completed Task</h2>
+                <h2 className={heading}>Completed Task</h2>
                 <div className='rounded flex flex-col gap-2'>
                   {
                     completedTask.map(item => (
@@ -179,7 +191,7 @@ function TaskList() {
                 </div>
               </div>
             </div>
-          }
+          
         </div>
         
       </div>

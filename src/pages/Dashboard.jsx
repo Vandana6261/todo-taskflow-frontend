@@ -37,7 +37,7 @@ function Dashboard() {
             >
               <GiHamburgerMenu />
             </span>
-            <div className="flex items-center gap-3 text-xl md:text-2xl font-bold text-accent">
+            <div className="flex items-center gap-3 text-xl md:text-2xl font-bold text-button">
               <FiCheckSquare className="text-2xl md:text-3xl" />
               <span className='cursor-pointer' onClick={() => navigate('/')}>TaskFlow</span>
             </div>
@@ -47,7 +47,7 @@ function Dashboard() {
         <div className='flex flex-1 overflow-hidden relative'>
           {/* category - Sidebar */}
           <aside className={`
-            absolute md:relative z-20 h-full w-64 md:w-auto md:flex-1 bg-white md:bg-transparent border-r border-shadow px-2 transition-transform duration-300 ease-in-out
+            absolute md:relative z-20 h-full w-64 md:w-auto md:flex-1 bg-white md:bg-transparent border-r border-gray-300 border-shadow px-2 transition-transform duration-300 ease-in-out
             ${showCategory ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
           `}>
             <Category />
@@ -62,7 +62,7 @@ function Dashboard() {
           )}
 
           {/* main */}
-          <main className='flex-[6] border-r border-gray/30 h-full overflow-y-auto'>
+          <main className='flex-[6] h-full overflow-y-auto'>
             <TaskList />
           </main>
         </div>

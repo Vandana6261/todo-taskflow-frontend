@@ -26,13 +26,7 @@ function App() {
         },
         {
           path: "/signUp",
-          element: <SignUp />,
-          // children: [
-          //   {
-          //     path: "varifyOtp",
-          //     element: <VarifyOtp />
-          //   }
-          // ]
+          element: <SignUp />
         },
         {
           path: "/signUp/varifyOtp",
@@ -48,24 +42,14 @@ function App() {
           // loader: loadProfile
         },
       ],
-    },
-    {
-      path: "/dashboard",
-      element: <Dashboard />,
-      // loader: loadProfile
-    },
+    }
   ]);
-
-  // /signup/verify-otp
-  // /auth/forgot-password
 
   return (
     <>
-      {/* <ErrorBoundary> */}
       <TodoProvider>
         <RouterProvider router={router} />
       </TodoProvider>
-      {/* </ErrorBoundary> */}
     </>
   );
 }

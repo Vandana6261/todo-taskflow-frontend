@@ -95,23 +95,17 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
     <>
       <div
         className={`blurEffect min-w-screen min-h-screen fixed top-0 left-0 flex justify-center items-center z-999 ${showDialogBox ? "flex" : "hidden"} text-left`}
-        onClick={(e) => {
-          handleCancel()
-        }}
+        onClick={(e) => { handleCancel() }}
       >
         <div
-          className="flex flex-col gap-1 w-[90%] max-w-[500px] h-auto modal bg-page text-text rounded-xl p-4"
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
+          className="flex flex-col gap-2 w-[90%] max-w-[500px] h-auto bg-card bg-opacity-80 backdrop-blur-sm rounded-xl border border-gray-200 shadow-lg p-6"
+          onClick={(e) => { e.stopPropagation() }}
         >
           {/* 1st part */}
           <div className='flex-1 border-b border-gray-300 px-4 py-2 flex justify-between'
-            onClick={(e) => {
-              setShowDialogBox(false);
-            }}
+            onClick={(e) => { setShowDialogBox(false) }}
           >
-            <h2 className="text-2xl text-center">Create Task</h2>
+            <h2 className="text-2xl font-bold text-muted text-center">Create Task</h2>
             <span 
               className='p-1 h-6 w-6 text-2xl rounded-full bg-gray-400/30 flex justify-center items-center cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 hover:bg-gray-400/50'
               onClick={(e) => handleCancel(e)}
@@ -122,12 +116,12 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
 
           <form
             onSubmit={(e) => handleSubmit(e)}
-            className="flex flex-col gap-2 max-h-[70vh] relative"
+            className="flex flex-col gap-2 max-h-[90vh] relative text-muted"
             >
             {/* 2nd part */}
             <div className="overflow-y-auto">
-              <div className="flex flex-col gap-1">
-                <label htmlFor="title" className="text-md font-semibold">
+              <div className="flex flex-col mb-1">
+                <label htmlFor="title" className="text-sm font-medium mt-1">
                   Title:
                 </label>
                 <input
@@ -146,10 +140,8 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
                 )}
               </div>
 
-              <div className="flex flex-col gap-2">
-                <label htmlFor="description" className="text-md font-semibold">
-                  Description:
-                </label>
+              <div className="flex flex-col mb-1">
+                <label htmlFor="description" className="text-sm font-medium mt-1"> Description: </label>
                 <input
                   type="text"
                   name="description"
@@ -168,55 +160,31 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
               </div>
 
               <div className="dropdownSection grid grid-cols-1 md:grid-cols-2 gap-2">
-                <div className="flex flex-col gap-3">
-                  <label htmlFor="priority" className="text-md font-semibold">
+                <div className="flex flex-col">
+                  <label htmlFor="priority" className="text-sm font-medium mt-1">
                     Priority:
                   </label>
-                  <select
-                    name="priority"
-                    id="priority"
-                    value={formData.priority}
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
-                    className="inputBase px-2"
-                  >
+                  <select name="priority" id="priority" value={formData.priority} onChange={(e) => { handleChange(e);  }} className="inputBase px-2" >
                     <option value="medium">Medium</option>
                     <option value="low">Low</option>
                     <option value="high">High</option>
                   </select>
                 </div>
 
-                <div className="flex flex-col gap-3">
-                  <label htmlFor="status" className="text-md font-semibold">
+                <div className="flex flex-col">
+                  <label htmlFor="status" className="text-sm font-medium mt-1">
                     Status:
                   </label>
-                  <select
-                    name="status"
-                    id="status"
-                    value={formData.status}
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
-                    className="inputBase px-2"
-                  >
+                  <select name="status" id="status" value={formData.status}  onChange={(e) => {handleChange(e)}} className="inputBase px-2" >
                     <option value="pending">Pending</option>
                     <option value="inProgress">Inprogress</option>
                     <option value="complete">Complete</option>
                   </select>
                 </div>
 
-                <div className="flex flex-col gap-3">
-                  <label htmlFor="category" className="text-md font-semibold">
-                    Category:
-                  </label>
-                  <select
-                    name="category"
-                    id="category"
-                    value={formData.category._id}
-                    className="inputBase px-2"
-                    onChange={(e) => handleChange(e)}
-                  >
+                <div className="flex flex-col">
+                  <label htmlFor="category" className="text-sm font-medium mt-1"> Category: </label>
+                  <select name="category" id="category" value={formData.category._id} className="inputBase px-2" onChange={(e) => handleChange(e)} >
                     {categories.map((item, index) => {
                       return (
                         <option key={item._id} value={item._id}>
@@ -230,10 +198,8 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
                   )}
                 </div>
 
-                <div className="flex flex-col gap-3">
-                  <label htmlFor="date" className="text-md font-semibold">
-                    Due Date:
-                  </label>
+                <div className="flex flex-col">
+                  <label htmlFor="date" className="text-sm font-medium mt-1"> Due Date: </label>
                   <input
                     type="date"
                     id="date"
@@ -257,13 +223,13 @@ function AddTaskDialogBox({ showDialogBox, setShowDialogBox }) {
               <button
                 type="button"
                 onClick={(e) => handleCancel(e)}
-                className="hoverBase btn mx-2 font-bold  text-danger"
+                className="hoverBase btn mx-2  font-semibold bg-danger/20 text-danger"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="hoverBase btn mx-2 font-bold text-success"
+                className="hoverBase btn mx-2 font-semibold bg-success/20 text-success hoverBase flex items-center gap-2"
                 onClick={(e) => handleSubmit(e)}
               >
                 Create Task

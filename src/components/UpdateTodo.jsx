@@ -57,18 +57,18 @@ function UpdateTodo({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
   return (
     <>
       <div
-        className='blurEffect fixed inset-0 z-50 flex items-center justify-center'
+        className='blurEffect min-w-screen min-h-screen fixed top-0 left-0 flex justify-center items-center z-999'
         onClick={() => setIsUpdate(!isUpdate)}
       >
 
-        <div className='flex flex-col gap-1 bg-page w-[90%] sm:w-[70vw] md:w-[40vw] rounded-xl p-4'
+        <div className='flex flex-col gap-2 w-[90%] max-w-md h-auto bg-card bg-opacity-80 backdrop-blur-sm rounded-xl border border-gray-200 shadow-lg p-6 '
           onClick={(e) => e.stopPropagation()}
         >
           {/* 1st part */}
-          <div className='flex-1 border-b border-gray-300 rounded px-4 py-2 flex justify-between'>
-            <h2 className='text-2xl text-center text-text'>Task Details</h2>
+          <div className='flex-1 border-b border-gray-300 px-4 py-2 flex justify-between'>
+            <h2 className='text-2xl font-bold text-muted text-center'>Task Details</h2>
             <span 
-              className='p-1 h-6 w-6 text-2xl rounded-full bg-gray/40 flex justify-center items-center cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 hover:bg-gray-400/50'
+              className='p-1 h-6 w-6 text-2xl rounded-full bg-gray-400/30 flex justify-center items-center cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 hover:bg-gray-400/50'
               onClick={(e) => handleCancel(e)}
             >
               <RxCross1 />
@@ -77,13 +77,13 @@ function UpdateTodo({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
           
           <form
             onSubmit={(e) => handleUpdate(e)}
-            className="flex flex-col gap-2 max-h-[70vh] relative"
+            className="flex flex-col gap-2 max-h-[70vh] relative text-muted"
           >
             {/* 2nd part */}
             <div className='overflow-y-auto'>
-                <div className='flex flex-col gap-1'>
+                <div className='flex flex-col mb-1'>
                   <label
-                    className='text-md font-semibold text-text'
+                    className='text-sm font-medium mt-1'
                     htmlFor='title'>
                     Title:
                   </label>
@@ -98,18 +98,14 @@ function UpdateTodo({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
                   )}
                 </div>
                 
-                <div className='flex flex-col gap-1'>
-                  <label
-                    className='text-md font-semibold'
-                    htmlFor="description" id='description'>
-                    Description
-                  </label>
+                <div className='flex flex-col mb-1'>
+                  <label className='text-sm font-medium mt-1' htmlFor="description" id='description'> Description </label>
                   <input
                     type="text"
                     name='description'
                     maxLength={300}
                     value={updatedData.description}
-                    className='inputBase px-2 py-1 h-12 overflow-y-auto text-gray'
+                    className='inputBase px-2 py-1 h-12 overflow-y-auto'
                     onChange={(e) => handleChange(e)}
                   />
                   {error && error.description && (
@@ -117,59 +113,28 @@ function UpdateTodo({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
                   )}
                 </div>
 
-                <div className='flex flex-col gap-1'>
-                  <label
-                    className='text-md font-semibold text-text'
-                    htmlFor='priority'
-                  >
-                    Priority:
-                  </label>
-                  <p>
-                    <select name="priority" id="priority"
-                      value={updatedData?.priority}
-                      className='inputBase text-gray'
-                      onChange={(e) => handleChange(e)}
-                    >
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
+                  <div className='flex flex-col'>
+                    <label className='text-sm font-medium mt-1' htmlFor='priority'> Priority: </label>
+                    <select name="priority" id="priority" value={updatedData?.priority} className='inputBase px-2' onChange={(e) => handleChange(e)}>
                       <option value="medium">Medium</option>
                       <option value="low">Low</option>
                       <option value="high">High</option>
                     </select>
-                  </p>
-                </div>
+                  </div>
 
-                <div className='flex flex-col gap-1'>
-                  <label
-                    className='text-md font-semibold '
-                    htmlFor='status'
-                  >
-                    Status:
-                  </label>
-                  <p>
-                    <select name="status" id="status"
-                      value={updatedData?.status}
-                      className='inputBase px-2 text-gray'
-                      onChange={(e) => handleChange(e)}
-                    >
+                  <div className='flex flex-col'>
+                    <label className='text-sm font-medium mt-1 ' htmlFor='status'> Status: </label>
+                    <select name="status" id="status" value={updatedData?.status} className='inputBase px-2' onChange={(e) => handleChange(e)} >
                       <option value="pending">Pending</option>
                       <option value="inProgress">Inprogress</option>
                       <option value="complete">Complete</option>
                     </select>
-                  </p>
-                </div>
+                  </div>
 
-                <div className='flex flex-col gap-1'>
-                  <label
-                    className='text-md font-semibold'
-                    htmlFor='category'
-                  >
-                    Category:
-                  </label>
-                  <p>
-                    <select name="category" id="category"
-                      value={updatedData?.category}
-                      className='inputBase px-2 text-gray'
-                      onChange={(e) => handleChange(e)}
-                    >
+                  <div className='flex flex-col'>
+                    <label className='text-sm font-medium mt-1' htmlFor='category' > Category: </label>
+                    <select name="category" id="category" value={updatedData?.category} className='inputBase px-2' onChange={(e) => handleChange(e)} >
                       {categories.map((item, index) => {
                         return (
                           <option key={item} value={item}>
@@ -178,27 +143,20 @@ function UpdateTodo({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
                         );
                       })}
                     </select>
-                  </p>
-                </div>
+                  </div>
 
-                <div className='flex flex-col gap-1'>
-                  <label
-                    className='text-md font-semibold '
-                    htmlFor='dueDate'
-                  >
-                    Due Date:
-                  </label>
-                  <p>
+                  <div className='flex flex-col'>
+                    <label className='text-sm font-medium mt-1 ' htmlFor='dueDate' > DueDate: </label>
                     <input
                       type="date" id='date' name='dueDate'
                       value={updatedData?.dueDate}
                       onChange={(e) => handleChange(e)}
-                      className='inputBase px-2 text-gray'
+                      className='inputBase'
                     />
-                  </p>
-                  {error && error.dueDate && (
-                    <p className="text-danger">{error.dueDate}</p>
-                  )}
+                    {error && error.dueDate && (
+                      <p className="text-danger">{error.dueDate}</p>
+                    )}
+                  </div>
                 </div>
             </div>
 

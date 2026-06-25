@@ -19,20 +19,14 @@ const Home = () => {
           V2.0 is now live with Drag & Drop
         </div>
         
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-slate-400 to-blue-800 bg-clip-text text-transparent">
-          Simplify your workflow. <br />
-          <span className="text-accent">Focus on what matters.</span>
-        </h1>
+        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-slate-400 to-blue-800 bg-clip-text text-transparent"> Simplify your workflow. <br /> <span className="">Focus on what matters.</span> </h1>
         
-        <p className="text-lg text-slate-600 max-w-2xl mb-10 leading-relaxed">
-          The professional task management tool designed for developers and high-achievers. 
-          Organize projects, track progress with Kanban-style boards, and stay ahead of deadlines.
-        </p>
+        <p className="text-lg text-slate-600 max-w-2xl mb-10 leading-relaxed"> The professional task management tool designed for developers and high-achievers. Organize projects, track progress with Kanban-style boards, and stay ahead of deadlines. </p>
 
         <div className="flex flex-col sm:flex-row gap-4">
           <button 
             onClick={() => navigate("/signUp")}
-            className="flex items-center gap-2 px-8 py-4 bg-accent text-white font-bold rounded-full shadow-[0px_10px_20px_rgba(0,25,247,0.3)] hover:shadow-[0px_15px_25px_rgba(0,25,247,0.4)] hover:-translate-y-1 transition-all duration-300"
+            className="flex items-center gap-2 px-8 py-4 bg-button text-white font-bold rounded-full shadow-[0px_5px_10px_rgba(0,25,247,0.3)] hover:shadow-[0px_5px_25px_rgba(0,25,247,0.4)] hover:-translate-y-1 transition-all duration-300"
           >
             Get Started for Free <HiOutlineArrowRight />
           </button>
@@ -42,8 +36,8 @@ const Home = () => {
         </div>
 
         {/* Abstract UI Preview */}
-        <div className="mt-20 w-full max-w-5xl rounded-2xl border border-slate-200 bg-white shadow-2xl overflow-hidden p-2 transform rotate-1 hover:rotate-0 transition-transform duration-700">
-           <div className="bg-slate-50 rounded-xl p-4 h-72 md:h-102 flex gap-4">
+        <div className="mt-20 w-full max-w-5xl rounded-2xl border border-slate-200 bg-header shadow-2xl overflow-hidden p-2 transform rotate-1 hover:rotate-0 transition-transform duration-700">
+           <div className=" rounded-xl p-4 h-72 md:h-102 flex gap-4">
               {/* <Preview /> */}
            </div>
         </div>
@@ -88,7 +82,7 @@ const FeatureCard = ({ icon, title, desc }) => (
       {icon}
     </div>
     <h3 className="text-xl font-bold mb-2">{title}</h3>
-    <p className="text-button leading-relaxed">{desc}</p>
+    <p className="text-gray-700 leading-relaxed">{desc}</p>
   </div>
 );
 

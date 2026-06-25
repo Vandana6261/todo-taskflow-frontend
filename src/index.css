@@ -1,168 +1,90 @@
 @import "tailwindcss";
 
-/* ==== Theme Variables ==== */
-:root {
-    /* Light theme */
-    --color-primary-bg: hsl(210, 20%, 98%);
-    /* page background */
-    --color-primary-text: hsl(210, 15%, 20%);
-    /* main text */
-    --color-button-bg: #456fa7c5;
-    /* primary button */
-    --color-delete-bg: #f71818;
-    /* delete actions */
-    --color-update-bg: #1d6b16ce;
-    /* update actions */
-    --color-modal-bg: #ceceec48;
-    /* modal background */
-    --color-border: #e6e3e3d8;
-    /* default border */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-    /* Additional colours collected from the codebase */
-    --color-page-bg: #dbdae9e5;
-    /* background used on Home, Login, SignUp pages */
-    --color-accent: #0019f7a8;
-    /* primary brand colour for buttons and highlights */
-    --color-header-bg: #aaaab094;
-    /* header / dashboard background */
-    --color-white: #ffffff;
-    /* white used for modals, cards */
-    --color-card-bg: #d2d2ec83;
-    /* card background in TaskList */
-    --color-list-bg: #fcfaf8b6;
-    /* background for TaskList container */
-    --color-bg-light: #f3f1f1;
-    /* light background for certain containers */
-    --color-text-muted: #2a344b;
-    /* muted text colour used in headings */
-    --color-category-card-bg: #a4acbdd5;
-    /* background for category cards */
-    --color-success-text: #027e23;
-    /* text colour for completed tasks */
-    --color-success-bg: #229c09;
-    /* button text colour for positive actions */
-    --color-shadow: #CBD5E1;
-    /* shadow / border colour in Dashboard */
+:root {
+  --color-page: #eff6fc;
+  --color-card: #c1d3d3;
+  --color-todoCard: #d4dfdf;
+  --color-header: #E2E8F0;
+   /* c4cad3  c1d3d3 d4dfdf */
+  --color-text: #0F172A;
+  --color-muted: #475569;
+  --color-gray: #94A3B8;
+  
+  --color-button: #2563EB;
+  /* --color-btnShadow: rgba(37, 99, 235, 0.25); */
+  --color-btnShadow: #676ecf;
+  
+  --color-danger: #DC2626;
+  --color-success-bg: #10B981;
+  --color-accent: #3B82F6;
+
+
+   --color-feature: rgba(91, 110, 31, 0.212);
 }
 
 .dark {
-    /* Dark theme overrides */
-    --color-primary-bg: hsl(210, 10%, 10%);
-    --color-primary-text: hsl(210, 10%, 90%);
-    --color-button-bg: #82b1ff;
-    --color-delete-bg: #ff7b7b;
-    --color-update-bg: #7fff7f;
-    --color-modal-bg: rgba(30, 30, 30, 0.85);
-    --color-border: #555555;
+  --color-page: #0F172A;
+  --color-card: #1E293B;
+  --color-todoCard: #334155;
+  --color-header: #334155;
+  
+  --color-text: #F8FAFC;
+  --color-muted: #94A3B8;
+  --color-gray: #64748B;
+  
+  --color-button: #3B82F6;
+  /* --color-btnShadow: rgba(59, 130, 246, 0.3); */
+  --color-btnShadow: #989595;
+  
+  --color-danger: #EF4444;
+  --color-success-bg: #10B981;
+  --color-accent: #60A5FA;
 
-    /* Preserve additional colours (or adapt as needed) */
-    --color-page-bg: #2c2c3a;
-    /* example dark version – adjust later */
-    --color-accent: #82b1ff;
-    /* use button colour as accent in dark mode */
-    --color-header-bg: #1a1a1f;
-    --color-white: #ffffff;
-    --color-card-bg: #2b2b3a;
-    --color-list-bg: #24242e;
-    --color-bg-light: #2a2a34;
-    --color-text-muted: #a0a0b0;
-    --color-category-card-bg: #3a3a4b;
-    --color-success-text: #7fff7f;
-    --color-success-bg: #229c09;
-    --color-shadow: #444455;
+
+  --color-feature: rgba(63, 75, 82, 0.524);
+
 }
-
-.dark2 {
-    --color-primary-bg: hsl(210, 20%, 10%);       /* Deep, comfortable dark page background */
-    --color-primary-text: hsl(210, 15%, 88%);     /* Crisp, readable off-white for main text */
-    --color-button-bg: #3a5f91;                   /* Slightly desaturated blue for buttons */
-    --color-delete-bg: #d93838;                   /* Subdued dark red for delete actions */
-    --color-update-bg: #165211;                   /* Deep forest green for update actions */
-    --color-modal-bg: #1a1a24cc;                  /* Darker, translucent modal background */
-    --color-border: #2d3139;                      /* Low-contrast border to avoid harsh lines */
-
-    /* Additional colours matched for Dark Theme */
-    --color-page-bg: #14141c;                     /* Deep dark background for Home, Login, SignUp */
-    --color-accent: #3b52f6;                      /* Brighter, neon-leaning brand color for contrast */
-    --color-header-bg: #1e1e24;                   /* Elevated dark header background */
-    --color-white: #1f1f2e;                       /* Swapped to a dark surface color for cards/modals */
-    --color-card-bg: #252538;                     /* Slightly lighter dark tone for task cards */
-    --color-list-bg: #18191e;                     /* Deep background for TaskList container */
-    --color-bg-light: #22252a;                    /* Dark alternative for container backgrounds */
-    --color-text-muted: #94a3b8;                  /* Light slate gray for subheadings/muted text */
-    --color-category-card-bg: #334155;            /* Dark slate for category cards */
-    --color-success-text: #4ade80;                /* Vibrant mint green for completed tasks text */
-    --color-success-bg: #166534;                  /* Deep green for positive action buttons */
-    --color-shadow: #0f172a;
-}
-
 
 @theme {
-    --color-primary: var(--color-primary-bg);
-    --color-primary-text: var(--color-primary-text);
-    --color-button: var(--color-button-bg);
-    --color-delete: var(--color-delete-bg);
-    --color-update: var(--color-update-bg);
-    --color-modal: var(--color-modal-bg);
-    --color-border: var(--color-border);
-    --color-page: var(--color-page-bg);
-    --color-accent: var(--color-accent);
-    --color-header: var(--color-header-bg);
-    --color-card: var(--color-card-bg);
-    --color-list: var(--color-list-bg);
-    --color-light: var(--color-bg-light);
-    --color-muted: var(--color-text-muted);
-    --color-category: var(--color-category-card-bg);
-    --color-success-text: var(--color-success-text);
-    --color-success-bg: var(--color-success-bg);
-    --color-shadow: var(--color-shadow);
+  --color-page: var(--color-page);
+  --color-card: var(--color-card);
+  --color-todoCard: var(--color-todoCard);
+  --color-header: var(--color-header);
+  
+  --color-text: var(--color-text);
+  --color-muted: var(--color-muted);
+  --color-gray: var(--color-gray);
+  
+  --color-button: var(--color-button);
+  --color-btnShadow: var(--color-btnShadow);
+  
+  --color-danger: var(--color-danger);
+  --color-success: var(--color-success-bg);
+  --color-accent: var(--color-accent);
+
+
+  --color-feature: var(--color-feature);
 }
-
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
-
 
 @layer components {
-    .inputBase {
-        @apply px-0 py-1 w-full text-gray-700 border-1 border-gray-300/40 rounded-lg hover:bg-gray-200/40 focus:border-[#e6e3e3d8] focus:outline-none focus:bg-gray-200/40
-    }
+  .inputBase {
+    @apply text-text bg-page mx-1 px-3 py-2 border border-header rounded-xl focus:outline-none focus:ring-2 focus:ring-button/40 transition-all duration-200;
+  }
 
-    .btn {
-        @apply rounded px-2 py-1 cursor-pointer
-    }
+  .btn {
+    @apply rounded-xl px-4 py-2 cursor-pointer transition-all duration-200;
+  }
 
-    .hoverBase {
-        @apply hover:scale-95 transition-all duration-200
-    }
+  .hoverBase {
+    @apply hover:scale-[0.98] active:scale-95 transition-all duration-200;
+  }
 
-    .heading4 {
-        @apply text-sm font-semibold;
-    }
+  .blurEffect {
+    @apply bg-slate-900/40 backdrop-blur-sm;
+  }
 
-    .transitionEffect {
-        @apply transition-all duration-100 ease-in
-    }
-
-    .onHoverEffect {
-        @apply transition-all duration-200
-    }
-
-    .scrollbar-hide {
-        -ms-overflow-syle: none;
-        /* IE & Old Edge */
-        scrollbar-width: none;
-        /* Firefox */
-    }
-
-    .scrollbar-hide::-webkit-scrollbar {
-        display: none;
-        /* Chrome, Safari, Edge */
-
-    }
-
-    .inputBase2 {
-        @apply px-0 py-1 w-full text-gray-900 text-sm placeholder-gray-400 border-1 border-gray-300/40 rounded-lg hover:bg-gray-300/40 focus:border-[#c9c7c7d8] focus:outline-none focus:bg-gray-200/40
-    }
 }
-

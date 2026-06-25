@@ -3,6 +3,9 @@ import { IoIosSearch } from "react-icons/io";
 import useTodoContext from '../context/TodoContext';
 
 function SearchBar({ setisLoading }) {
+
+  const searchStyle = `flex items-center gap-2 px-3.5 bg-gray-50 border border-gray-200 rounded-xl transition-all duration-300 hover:shadow-[0px_0px_10px_rgba(0,15,205,0.4)] focus-within:border focus-within:border-blue-800/50 focus-within:shadow-[0px_0px_10px_rgba(0,15,205,0.4)]`;
+
   const { searchTask, loadTodo } = useTodoContext()
   const timerRef = useRef(null);
 
@@ -24,12 +27,12 @@ function SearchBar({ setisLoading }) {
 
   return (
     <div className='w-full max-w-sm  '>
-      <div className='flex items-center gap-2 px-3.5 bg-gray-50 border border-gray-200 rounded-xl transition-all duration-300 hover:shadow-[0px_0px_10px_rgba(0,15,205,0.4)] focus-within:border focus-within:border-blue-800/50 focus-within:shadow-[0px_0px_10px_rgba(0,15,205,0.4)]'>
-        <span className="text-gray-400 text-lg transition-colors duration-300 group-focus-within:text-button">
+      <div className={searchStyle}>
+        <span className="text-gray-400 text-lg">
           <IoIosSearch />
         </span>
         <input 
-          className='py-2.5 bg-transparent border-none focus:outline-none w-full text-sm text-gray-700 placeholder-gray-500'
+          className='py-2.5  border-none focus:outline-none w-full text-sm text-gray-700 placeholder-gray-500'
           type="text" 
           placeholder='Search tasks...' 
           onChange={handleSearch}

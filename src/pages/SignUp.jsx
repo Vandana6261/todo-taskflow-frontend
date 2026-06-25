@@ -120,12 +120,15 @@ function SignUp() {
         {isLoading ? (
           <Loader message={"Sending Otp"} />
         ) : (
-          <div className="flex flex-col gap-4 w-full max-w-md md:max-w-[40vw] bg-white bg-opacity-80 backdrop-blur-sm rounded-xl border border-gray-200 shadow-lg p-6">
-            <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">Create Account</h2>
-            <form className="flex flex-col gap-4 h-[60vh]  overflow-y-auto" onSubmit={handleSubmit}>
+          <div className="flex flex-col gap-2 w-full max-w-md md:max-w-[40vw] bg-card bg-opacity-80 backdrop-blur-sm rounded-xl border border-gray-200 shadow-lg p-6">
+            <div className='flex-1 border-b border-gray-300 px-4 py-2 flex justify-between' >
+              <h2 className="text-2xl font-bold text-muted text-center">Create Account</h2>
+            </div>
+            
+            <form className="flex flex-col gap-4 h-[60vh] p-2 overflow-y-auto text-muted" onSubmit={handleSubmit}>
               {/* First Name */}
               <div className="flex flex-col">
-                <label htmlFor="firstName" className="text-sm font-medium text-gray-700 mb-1">First Name</label>
+                <label htmlFor="firstName" className="text-sm font-medium">First Name</label>
                 <input
                   type="text"
                   placeholder="Enter First Name"
@@ -133,13 +136,13 @@ function SignUp() {
                   value={formData.firstName}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="inputBase2 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                  className="inputBase"
                 />
-                {errors.firstName && <p className="mt-1 text-xs text-red-600">{errors.firstName}</p>}
+                {errors.firstName && <p className="mt-1 text-xs text-red-400">{errors.firstName}</p>}
               </div>
               {/* Last Name */}
               <div className="flex flex-col">
-                <label htmlFor="lastName" className="text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                <label htmlFor="lastName" className="text-sm font-medium">Last Name</label>
                 <input
                   type="text"
                   placeholder="Enter Last Name"
@@ -147,13 +150,13 @@ function SignUp() {
                   value={formData.lastName}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="inputBase2 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                  className="inputBase"
                 />
-                {errors.lastName && <p className="mt-1 text-xs text-red-600">{errors.lastName}</p>}
+                {errors.lastName && <p className="mt-1 text-xs text-red-400">{errors.lastName}</p>}
               </div>
               {/* Email */}
               <div className="flex flex-col">
-                <label htmlFor="email" className="text-sm font-medium text-gray-700 mb-1">Email</label>
+                <label htmlFor="email" className="text-sm font-medium">Email</label>
                 <input
                   type="email"
                   placeholder="Enter Email"
@@ -161,13 +164,13 @@ function SignUp() {
                   value={formData.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="inputBase2 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                  className="inputBase"
                 />
-                {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
+                {errors.email && <p className="mt-1 text-xs text-red-400">{errors.email}</p>}
               </div>
               {/* Password */}
               <div className="flex flex-col">
-                <label htmlFor="password" className="text-sm font-medium text-gray-700 mb-1">Password</label>
+                <label htmlFor="password" className="text-sm font-medium">Password</label>
                 <div className="flex gap-1 pr-1">
                   <input
                     type={isVisible ? "text" : "password"}
@@ -176,19 +179,19 @@ function SignUp() {
                     value={formData.password}
                     minLength={8}
                     maxLength={20}
-                    className="inputBase2 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition flex-1"
+                    className="inputBase flex-1"
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
-                  <button type="button" onClick={() => setIsVisible(!isVisible)} className="text-gray-600">
+                  <button type="button" onClick={() => setIsVisible(!isVisible)} className="text-gray-600 border border-header rounded-xl py-1 px-2 bg-page">
                     {isVisible ? <FaEyeSlash /> : <FaEye />}
                   </button>
                 </div>
-                {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password}</p>}
+                {errors.password && <p className="mt-1 text-xs text-red-400">{errors.password}</p>}
               </div>
               {/* Mobile Number */}
               <div className="flex flex-col">
-                <label htmlFor="mobileNo" className="text-sm font-medium text-gray-700 mb-1">Mobile No</label>
+                <label htmlFor="mobileNo" className="text-sm font-medium">Mobile No</label>
                 <input
                   type="text"
                   placeholder="Enter Mobile No"
@@ -198,12 +201,12 @@ function SignUp() {
                   maxLength={10}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="inputBase2 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                  className="inputBase"
                 />
-                {errors.mobileNo && <p className="mt-1 text-xs text-red-600">{errors.mobileNo}</p>}
+                {errors.mobileNo && <p className="mt-1 text-xs text-red-400">{errors.mobileNo}</p>}
               </div>
-              {isRegistered && <p className="text-center text-sm text-red-600 mb-2">Account already exists with this email. Please login</p>}
-              <button type="submit" className="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full shadow-md hover:shadow-lg transition">
+              {isRegistered && <p className="text-center text-sm text-red-400 mb-2">Account already exists with this email. Please login</p>}
+              <button type="submit" className="btn w-full bg-button hover:bg-button/70 text-white font-semibold rounded-full">
                 Send OTP
               </button>
             </form>

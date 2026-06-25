@@ -17,9 +17,9 @@ function TaskItem({ task }) {
   const [isOpen, setIsOpen] = useState(false)
 
   const styleMap = {
-    complete: "bg-orange-300/20 text-orange-600",
-    inProgress: "bg-blue-300/30 text-blue-600",
-    pending: "bg-purple-500/20 text-purple-500"
+    complete: "text-[#10B981]",
+    inProgress: " text-[#3B82F6]",
+    pending: " text-[#F59E0B]"
   }
 
   const handleUpdate = () => {
@@ -38,13 +38,13 @@ function TaskItem({ task }) {
 
   return (
     <>
-      <div tabIndex={0} className={`px-4 border-b bg-page min-h-30 pb-2 text-sm m-1 border border-gray-300 rounded-xl shadow-[0px_5px_10px_2px_rgba(0,0,0,0.25)]  hover:shadow-[0px_5px_10px_rgba(0,0,0,0.25)] hover:border-gray-400 `}
+      <div tabIndex={0} className={`px-4 border-b bg-todoCard min-h-30 pb-2 text-sm m-1  rounded-xl shadow-[0px_5px_10px_2px_rgba(0,0,0,0.25)]  hover:shadow-[0px_5px_10px_rgba(0,0,0,0.25)] hover:border-gray-400 `}
         onClick={() => setSelectId(task._id)}
       >
         {/* task title, description, etc. */}
         <div className={`flex flex-col rounded-md py-2 ${isCompleted ? "line-through text-gray" : ""}`}>
-          <div className=''>
-            <div className=''>
+          <div>
+            <div>
               <input
                 className='cursor-pointer' 
                 type="checkbox" id='checkbox' name='checkbox' checked={isCompleted}
@@ -56,17 +56,17 @@ function TaskItem({ task }) {
               />
             </div>
 
-            <div className='flex flex-col w-full'>
-              <div className='flex justify-between'>
-                <h2 className='text-text'>{task.title}</h2>
+            <div className='flex flex-col w-full gap-1'>
+              <div className='flex justify-between items-center'>
+                <h2 className='text-base font-semibold text-muted'>{task.title}</h2>
                 <div className='flex-1'>
-                  <button className='hoverBase btn mx-2 font-semibold bg-danger/20  text-danger'
+                  <button className='hoverBase px-1 py-1 rounded-xl  mx-2 font-semibold text-xl text-danger/50 bg-danger/10'
                     onClick={() => setIsOpen(!isOpen)
                     }
                   >
                     <MdDeleteForever />
                   </button>
-                  <button className={`hoverBase btn mx-2 font-semibold bg-success/20 text-success ${isCompleted ? "line-through  " : ""}`}
+                  <button className={`hoverBase px-1 py-1 mx-2 font-semibold text-xl rounded-xl text-success/50 bg-success/10 ${isCompleted ? "line-through  " : ""}`}
                     onClick={() => handleUpdate()}
                     disabled={isCompleted}
                   >
@@ -74,9 +74,9 @@ function TaskItem({ task }) {
                   </button>
                 </div>
               </div>
-              <p className='text-gray'>{task.description}</p>
+              <p className='text-muted bg-muted/10'>{task.description}</p>
               <div className='mt-2 flex items-center justify-between '>
-                {task.category && <p className='bg-gray/30 text-gray w-fit rounded'>{task.category.name}</p>}
+                {task.category && <p className='bg-gray-400/30 text- w-fit rounded'>{task.category.name}</p>}
                 {task.status && <p className={`w-fit rounded px-4 font-semibold ${styleMap[task.status]}`}>{task.status}</p>}
               </div>
             </div>
@@ -87,7 +87,7 @@ function TaskItem({ task }) {
 
         {/* button delete and update */}
         <div className='flex justify-between'>
-          <div>{task.dueDate && <small className=' px-2 rounded  text-gray'>Due: {task.dueDate}</small>}</div>
+          <div>{task.dueDate && <small className=' px-2 rounded  text-gray-400'>Due: {task.dueDate}</small>}</div>
         </div>
       </div>
 

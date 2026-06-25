@@ -81,10 +81,10 @@ function Category() {
             
             <div className='flex flex-col gap-1.5'>
               <div
-                className={`flex items-center gap-3 cursor-pointer px-4 py-2.5 rounded-xl transition-all duration-300 transform active:scale-95 ${
+                className={`flex items-center gap-3 cursor-pointer px-4 py-2.5 rounded-xl transition-all duration-300 transform active:scale-95 text-blue-600 ${
                   selectedCat === "all"
-                    ? "text-blue-600 shadow-sm border border-blue-100"
-                    : "text-gray-600 hover:bg-gray-100/80"
+                    ? "shadow-sm border border-blue-100"
+                    : " hover:bg-header"
                 }`}
                 onClick={() => handleCat("all")}
               >
@@ -103,8 +103,8 @@ function Category() {
                       key={item._id}
                       className={`flex items-center gap-3 cursor-pointer px-4 py-2.5 rounded-xl transition-all duration-300 transform active:scale-95 ${
                         isSelected
-                          ? "bg-page text-button shadow-sm border border-blue-100"
-                          : "text-gray-600 hover:bg-gray-100/80"
+                          ? "bg-page text-button shadow-sm border border-blue-500"
+                          : "text-gray-600 hover:bg-header"
                       }`}
                       onClick={() => handleCat(item)}
                     >
