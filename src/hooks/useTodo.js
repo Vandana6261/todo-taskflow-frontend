@@ -250,12 +250,13 @@ export function useTodo() {
     }
   }
 
-  async function getProfile(data) {
+  async function getProfile() {
     console.log("getProfile called");
-    const response = await customFetch(`${BASE_URL}/api/user/profile`, {
+    const response = await customFetch(`${BASE_URL}/api/user/me`, {
       method: "GET",
     });
     const userInfo = await response.json();
+    return userInfo;
   }
 
 
