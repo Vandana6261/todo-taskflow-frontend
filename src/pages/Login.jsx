@@ -5,6 +5,7 @@ import Loader from "../components/Loader";
 import { useAuthContext } from "../context/AuthContext";
 import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
+import LoginLoader from "../loader/LoginLoader";
 
 function Login() {
   const { loginUser } = useTodoContext();
@@ -114,78 +115,60 @@ function Login() {
 
   return (
     <>
-      {/* Outer container with a gentle light gradient background */}
-      <div className="w-full min-h-screen  fixed z-0 flex bg-page justify-center items-center p-4">
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <div className="flex flex-col gap-4 w-full max-w-md md:max-w-[40vw] bg-card bg-opacity-80 backdrop-blur-sm rounded-xl border border-gray-200 shadow-lg p-6">
-            <h2 className="text-2xl font-bold text-muted text-center">
-              Welcome Back
-            </h2>
-            <form
-              className="flex flex-col gap-4 text-muted p-2"
-              onSubmit={handleSubmit}
-            >
-              {/* Email Field */}
-              <div className="flex flex-col">
-                <label htmlFor="email" className="text-sm font-medium">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  placeholder="Enter Email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="inputBase"
-                />
-                {errors.email && (
-                  <p className="mt-1 text-xs text-red-400">{errors.email}</p>
-                )}
-              </div>
-              {/* Password Field */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="password"
-                  className="text-sm font-medium"
-                >
-                  Password
-                </label>
-                <div className="flex gap-1 pr-1">
-                    <input
-                      type="password"
-                      placeholder="Enter Password"
-                      name="password"
-                      value={formData.password}
-                      minLength={8}
-                      maxLength={20}
-                      onChange={handleChange}
-                      className="inputBase flex-1"
-                    />
-                    {errors.password && (
-                      <p className="mt-1 text-xs text-danger">{errors.password}</p>
-                    )}
-                    <button type="button"onClick={() => setIsVisible(!isVisible)} className="text-gray-600 border border-header rounded-xl py-1 px-2 bg-page" >{isVisible ? <FaEyeSlash /> : <FaEye />} </button>
-                </div>
-              </div>
-              {/* General error */}
-              {errors.loginError && (
-                <p className="text-center text-sm text-red-400 mb-2">
-                  {errors.loginError}
-                </p>
-              )}
-              {/* Submit Button */}
-              <button
-                type="submit"
-                className="btn w-full bg-button hover:bg-button/80 text-white font-semibold rounded-full "
-              >
-                Login
-              </button>
-            </form>
+      {isLoading ? (
+          <div className="w-full min-h-screen fixed z-0 flex bg-page justify-center items-center p-4">
+            <LoginLoader loaderFor="Logging in..."/>
           </div>
-        )}
-      </div>
+        ) : (
+          <div className="w-full min-h-screen fixed z-0 flex bg-page justify-center items-center p-4">
+            <div className="flex flex-col gap-4 w-full max-w-md md:max-w-[40vw] bg-card bg-opacity-80 backdrop-blur-sm rounded-xl border border-gray-200 shadow-lg p-6">
+              <h2 className="text-2xl font-bold text-muted text-center">Welcome Back</h2>
+              <form onSubmit={handleSubmit} className="flex flex-col gap-4 text-muted p-2">
+                {/* Email Field */}
+                <div className="flex flex-col">
+                  <label htmlFor="email" className="text-sm font-medium">Email</label>
+                  <input
+                    type="email"
+                    placeholder="Enter Email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="inputBase"
+                  />
+                  {errors.email && (
+                    <p className="mt-1 text-xs text-red-400">{errors.email}</p>
+                  )}
+                </div>
+                {/* Password Field */}
+                <div className="flex flex-col">
+                  <label htmlFor="password" className="text-sm font-medium">Password</label>
+                  <div className="flex gap-1 pr-1">
+                      <input
+                        type={isVisible ? "text" : "password"}
+                        placeholder="Enter Password"
+                        name="password"
+                        value={formData.password}
+                        minLength={8}
+                        maxLength={20}
+                        onChange={handleChange}
+                        className="inputBase flex-1"
+                      />
+                      {errors.password && (
+                        <p className="mt-1 text-xs text-danger">{errors.password}</p>
+                      )}
+                      <button type="button"onClick={() => setIsVisible(!isVisible)} className="text-gray-600 border border-header rounded-xl py-1 px-2 bg-page" >{isVisible ? <FaEyeSlash /> : <FaEye />} </button>
+                  </div>
+                </div>
+                {/* General error */}
+                {errors.loginError && (
+                  <p className="text-center text-sm text-red-400 mb-2">{errors.loginError}</p>
+                )}
+                {/* Submit Button */}
+                <button type="submit" className="btn w-full bg-button hover:bg-button/80 text-white font-semibold rounded-full ">Login</button>
+              </form>
+            </div>
+          </div>
+      )}
     </>
   );
 }
