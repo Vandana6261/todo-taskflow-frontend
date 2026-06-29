@@ -70,6 +70,10 @@
   --color-feature: var(--color-feature);
 }
 
+* {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
 @layer components {
   .inputBase {
     @apply text-text bg-page mx-1 px-3 py-2 border border-header rounded-xl focus:outline-none focus:ring-2 focus:ring-button/40 transition-all duration-200;
