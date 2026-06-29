@@ -1,4 +1,6 @@
+// @ts-nocheck
 import React, { useEffect, useState } from 'react'
+
 import { useTodo } from '../hooks/useTodo'
 import useTodoContext from '../context/TodoContext'
 import UpdateTodo from './UpdateTodo'
@@ -10,6 +12,7 @@ import { GrUpdate } from "react-icons/gr";
 // console.log("TaskItem rendered")
 
 function TaskItem({ task }) {
+
   const { tasks, updateTask, setSelectId, deleteTask } = useTodoContext()
   const [isUpdate, setIsUpdate] = useState(false);
   const [isCompleted, setIsCompleted] = useState(task.isCompleted);
@@ -38,57 +41,90 @@ function TaskItem({ task }) {
 
   return (
     <>
-      <div tabIndex={0} className={`px-4 border-b bg-todoCard min-h-30 pb-2 text-sm m-1  rounded-xl shadow-[0px_5px_10px_2px_rgba(0,0,0,0.25)]  hover:shadow-[0px_5px_10px_rgba(0,0,0,0.25)] hover:border-gray-400 `}
+      <div
+        tabIndex={0}
         onClick={() => setSelectId(task._id)}
+        className="group bg-todoCard rounded-xl border border-transparent p-4 m-1 text-sm shadow-[0px_5px_10px_2px_rgba(0,0,0,0.25)] hover:shadow-[0px_8px_16px_rgba(0,0,0,0.3)] hover:border-gray-400 transition-all cursor-pointer"
       >
-        {/* task title, description, etc. */}
-        <div className={`flex flex-col rounded-md py-2 ${isCompleted ? "line-through text-gray" : ""}`}>
-          <div>
-            <div>
-              <input
-                className='cursor-pointer' 
-                type="checkbox" id='checkbox' name='checkbox' checked={isCompleted}
-                onChange={(e) => {
-                  const status = task.status !== "complete" ? "complete" : "inProgress";
-                  updateTask(task._id, { ...task, isCompleted: e.target.checked, status })
-                  setIsCompleted(e.target.checked)
-                }}
-              />
-            </div>
+        {/* Top row: checkbox + title (left) | edit + delete (right) */}
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex items-start gap-3 min-w-0 flex-1">
+            <input
+              type="checkbox"
+              id="checkbox"
+              name="checkbox"
+              checked={isCompleted}
+              onClick={(e) => e.stopPropagation()}
+              onChange={(e) => {
+                const status = task.status !== "complete" ? "complete" : "inProgress";
+                updateTask(task._id, { ...task, isCompleted: e.target.checked, status })
+                setIsCompleted(e.target.checked)
+              }}
+              className="mt-1 h-4 w-4 cursor-pointer shrink-0 accent-button"
+            />
+            <h2
+              className={`text-base font-semibold text-text truncate ${
+                isCompleted ? "line-through text-gray" : ""
+              }`}
+            >
+              {task.title}
+            </h2>
+          </div>
 
-            <div className='flex flex-col w-full gap-1'>
-              <div className='flex justify-between items-center'>
-                <h2 className='text-base font-semibold text-muted'>{task.title}</h2>
-                <div className='flex-1'>
-                  <button className='hoverBase px-1 py-1 rounded-xl  mx-2 font-semibold text-xl text-danger/50 bg-danger/10'
-                    onClick={() => setIsOpen(!isOpen)
-                    }
-                  >
-                    <MdDeleteForever />
-                  </button>
-                  <button className={`hoverBase px-1 py-1 mx-2 font-semibold text-xl rounded-xl text-success/50 bg-success/10 ${isCompleted ? "line-through  " : ""}`}
-                    onClick={() => handleUpdate()}
-                    disabled={isCompleted}
-                  >
-                    <GrUpdate />
-                  </button>
-                </div>
-              </div>
-              <p className='text-muted bg-muted/10'>{task.description}</p>
-              <div className='mt-2 flex items-center justify-between '>
-                {task.category && <p className='bg-gray-400/30 text- w-fit rounded'>{task.category.name}</p>}
-                {task.status && <p className={`w-fit rounded px-4 font-semibold ${styleMap[task.status]}`}>{task.status}</p>}
-              </div>
-            </div>
-
-
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              aria-label="Update task"
+              disabled={isCompleted}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleUpdate();
+              }}
+              className="h-8 w-8 grid place-items-center rounded-lg text-success/70 hover:bg-success/15 hover:text-success disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+              <GrUpdate className="text-lg" />
+            </button>
+            <button
+              type="button"
+              aria-label="Delete task"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsOpen(!isOpen);
+              }}
+              className="h-8 w-8 grid place-items-center rounded-lg text-danger/70 hover:bg-danger/15 hover:text-danger transition-colors"
+            >
+              <MdDeleteForever className="text-lg" />
+            </button>
           </div>
         </div>
 
-        {/* button delete and update */}
-        <div className='flex justify-between'>
-          <div>{task.dueDate && <small className=' px-2 rounded  text-gray-400'>Due: {task.dueDate}</small>}</div>
+        {/* Description */}
+        <p className={`mt-2 text-muted ${isCompleted ? "line-through" : ""}`}>
+          {task.description}
+        </p>
+
+        {/* Category + status */}
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+          {task.category && (
+            <span className="bg-gray-400/30 text-text/80 text-[11px] px-2 py-0.5 rounded">
+              {task.category.name}
+            </span>
+          )}
+          {task.status && (
+            <span
+              className={`text-xs font-semibold px-3 py-0.5 rounded ${styleMap[task.status]}`}
+            >
+              {task.status}
+            </span>
+          )}
         </div>
+
+        {/* Due date */}
+        {task.dueDate && (
+          <div className="mt-3 pt-2 border-t border-gray-400/20">
+            <small className="text-gray-400">Due: {task.dueDate}</small>
+          </div>
+        )}
       </div>
 
       {/* UpdateTodo (update) */}
@@ -99,7 +135,7 @@ function TaskItem({ task }) {
       {/* confirmation (delete) */}
       <div>
         {createPortal(
-          isOpen ? <Confirmation setIsOpen={setIsOpen} handleConfirmation={handleDelete} text={"Delet this todo"}  /> : "", document.body
+          isOpen ? <Confirmation setIsOpen={setIsOpen} handleConfirmation={handleDelete} text={"Delet this todo"} /> : "", document.body
         )}
       </div>
     </>
@@ -107,3 +143,4 @@ function TaskItem({ task }) {
 }
 
 export default TaskItem
+
