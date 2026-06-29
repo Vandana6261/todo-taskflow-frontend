@@ -9,7 +9,6 @@ import SearchBar from './SearchBar';
 import Loader from './Loader';
 import { useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
-import Confirmation from './Confirmation';
 
 
 // console.log("TaskList rendered")
@@ -77,11 +76,6 @@ function TaskList() {
     updateTask(data._id, data);
   }
 
-  const handleLogout = async () => {
-    await logout();
-    navigate("/")
-  }
-
   return (
     <>
       <div className='relative h-full select-none bg-page'>
@@ -91,12 +85,6 @@ function TaskList() {
             onClick={() => setShowDialogBox(true)}
             className={buttonStyle}
           >Add Task</button>
-          <button 
-            onClick={() => setIsOpen(!isOpen)}
-            className='btn hoverBase border-none w-auto py-2 text-white font-semibold bg-[#0019f7a8] rounded-full hover:shadow-[0px_0px_20px_rgba(0,15,205,0.4)]'
-          >
-            Log Out
-          </button>
           <AddTaskDialogBox showDialogBox={showDialogBox} setShowDialogBox={setShowDialogBox} />
         </div>
 
@@ -194,11 +182,6 @@ function TaskList() {
           
         </div>
         
-      </div>
-      <div>
-        {createPortal(
-          isOpen ? <Confirmation setIsOpen={setIsOpen} handleConfirmation={handleLogout} text={"Logout"}  /> : "", document.body
-        )}
       </div>
     </>
   )
