@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { IoMdTime } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
-import { RxUpdate } from "react-icons/rx";
 import useTodoContext from '../context/TodoContext';
 import { MdCancel } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
+import { MdOutlineModeEditOutline } from "react-icons/md";
 
 // console.log("UpdateTodo rendered")
 
@@ -172,7 +172,7 @@ function UpdateTodo({ setIsUpdate, isUpdate, updatedData, setUpdatedData }) {
               <button className='hoverBase btn mx-2 font-semibold bg-success/20 text-success hoverBase flex items-center gap-2'
               >
                 <span>
-                  <RxUpdate />
+                  <MdOutlineModeEditOutline />
                 </span>
                 <span>Update</span>
               </button>
