@@ -1,6 +1,6 @@
 import React from "react";
 
-function LoginLoader({loaderFor="loading"}) {
+function AuthLoader({loaderFor="loading"}) {
   return (
     <div className="flex flex-col items-center justify-center p-12 rounded-2xl border border-gray/10 bg-card text-text shadow-xl relative overflow-hidden min-h-[220px]">
       <style>{`
@@ -36,4 +36,4 @@ function LoginLoader({loaderFor="loading"}) {
   );
 }
 
-export default LoginLoader;
+export default AuthLoader;
