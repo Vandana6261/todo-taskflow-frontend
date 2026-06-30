@@ -5,20 +5,28 @@ import { redirect, useNavigate } from 'react-router-dom';
 import Loader from "../components/Loader";
 import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
+import { useAuthContext } from "../context/AuthContext";
+import VarifyOtp from "./VarifyOtp";
+import { sendOtp, varifyAndRegister } from "../services/otp";
+import AuthLoader from "../loader/AuthLoader";
 
 function SignUp() {
   const { registerUser, getProfile, loadTodo, loadCat } = useTodoContext();
+  const { setUser } = useAuthContext()
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
+  
 
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-    mobileNo: ""
+    mobileNo: "",
+    otp: "",
   })
 
   const [errors, setErrors] = useState({})
@@ -65,6 +73,8 @@ function SignUp() {
       else if(value.length !== 10) errorMessage = "Mobile number must be 10 digits";
     }
 
+    // console.log(errorMessage, name)
+
     if (errorMessage) {
         setErrors(prev => ({ ...prev, [name]: errorMessage }));
     }
@@ -90,35 +100,49 @@ function SignUp() {
     if(!formData.mobileNo) newErrors.mobileNo = "Please Provide some value";
     else if(formData.mobileNo.length !== 10) newErrors.mobileNo = "Mobile number must be 10 digits";
 
+    // if(!formData.otp) newErrors.mobileNo = "Please Provide some value";
+    
     if(Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
     
     setIsLoading(true);
-    const response = await registerUser(formData);
+    if(!otpSent) {
+      setOtpSent(await sendOtp({email: formData.email}));
+      setIsLoading(false)
+      return;
+    }
+
+    console.log(formData, "formData")
+    const response = await varifyAndRegister(formData);
+    console.log(response, "response otp")
+    setUser(response.user);
     setIsLoading(false);
-    
-    if (!response) {
-      setErrors({ email: "Network Error: Could not connect to the backend server. Please try again." });
-    }
-    else if(!response.success) {
-      if (response.message === "User already exists, Please login first") {
-        setIsRegistered(true);
-      } else {
-        setErrors({ email: response.message || "An error occurred during signup" });
-      }
-    }
-    else {
-      navigate("/signUp/varifyOtp")
-    }
+    setOtpSent(false);
+    navigate("/dashboard");
+
+    // if (!response) {
+    //   setErrors({ email: "Networ${user} ? ${user} : " "`k Error: Could not connect to the backend server. Please try again." });
+    // }
+    // else if(!response.success) {
+    //   if (response.message === "User already exists, Please login first") {
+    //     setIsRegistered(true);
+    //   } else {
+    //     setErrors({ email: response.message || "An error occurred during signup" });
+    //   }
+    // }
+    // else {
+      // navigate("/signUp/varifyOtp");
+      // navigate("/dashboard");
+    // }
   }
 
   return (
     <>
       <div className="w-full min-h-screen max-h-auto fixed z-0 flex bg-page justify-center items-center p-4">
         {isLoading ? (
-          <Loader message={"Sending Otp"} />
+          <AuthLoader loaderFor={"fetching response..."} />
         ) : (
           <div className="flex flex-col gap-2 w-full max-w-md md:max-w-[40vw] bg-card bg-opacity-80 backdrop-blur-sm rounded-xl border border-gray-200 shadow-lg p-6">
             <div className='flex-1 border-b border-gray-300 px-4 py-2 flex justify-between' >
@@ -205,10 +229,27 @@ function SignUp() {
                 />
                 {errors.mobileNo && <p className="mt-1 text-xs text-red-400">{errors.mobileNo}</p>}
               </div>
+
+              <div className={`flex flex-col ${otpSent ? 'block' : 'hidden'}`}>
+                <label htmlFor="otp" className="text-sm font-medium">Otp</label>
+                <input 
+                  type="text" 
+                  placeholder="Enter your otp ******"
+                  name="otp"
+                  value={formData.otp}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  className="inputBase"
+                />
+              </div>
               {isRegistered && <p className="text-center text-sm text-red-400 mb-2">Account already exists with this email. Please login</p>}
               <button type="submit" className="btn w-full bg-button hover:bg-button/70 text-white font-semibold rounded-full">
-                Send OTP
+                {otpSent ? "VarifyOtp" : "Send OTP"}
               </button>
+
+              <div>
+                <label></label>
+              </div>
             </form>
           </div>
         )}
