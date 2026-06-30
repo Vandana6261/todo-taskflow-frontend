@@ -12,6 +12,7 @@ import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import VarifyOtp from "./pages/VarifyOtp";
+import { AuthProvider } from "./context/AuthContext";
 // import ErrorBoundary from './pages/ErrorBoundary'
 
 function App() {
@@ -47,9 +48,11 @@ function App() {
 
   return (
     <>
-      <TodoProvider>
-        <RouterProvider router={router} />
-      </TodoProvider>
+      <AuthProvider>
+        <TodoProvider>
+          <RouterProvider router={router} />
+        </TodoProvider>
+      </AuthProvider>
     </>
   );
 }
