@@ -5,7 +5,7 @@ import Loader from "../components/Loader";
 import { useAuthContext } from "../context/AuthContext";
 import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
-import LoginLoader from "../loader/LoginLoader";
+import AuthLoader from "../loader/AuthLoader";
 
 function Login() {
   const { loginUser } = useTodoContext();
@@ -117,7 +117,7 @@ function Login() {
     <>
       {isLoading ? (
           <div className="w-full min-h-screen fixed z-0 flex bg-page justify-center items-center p-4">
-            <LoginLoader loaderFor="Logging in..."/>
+            <AuthLoader loaderFor="Logging in..."/>
           </div>
         ) : (
           <div className="w-full min-h-screen fixed z-0 flex bg-page justify-center items-center p-4">
