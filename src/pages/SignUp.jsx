@@ -15,9 +15,9 @@ function SignUp() {
   const { setUser } = useAuthContext()
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [isRegistered, setIsRegistered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
+  const [resError, setResError] = useState("");
   
 
   const [formData, setFormData] = useState({
@@ -51,6 +51,7 @@ function SignUp() {
   const handleBlur = (e) => {
     const { name, value } = e.target;
     let errorMessage = null;
+    setResError("");
 
     if(name === 'firstName') {
       if(!value) errorMessage = "Please Provide some value";
@@ -73,8 +74,6 @@ function SignUp() {
       else if(value.length !== 10) errorMessage = "Mobile number must be 10 digits";
     }
 
-    // console.log(errorMessage, name)
-
     if (errorMessage) {
         setErrors(prev => ({ ...prev, [name]: errorMessage }));
     }
@@ -82,7 +81,7 @@ function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
+    setResError("");
     // Full validation before submit
     const newErrors = {};
     if(!formData.firstName) newErrors.firstName = "Please Provide some value";
@@ -99,8 +98,6 @@ function SignUp() {
     
     if(!formData.mobileNo) newErrors.mobileNo = "Please Provide some value";
     else if(formData.mobileNo.length !== 10) newErrors.mobileNo = "Mobile number must be 10 digits";
-
-    // if(!formData.otp) newErrors.mobileNo = "Please Provide some value";
     
     if(Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -116,26 +113,20 @@ function SignUp() {
 
     console.log(formData, "formData")
     const response = await varifyAndRegister(formData);
-    console.log(response, "response otp")
-    setUser(response.user);
-    setIsLoading(false);
-    setOtpSent(false);
-    navigate("/dashboard");
-
-    // if (!response) {
-    //   setErrors({ email: "Networ${user} ? ${user} : " "`k Error: Could not connect to the backend server. Please try again." });
-    // }
-    // else if(!response.success) {
-    //   if (response.message === "User already exists, Please login first") {
-    //     setIsRegistered(true);
-    //   } else {
-    //     setErrors({ email: response.message || "An error occurred during signup" });
-    //   }
-    // }
-    // else {
-      // navigate("/signUp/varifyOtp");
-      // navigate("/dashboard");
-    // }
+    // console.log(response, "response otp")
+    console.log(response.ok, "ok or not")
+    if(!response.success) {
+      setResError(response.message)
+      setIsLoading(false);
+      return;
+    }
+    else {
+      setUser(response.user);
+      setOtpSent(false);
+      setIsLoading(false);
+      navigate("/dashboard");
+      return;
+    }
   }
 
   return (
@@ -242,14 +233,11 @@ function SignUp() {
                   className="inputBase"
                 />
               </div>
-              {isRegistered && <p className="text-center text-sm text-red-400 mb-2">Account already exists with this email. Please login</p>}
+              {resError && <p className="text-center text-sm text-red-400 mb-2">{resError}</p>}
               <button type="submit" className="btn w-full bg-button hover:bg-button/70 text-white font-semibold rounded-full">
                 {otpSent ? "VarifyOtp" : "Send OTP"}
               </button>
 
-              <div>
-                <label></label>
-              </div>
             </form>
           </div>
         )}

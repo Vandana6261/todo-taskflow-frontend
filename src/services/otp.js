@@ -10,8 +10,7 @@ export async function sendOtp({ email }) {
             body: JSON.stringify({ email })
         })
         const data = await res.json();
-        console.log(data);
-        return res.ok && data.success === true;
+        return data;
     } catch (error) {
         console.log(error.message);
     }
@@ -30,9 +29,7 @@ export async function varifyAndRegister(userData) {
             body: JSON.stringify(userData)
         })
         const data = await res.json();
-        console.log(data);
         return data;
-        return res.ok && data.success === true;
     } catch (error) {
         console.log(error)
     }
